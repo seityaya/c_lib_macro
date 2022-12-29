@@ -182,23 +182,18 @@ u16s x = 54321, t = k;
 
 
 
-    PRINT_LOC_TYPE(x); PRINT_LOC_MAIN(x);
-    PRINT_FNC_TYPE(x); PRINT_FNC_MAIN(x);
-    PRINT_INT_TYPE(x); PRINT_INT_MAIN(x);
-    PRINT_BIT_TYPE(x); PRINT_BIT_MAIN(x);
-    PRINT_RAW_TYPE(x); PRINT_RAW_MAIN(x);
-    PRINT_PTR_TYPE(x); PRINT_PTR_MAIN(x);
-
-    PRINT_CHR_TYPE(x); PRINT_CHR_MAIN(x);
-
-
-
-
-    PRINT_SIZ_TYPE(x); PRINT_SIZ_MAIN(x);
-    PRINT_FLT_TYPE(x); PRINT_FLT_MAIN(x);
-    PRINT_STR_TYPE(x); PRINT_STR_MAIN(x);
-    PRINT_TYP_TYPE(x); PRINT_TYP_MAIN(x);
-    PRINT_TXT_TYPE(x); PRINT_TXT_MAIN(x);
+    PRINT_LOC(x);
+    PRINT_FNC(x);
+    PRINT_INT(x);
+    PRINT_BIT(x);
+    PRINT_RAW(x);
+    PRINT_PTR(x);
+    PRINT_CHR(x);
+    PRINT_SIZ(x);
+    PRINT_FLT(x);
+    PRINT_STR(x);
+    PRINT_TYP(x);
+    PRINT_TXT(x);
 
 
 
@@ -213,23 +208,27 @@ u16s x = 54321, t = k;
 
 
 
-//PRINT_INF(t);
 
-//#define VAR 1
 
-//#if VAR == 0
-//    int orX = 1;
-//    int x = orX;
-//#elif VAR == 1
-//     int orX = 1;
-//     int *x = &orX;
-//#elif VAR == 2
-//    double orX = 1;
-//    double x = orX;
-//#elif VAR == 3
-//    double orX = 1;
-//    double* x = &orX;
-//#endif
+#define VAR 4
+#if VAR == 0
+    int orZ = 1;
+    int z = orZ;
+#elif VAR == 1
+     int orZ = 1;
+     int *z = &orZ;
+#elif VAR == 2
+    double orZ = 1;
+    double Z = orZ;
+#elif VAR == 3
+    double orZ = 1;
+    double* z = &orZ;
+#elif VAR == 4
+    char orZ = 1;
+    char* z = &orZ;
+#endif
+
+PRINT_INF(orZ);
 
 //    do{
 //        PRINT_LOC(x);

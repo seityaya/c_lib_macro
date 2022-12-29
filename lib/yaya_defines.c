@@ -1,8 +1,15 @@
+//Author                 : Seityagiya Terlekchi
+//Contacts               : seityaya@ukr.net
+//Creation Date          : 2020.05
+//License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
+//SPDX-License-Identifier: LGPL-2.1-or-later
+//Copyright © 2020-2022 Seityagiya Terlekchi. All rights reserved.
+
 #include "yaya_defines.h"
+#include "stdio.h"
 
 /*Возвращает позицию первого взведеного бита*/
-i08s yaya_bit_position(umax x)
-{
+i08s yaya_bit_position(umax x) {
     if (x <= 1){
         return yaya_bit_onse_bit(x);
     }else{
@@ -10,8 +17,7 @@ i08s yaya_bit_position(umax x)
     }
 }
 
-i08s yaya_bit_onse_bit(umax n)
-{
+i08s yaya_bit_onse_bit(umax n) {
     n = ((n>>1) & 0x5555555555555555) + (n & 0x5555555555555555);
     n = ((n>>2) & 0x3333333333333333) + (n & 0x3333333333333333);
     n = ((n>>4) & 0x0F0F0F0F0F0F0F0F) + (n & 0x0F0F0F0F0F0F0F0F);
@@ -21,8 +27,7 @@ i08s yaya_bit_onse_bit(umax n)
     return n;
 }
 
-umax yaya_bit_revers(umax x, umax n)
-{
+umax yaya_bit_revers(umax x, umax n) {
     x = (x & 0x00000000FFFFFFFF) << 32 | (x & 0xFFFFFFFF00000000) >> 32;
     x = (x & 0x0000FFFF0000FFFF) << 16 | (x & 0xFFFF0000FFFF0000) >> 16;
     x = (x & 0x00FF00FF00FF00FF) << 8  | (x & 0xFF00FF00FF00FF00) >> 8;
@@ -33,8 +38,7 @@ umax yaya_bit_revers(umax x, umax n)
     return x;
 }
 
-void yaya_print_bit(void *v, uintmax_t size)
-{
+void yaya_print_bit(void *v, uintmax_t size) {
     uintmax_t p = *((uintmax_t*)(v));
 
     if(ENDIAN_BIT == ENDIAN_LIT){
@@ -52,9 +56,7 @@ void yaya_print_bit(void *v, uintmax_t size)
     printf("\n");
 }
 
-
-void yaya_print_raw(void *p, uintmax_t size)
-{
+void yaya_print_raw(void *p, uintmax_t size) {
     for(uintmax_t i = 0; i < size; i++){
         uint8_t temp = *(((uint8_t*)(p)) + i);
         printf("%02" PRIX8 " ", temp);

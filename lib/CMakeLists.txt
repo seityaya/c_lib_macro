@@ -18,6 +18,16 @@ set(SRC_LIST yaya_defines.c)
 set(INC_LIST
     yaya_defines.h
     yaya_bool.h
-    yaya_unused.h)
+    yaya_unused.h
+    yaya_sugar.h
+    yaya_concatenate.h
+    yaya_bit.h
+    yaya_endian.h
+    yaya_flag.h
+    yaya_math.h
+    yaya_type.h
+    yaya_number.h
+    yaya_debug.h
+    yaya_chek.h)
 
 add_library(${PROJECT_NAME} SHARED ${SRC_LIST} ${INC_LIST})

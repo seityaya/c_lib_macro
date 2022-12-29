@@ -1,27 +1,12 @@
-#ifndef MM_H
-#define MM_H
+//Author                 : Seityagiya Terlekchi
+//Contacts               : seityaya@ukr.net
+//Creation Date          : 2020.05
+//License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
+//SPDX-License-Identifier: LGPL-2.1-or-later
+//Copyright © 2020-2022 Seityagiya Terlekchi. All rights reserved.
 
-#define CMP(x, y, op) ((x) op (y) ? (x) : (y))
-
-#define CMP_ONSE_2(x, y, unique_x, unique_y, op) ({	\
-        typeof(x) unique_x = (x);		\
-        typeof(y) unique_y = (y);		\
-        CMP(unique_x, unique_y, op); })
-
-#define CMP_ONSE(x, y, op) CMP_ONSE_2(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), <)
-
-#define MIN(x,y)  CMP_ONSE(x, y, <)
-#define MAX(a,b)  CMP_ONSE(x, y, >)
-#define SWAP(a,b) { typeof(a) tmp = a; a = b; b = tmp; }
-
-
-
-
-
-
-
-
-
+#ifndef YAYA_CHEK_H
+#define YAYA_CHEK_H
 
 #define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
 
@@ -83,4 +68,4 @@
  */
 #define max(x, y)	__careful_cmp(x, y, >)
 
-#endif // MM_H
+#endif /*YAYA_CHEK_H*/
