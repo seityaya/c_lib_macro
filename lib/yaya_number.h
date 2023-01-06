@@ -108,4 +108,36 @@ typedef union allt{
 #define fl64n(x)    ((fl64)(x))
 #define flmxn(x)    ((fl64)(x))
 
+//#undef intmax_t
+//#undef uintmax_t
+//#undef intptr_t
+//#undef uintptr_t
+//#undef int8_t
+//#undef int16_t
+//#undef int32_t
+//#undef int64_t
+//#undef uint8_t
+//#undef uint16_t
+//#undef uint32_t
+//#undef uint64_t
+//#undef int_least8_t
+//#undef int_least16_t
+//#undef int_least32_t
+//#undef int_least64_t
+//#undef uint_least8_t
+//#undef uint_least16_t
+//#undef uint_least32_t
+//#undef uint_least64_t
+//#undef int_fast8_t
+//#undef int_fast16_t
+//#undef int_fast32_t
+//#undef int_fast64_t
+//#undef uint_fast8_t
+//#undef uint_fast16_t
+//#undef uint_fast32_t
+//#undef uint_fast64_t
+//#undef float
+//#undef double
+
+
 #endif /*YAYA_NUMBER_H*/

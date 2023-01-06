@@ -26,7 +26,7 @@
  * Можно использовать как с фигурными скобками так и без.
  * Можно использовать с другими операторами if/else, switch/case вместо скобок.
  */
-#define beg do{  mandatory_semicolon
+#define beg do{                    mandatory_semicolon
 #define end break; } while (true); mandatory_semicolon
 
 #endif /*YAYA_SUGAR_H*/

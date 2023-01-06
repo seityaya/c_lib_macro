@@ -18,8 +18,8 @@ umax yaya_bit_revers(umax x, umax n);
  *Если функция возвращает результат, то он тоже нумерует биты от 1
 */
 
-#define BIT_BEG(x)                         //вернуть позицию первого взведенного бита
-#define BIT_END(x)                         //вернуть позицию последнего взведенного бита
+#define BIT_BEG(x)  yaya_bit_position(x)   //вернуть позицию первого взведенного бита
+#define BIT_END(x)  yaya_bit_position(x)   //вернуть позицию последнего взведенного бита
 #define BIT_NUM(x)  yaya_bit_onse_bit(x)   //подсчитать количество взведенных битов
 #define BIT_POS(x)  yaya_bit_position(x)   //вернуть позицию одного единичного бита, если битов несколько, то -1
 
