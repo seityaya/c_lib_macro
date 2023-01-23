@@ -3,10 +3,16 @@
 //Creation Date          : 2020.05
 //License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 //SPDX-License-Identifier: LGPL-2.1-or-later
-//Copyright © 2020-2022 Seityagiya Terlekchi. All rights reserved.
+//Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_NUMBER_H
 #define YAYA_NUMBER_H
+
+#include "stdint.h"
+#include "float.h"
+#include "math.h"
+#include "inttypes.h"
+#include "limits.h"
 
 #include "yaya_type.h"
 
@@ -14,6 +20,8 @@
 /*types*/
 #define imax       intmax_t
 #define umax       uintmax_t
+#define flmax      fl64
+#define fpmax      fp64
 
 #define iptr       intptr_t
 #define uptr       uintptr_t
@@ -46,18 +54,17 @@
 #define i32f       int_fast32_t
 #define i64f       int_fast64_t
 
-#define u_8f       uint_fast8_t
+#define u08f       uint_fast8_t
 #define u16f       uint_fast16_t
 #define u32f       uint_fast32_t
 #define u64f       uint_fast64_t
 
-#define fl32       float
-#define fl64       double
-#define fp32       char
-#define fp64       char
+#define fl32        float_t
+#define fl64        double_t
+#define fx32       char
+#define fx64       char
 
 typedef union allt{
-    void*      voidt;
     char       chart;
     imax       imaxt;
     umax       umaxt;
@@ -83,30 +90,33 @@ typedef union allt{
     i16f       i16ft;
     i32f       i32ft;
     i64f       i64ft;
-    u_8f       u08ft;
+    u08f       u08ft;
     u16f       u16ft;
     u32f       u32ft;
     u64f       u64ft;
     fl32       fl32t;
     fl64       fl64t;
-    fp32       fp32t;
-    fp64       fp64t;
-}allt;
+    fx32       fx32t;
+    fx64       fx64t;
+} allt;
 
 /*NUMBER*/
-#define i08n(x)    (i08s)(INT8_C(x))
-#define i16n(x)    (i16s)(INT16_C(x))
-#define i32n(x)    (i32s)(INT32_C(x))
-#define i64n(x)    (i64s)(INT64_C(x))
+#define i08c(x)    (i08s)(INT8_C(x))
+#define i16c(x)    (i16s)(INT16_C(x))
+#define i32c(x)    (i32s)(INT32_C(x))
+#define i64c(x)    (i64s)(INT64_C(x))
+#define imaxc(x)   (imax)(INTMAX_C(x))
 
-#define u08n(x)    (u08s)(UINT8_C(x))
-#define u16n(x)    (u16s)(UINT16_C(x))
-#define u32n(x)    (u32s)(UINT32_C(x))
-#define u64n(x)    (u64s)(UINT64_C(x))
+#define u08c(x)    (u08s)(UINT8_C(x))
+#define u16c(x)    (u16s)(UINT16_C(x))
+#define u32c(x)    (u32s)(UINT32_C(x))
+#define u64c(x)    (u64s)(UINT64_C(x))
+#define u64c(x)    (u64s)(UINT64_C(x))
+#define umaxc(x)   (umax)(UINTMAX_C(x))
 
-#define fl32n(x)    ((fl32)(x))
-#define fl64n(x)    ((fl64)(x))
-#define flmxn(x)    ((fl64)(x))
+#define fl32c(x)    ((fl32)(x))
+#define fl64c(x)    ((fl64)(x))
+#define flmaxc(x)   ((fl64)(x))
 
 //#undef intmax_t
 //#undef uintmax_t

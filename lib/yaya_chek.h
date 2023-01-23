@@ -3,69 +3,75 @@
 //Creation Date          : 2020.05
 //License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 //SPDX-License-Identifier: LGPL-2.1-or-later
-//Copyright © 2020-2022 Seityagiya Terlekchi. All rights reserved.
+//Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_CHEK_H
 #define YAYA_CHEK_H
 
-#define __UNIQUE_ID(prefix) __PASTE(__PASTE(__UNIQUE_ID_, prefix), __COUNTER__)
+#include "yaya_type.h"
+#include "yaya_concat.h"
 
-#define ___PASTE(a,b) a##b
-#define __PASTE(a,b) ___PASTE(a,b)
+#define COMPILE_CHR_OR_ZERO(A) _Generic((A), \
+    char          : (A), const char          : (A), \
+    signed char   : (A), const signed char   : (A), \
+    unsigned char : (A), const unsigned char : (A), \
+    default       : ('\0'))
 
-/*
- * min()/max()/clamp() macros must accomplish three things:
- *
- * - avoid multiple evaluations of the arguments (so side-effects like
- *   "x++" happen only once) when non-constant.
- * - perform strict type-checking (to generate warnings instead of
- *   nasty runtime surprises). See the "unnecessary" pointer comparison
- *   in __typecheck().
- * - retain result as a constant expressions when called with only
- *   constant expressions (to avoid tripping VLA warnings in stack
- *   allocation usage).
- */
-#define __typecheck(x, y) \
-    (!!(sizeof((typeof(x) *)1 == (typeof(y) *)1)))
+#define COMPILE_INT_OR_ZERO(A) _Generic((A), \
+    signed int         : (A), const signed int         : (A), \
+    unsigned int       : (A), const unsigned int       : (A), \
+    signed short       : (A), const signed short       : (A), \
+    unsigned short     : (A), const unsigned short     : (A), \
+    signed long        : (A), const signed long        : (A), \
+    unsigned long      : (A), const unsigned long      : (A), \
+    signed long long   : (A), const signed long long   : (A), \
+    unsigned long long : (A), const unsigned long long : (A), \
+    default            : (0))
 
-/*
- * This returns a constant expression while determining if an argument is
- * a constant expression, most importantly without evaluating the argument.
- * Glory to Martin Uecker <Martin.Uecker@med.uni-goettingen.de>
- */
-#define __is_constexpr(x) \
-    (sizeof(int) == sizeof(*(8 ? ((void *)((long)(x) * 0l)) : (int *)8)))
+#define COMPILE_FLT_OR_ZERO(A) _Generic((A), \
+    float        : (A), const float       : (A), \
+    double       : (A), const double      : (A), \
+    long double  : (A), const long double : (A), \
+    default      : (0.0))
 
-#define __no_side_effects(x, y) \
-        (__is_constexpr(x) && __is_constexpr(y))
+#define COMPILE_CHRP_OR_NULL(A) _Generic((A), \
+    char*          : (A), const char*          : (A), \
+    signed char*   : (A), const signed char*   : (A), \
+    unsigned char* : (A), const unsigned char* : (A), \
+    default        : (NULL))
 
-#define __safe_cmp(x, y) \
-        (__typecheck(x, y) && __no_side_effects(x, y))
+#define COMPILE_INTP_OR_NULL(A) _Generic((A), \
+    signed int*         : (A), const signed int*         : (A), \
+    unsigned int*       : (A), const unsigned int*       : (A), \
+    signed short*       : (A), const signed short*       : (A), \
+    unsigned short*     : (A), const unsigned short*     : (A), \
+    signed long*        : (A), const signed long*        : (A), \
+    unsigned long*      : (A), const unsigned long*      : (A), \
+    signed long long*   : (A), const signed long long*   : (A), \
+    unsigned long long* : (A), const unsigned long long* : (A), \
+    default             : (NULL))
 
-#define __cmp(x, y, op)	((x) op (y) ? (x) : (y))
+#define COMPILE_FLTP_OR_NULL(A) _Generic((A), \
+    float*        : (A), const float*       : (A), \
+    double*       : (A), const double*      : (A), \
+    long double*  : (A), const long double* : (A), \
+    default       : (NULL))
 
-#define __cmp_once(x, y, unique_x, unique_y, op) ({	\
-        typeof(x) unique_x = (x);		\
-        typeof(y) unique_y = (y);		\
-        __cmp(unique_x, unique_y, op); })
+#define COMPILE_ASSERT(cond, name)                       \
+    typedef int ASSERT##name[(cond) ? 1 : -1]
 
-#define __careful_cmp(x, y, op) \
-    __builtin_choose_expr(__safe_cmp(x, y), \
-        __cmp(x, y, op), \
-        __cmp_once(x, y, __UNIQUE_ID(__x), __UNIQUE_ID(__y), op))
+#define COMPILE_TYPECHEK(x, y)                           \
+    ((type_in(x) == type_in(y)) &&                       \
+    (sizeof(x) == sizeof(y)))
 
-/**
- * min - return minimum of two values of the same or compatible types
- * @x: first value
- * @y: second value
- */
-#define min(x, y)	__careful_cmp(x, y, <)
+#define COMPILE_NO_SIDE(x, y)                            \
+    typeof (x) _x = (x);                                 \
+    typeof (y) _y = (y);
 
-/**
- * max - return maximum of two values of the same or compatible types
- * @x: first value
- * @y: second value
- */
-#define max(x, y)	__careful_cmp(x, y, >)
+#define COMPILE_WCHDOG(x, y, op) ({                      \
+    COMPILE_NO_SIDE(x, y);                               \
+    COMPILE_ASSERT(COMPILE_TYPECHEK(_x, _y), _TYPECHEK); \
+    (op);                                                \
+    })
 
 #endif /*YAYA_CHEK_H*/

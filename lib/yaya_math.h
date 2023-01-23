@@ -3,78 +3,105 @@
 //Creation Date          : 2020.05
 //License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 //SPDX-License-Identifier: LGPL-2.1-or-later
-//Copyright © 2020-2022 Seityagiya Terlekchi. All rights reserved.
+//Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_MATH_H
 #define YAYA_MATH_H
 
+#include "yaya_chek.h"
+#include "tgmath.h"
+
+/*адрес и значение*/
+#define GtA(x)       (&(x))
+#define GtV(x)       (*(x))
+
 /*присваисвние*/
-#define AS(a, b) a = b              /*assignment*/
+/*assignment*/
+#define AS(x, y)    a = b
 
 /*сравнение*/
 /*на равенство*/
-#define EQ(a, b) ((a) == (b))       /*equality*/
+/*equality*/
+#define EQ(x, y)    COMPILE_WCHDOG(x, y, ((x) == (y)))
 /*на неравенство*/
-#define NQ(a, b) ((a) != (b))       /*inequality*/
+/*inequality*/
+#define NQ(x, y)    COMPILE_WCHDOG(x, y, ((x) != (y)))
 /*больше*/
-#define GT(a, b) ((a) > (b))        /*greater then*/
+/*greater then*/
+#define GT(x, y)    COMPILE_WCHDOG(x, y, ((x) > (y)))
 /*меньше*/
-#define LT(a, b) ((a) < (b))        /*less then*/
+/*less then*/
+#define LT(x, y)    COMPILE_WCHDOG(x, y, ((x) < (y)))
 /*больше или равно*/
-#define GE(a, b) ((a) >= (b))       /*equality or greater then*/
+/*equality or greater then*/
+#define GE(x, y)    COMPILE_WCHDOG(x, y, ((x) >= (y)))
 /*меньше или равно*/
-#define LE(a, b) ((a) <= (b))       /*equality or less then*/
+/*equality or less then*/
+#define LE(x, y)    COMPILE_WCHDOG(x, y, ((x) <= (y)))
 /*примерное равно*/
-#define AP(a, b, e) (ABS((a) - (b)) > e) /*approximation*/
+/*approximation*/
+#define AP(x, y, e) COMPILE_WCHDOG(x, y, (ABS((x) - (y)) > e))
 
 /*математические операции*/
 /*сумма*/
-#define SUM(a, b) ((a) + (b))       /*summa*/
+/*summa*/
+#define SUM(x, y)   COMPILE_WCHDOG(x, y, ((_x) + (_y)))
 /*разность*/
-#define DIF(a, b) ((a) - (b))       /*difference*/
+/*difference*/
+#define DIF(x, y)   COMPILE_WCHDOG(x, y, ((_x) - (_y)))
 /*умножение*/
-#define MUL(a, b) ((a) * (b))       /*multiplication*/
+/*multiplication*/
+#define MUL(x, y)   COMPILE_WCHDOG(x, y, ((_x) * (_y)))
 /*целое от деления*/
-#define DIV(a, b) ((a) / (b))       /*division*/
+/*division*/
+#define DIV(x, y)   COMPILE_WCHDOG(x, y, (signed)((_x) / (_y)))
 /*остаток от деления*/
-#define MOD(a, b) ((a) / (b))       /*remainder*/
+/*remainder*/
+#define MOD(x, y)   COMPILE_WCHDOG(x, y, ((_x) % (_y)))
 /*полное деление*/
-#define QUT(a, b) ((a) / (b))       /*quotient*/
+/*quotient*/
+#define QUT(x, y)   COMPILE_WCHDOG(x, y, ((((double_t)(_x) / (double_t)(_y)))
+
 
 /*взятие целого*/
 #define GET_INT(x)
 /*взятие дробного*/
 #define GET_REM(x)
 
+
 /*возведение в степень*/
-#define POW(a, b)
+#define POW(x, p)    (pow((x), (p)))
 /*извлечение корня*/
-#define ROT(a, b)
+#define ROT(x, r)    (pow((x), (double_t)(1.0)/(r)))
 /*логарифм числа по основанию*/
-#define LOG(a, b)
+#define LOG(x, l)    (log(x) / log(l))
 
 /*проверка, что число делится на делитель нацело*/
-#define IS_DIV(a, b)
+#define IS_DIV(x, k)
 /*проверка, что число есть степень числа*/
-#define IS_POW(a, b)
+#define IS_POW(x, k)
 
+/*знак числа*/
+#define SIG(x)             ({ typeof(x) _x = x; ((_x) > 0) ? (+1) : (((_x) < 0) ? (-1) : (0)); })
 /*абсолютное значение*/
-#define ABS(a)
+#define ABS(x)             ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (((_x) < 0) ? (-(_x)) : (0)); })
+
 /*положительное число*/
-#define POSITIV(a) (a) > 0 ? (a) : (-(a))
+#define POSITIV(x)         ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (-(_x)); })
 /*отрицательное число*/
-#define NEGITIV(a) (a) < 0 ? (a) : (-(a))
+#define NEGITIV(x)         ({ typeof(x) _x = x; ((_x) < 0) ? (_x) : (-(_x)); })
+
 
 /*проверка, что число положительное, но не ноль */
-#define IS_POS(a)
+#define IS_POS(x)          ({ ((x) > 0) })
 /*проверка, что число отрицательное, но не ноль*/
-#define IS_NEG(a)
-/*проверка, число ноль*/
-#define IS_ZERO(a)
+#define IS_NEG(x)          ({ ((x) < 0) })
+/*проверка, что число ноль*/
+#define IS_ZERO(x)         ({ ((x) == 0) })
 /*проверка, что число положительное или ноль*/
-#define IS_POS_AND_ZERO(a)
+#define IS_POS_AND_ZERO(x) ({ ((x) >= 0) })
 /*проверка, что число отрицательное или ноль*/
-#define IS_NEG_AND_ZERO(a)
+#define IS_NEG_AND_ZERO(x) ({ ((x) <= 0) })
 
 /*округление к ближайшему целому*/
 #define ROUND(x)
@@ -91,15 +118,17 @@
 #define ROUND_DN_EPS(x, e)
 
 /*минимальное из чисел*/
-#define MIN(x,y)  CMP_ONSE(x, y, <)
+#define MIN(x, y)                        COMPILE_WCHDOG(x, y, (((_x) < (_y)) ? (_x) : (_y)))
 /*максимальное из чисел*/
-#define MAX(a,b)  CMP_ONSE(x, y, >)
+#define MAX(x, y)                        COMPILE_WCHDOG(x, y, (((_x) > (_y)) ? (_x) : (_y)))
 /*минимальное из чисел, но не ноль*/
-#define MIN_NOT_ZERO(x,y)
+#define MIN_NOT_ZERO(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) < (_y)) ? (_x) : (_y)))))
 /*максимальное из чисел, но не ноль*/
-#define MAX_NOT_ZERO(x,y)
+#define MAX_NOT_ZERO(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) > (_y)) ? (_x) : (_y)))))
 
 /*обмен значений*/
-#define SWAP(a,b) { typeof(a) tmp = a; a = b; b = tmp; }
+#define SWAP(a,b) { typeof(x) tmp = a; a = b; b = tmp; }
+
+/*тригонометрические*/
 
 #endif /*YAYA_MATH_H*/
