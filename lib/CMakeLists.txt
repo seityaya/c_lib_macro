@@ -14,8 +14,12 @@ set(PROJECT_NAME yaya_defines)
 
 project(${PROJECT_NAME})
 
-set(SRC_LIST yaya_defines.c)
+set(SRC_LIST
+    yaya_bit.c
+    yaya_debug.c)
+
 set(INC_LIST
+    yaya_arithmetic.h
     yaya_bit.h
     yaya_bit.c
     yaya_defines.h
@@ -25,7 +29,6 @@ set(INC_LIST
     yaya_concat.h
     yaya_endian.h
     yaya_flag.h
-    yaya_math.h
     yaya_type.h
     yaya_number.h
     yaya_debug.h

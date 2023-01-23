@@ -10,9 +10,9 @@
 
 #include "yaya_unit.h"
 
-UT_FUNC_GEN(test_debug);
+UT_FUNC_GEN(test_arithmetic);
 UT_FUNC_GEN(test_bit);
 UT_FUNC_GEN(test_bool);
-UT_FUNC_GEN(test_math);
+UT_FUNC_GEN(test_debug);
 
 #endif /*UNIT_TEST_H*/

@@ -8,6 +8,8 @@
 #ifndef YAYA_DEBUG_H
 #define YAYA_DEBUG_H
 
+#include "stdio.h"
+
 #include "yaya_number.h"
 #include "yaya_type.h"
 #include "yaya_chek.h"
@@ -29,9 +31,9 @@ void yaya_print_raw(void *p, umax size);
     snprintf(fmt, 15, \
     "%%%s\n", type_print(x)); \
     printf(fmt, x);})
-#define PRINT_CHR_MAIN(x)    ({ printf("\'%s\'\n", ((TYPE_CHR != type_id(x)) ? "[not a text literal]" : (char[]) {COMPILE_CHR_OR_ZERO(x), '\0'})); })
-#define PRINT_FLT_MAIN(x)    ({ ((TYPE_FLT != type_id(x)) ? printf("\'%s\'\n", "[not a floating number]") : printf("%.60f\n", (flmaxc(COMPILE_FLT_OR_ZERO(x))))); })
-#define PRINT_STR_MAIN(x)    printf("\'%s\'\n", ((TYPE_CHR_P != type_id(x)) ? "[not a text string]" : COMPILE_CHRP_OR_NULL(x)));
+#define PRINT_CHR_MAIN(x)    ({ printf("\'%s\'\n", ((TYPE_CHR != type_group(x)) ? "[not a text literal]" : (char[]) {COMPILE_CHR_OR_ZERO(x), '\0'})); })
+#define PRINT_FLT_MAIN(x)    ({ ((TYPE_FLT != type_group(x)) ? printf("\'%s\'\n", "[not a floating number]") : printf("%.60f\n", (flmaxc(COMPILE_FLT_OR_ZERO(x))))); })
+#define PRINT_STR_MAIN(x)    printf("\'%s\'\n", ((TYPE_CHR_P != type_group(x)) ? "[not a text string]" : COMPILE_CHRP_OR_NULL(x)));
 
 
 #define PRINT_LOC_TYPE(x)    printf("[loc] " #x " = ")
@@ -62,6 +64,7 @@ void yaya_print_raw(void *p, umax size);
 #define PRINT_STR(x)    PRINT_STR_TYPE(x); PRINT_STR_MAIN(x)
 #define PRINT_NLN( )    printf("\n")
 
+
 #define PRINT_INFO(x)                                                                               \
     do{                                                                                             \
         PRINT_NLN();                                                                                \
@@ -72,7 +75,7 @@ void yaya_print_raw(void *p, umax size);
         PRINT_RAW(x);                                                                               \
         PRINT_BIT(x);                                                                               \
         PRINT_PTR(x);                                                                               \
-        switch(type_id(x)){                                                                         \
+        switch(type_group(x)){                                                                      \
             case TYPE_CHR:   { PRINT_CHR_TYPE(x); PRINT_CHR_MAIN(COMPILE_CHR_OR_ZERO(x));  break; } \
             case TYPE_INT:   { PRINT_INT_TYPE(x); PRINT_INT_MAIN(COMPILE_INT_OR_ZERO(x));  break; } \
             case TYPE_FLT:   { PRINT_FLT_TYPE(x); PRINT_FLT_MAIN(COMPILE_FLT_OR_ZERO(x));  break; } \

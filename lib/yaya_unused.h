@@ -11,4 +11,4 @@
 #define UNUSED_VAR(x) ((void)(x))
 #define UNUSED_FNC(f) static void f##_UNUSED(){do{ f;} while (0);}
 
-#endif // YAYA_UNUSED_H
+#endif /*YAYA_UNUSED_H*/

@@ -61,7 +61,7 @@
     typedef int ASSERT##name[(cond) ? 1 : -1]
 
 #define COMPILE_TYPECHEK(x, y)                           \
-    ((type_in(x) == type_in(y)) &&                       \
+    ((type_index(x) == type_index(y)) &&                 \
     (sizeof(x) == sizeof(y)))
 
 #define COMPILE_NO_SIDE(x, y)                            \

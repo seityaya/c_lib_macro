@@ -5,19 +5,27 @@
 //SPDX-License-Identifier: LGPL-2.1-or-later
 //Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
-#ifndef YAYA_MATH_H
-#define YAYA_MATH_H
+#ifndef YAYA_ARITHMETIC_H
+#define YAYA_ARITHMETIC_H
 
 #include "yaya_chek.h"
-#include "tgmath.h"
 
 /*адрес и значение*/
-#define GtA(x)       (&(x))
-#define GtV(x)       (*(x))
+#define SetAdr(x)       (*x)
+#define GetAdr(x)       (&(x))
+#define GetVal(x)       (*(x))
 
 /*присваисвние*/
 /*assignment*/
-#define AS(x, y)    a = b
+#define AS(x, y)        a = b
+
+/*порядок*/
+/*procedure*/
+#define PR(x, op, y)    ((x) op (y))
+
+/*conditional*/
+/*условие*/
+#define ternary(_cond, _true, _false) ((_cond) ? (_true) : (_false))
 
 /*сравнение*/
 /*на равенство*/
@@ -40,7 +48,7 @@
 #define LE(x, y)    COMPILE_WCHDOG(x, y, ((x) <= (y)))
 /*примерное равно*/
 /*approximation*/
-#define AP(x, y, e) COMPILE_WCHDOG(x, y, (ABS((x) - (y)) > e))
+#define AP(x, y, e) COMPILE_WCHDOG(x, y, (ABS((x) - (y)) <= e))
 
 /*математические операции*/
 /*сумма*/
@@ -129,6 +137,4 @@
 /*обмен значений*/
 #define SWAP(a,b) { typeof(x) tmp = a; a = b; b = tmp; }
 
-/*тригонометрические*/
-
-#endif /*YAYA_MATH_H*/
+#endif /*YAYA_ARITHMETIC_H*/

@@ -10,11 +10,16 @@
 
 #include "yaya_bool.h"
 
-#define MDSC do{ } while(false) /*mandatory semicolon*/
-
+/*
+ * Fun Sugar
+*/
 #define ever      (;;)
 #define forever() for ever
-#define ternarius(_if, _true, _false) ((_if) ? (_true) : (_false))
+
+/*
+ * Mandatory Semicolon
+*/
+#define MDSC do{ } while(false)
 
 /*
  * Новый тип блока в котором разрешено использовать break и continue вместо

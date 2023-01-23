@@ -16,10 +16,10 @@ int main() {
                                 };
 
     unit_test_func_t MyUnFunc[] = { {0},
-                                    {test_debug, 0},
-                                    {test_bit,   1},
-                                    {test_bool,  1},
-                                    {test_math,  1},
+                                    {test_arithmetic, 1},
+                                    {test_bit,        0},
+                                    {test_bool,       0},
+                                    {test_debug,      0},
                                     {0}
                                   };
 

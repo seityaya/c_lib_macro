@@ -21,7 +21,7 @@ UT_FUNC_GEN(test_debug){
     } UT_GROUP_END;
 
     UT_GROUP_BEG(float) {
-        float x = 777.777;
+        double_t x = 777.777;
         PRINT_INFO(x);
     } UT_GROUP_END;
 
@@ -36,14 +36,14 @@ UT_FUNC_GEN(test_debug){
     } UT_GROUP_END;
 
     UT_GROUP_BEG(int_p) {
-        int8_t x = 666;
-        int8_t* p = &x;
+        int16_t x = 666;
+        int16_t* p = &x;
         PRINT_INFO(p);
     } UT_GROUP_END;
 
     UT_GROUP_BEG(float_p) {
-        float x = 777.777;
-        float* p = &x;
+        double_t x = 777.777;
+        double_t* p = &x;
         PRINT_INFO(p);
     } UT_GROUP_END;
 

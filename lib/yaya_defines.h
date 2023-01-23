@@ -8,16 +8,17 @@
 #ifndef YAYA_DEFINES_H
 #define YAYA_DEFINES_H
 
+#include "yaya_arithmetic.h"
 #include "yaya_bool.h"
-#include "yaya_unused.h"
-#include "yaya_sugar.h"
-#include "yaya_concat.h"
 #include "yaya_bit.h"
+#include "yaya_chek.h"
+#include "yaya_concat.h"
+#include "yaya_debug.h"
 #include "yaya_endian.h"
 #include "yaya_flag.h"
-#include "yaya_math.h"
-#include "yaya_type.h"
 #include "yaya_number.h"
-#include "yaya_debug.h"
+#include "yaya_sugar.h"
+#include "yaya_type.h"
+#include "yaya_unused.h"
 
 #endif /*YAYA_DEFINES_H*/

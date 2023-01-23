@@ -57,7 +57,7 @@
 #define TYPE_FLT_P  -3
 #define TYPE_VOID_P -4
 
-#define type_id(x) _Generic((x),       \
+#define type_group(x) _Generic((x),       \
     char:                TYPE_CHR,     \
     signed char:         TYPE_INT,     \
     unsigned char:       TYPE_INT,     \
@@ -94,7 +94,7 @@
     default:             TYPE_NAN)
 
 
-#define type_in(x) _Generic((x), \
+#define type_index(x) _Generic((x), \
     char:                   'a', \
     signed char:            'b', \
     unsigned char:          'c', \

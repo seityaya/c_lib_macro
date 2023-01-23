@@ -52,8 +52,8 @@ umax yaya_bit_revers(umax x, u08s s);
 #define BIT_SHF_LEF(x, n) ( (x) << (n))                                                  //сдвиг влево с занулением  ??
 #define BIT_SHF_VEC(x, n) (((n) < (0)) ? BIT_SHF_RIG((x), -(n)) : BIT_SHF_LEF((x), (n))) //сдвиг относительно знака числа, + влево, - вправо
 
-#define BIT_CYC_RIG(x, n) ( (n) == 0 ? (x) : ((x) >> (n)) | ((x) << ((sizeof(x) * CHAR_BIT) - (n))))     //циклический сдвиг вправо
-#define BIT_CYC_LEF(x, n) ( (n) == 0 ? (x) : ((x) << (n)) | ((x) >> ((sizeof(x) * CHAR_BIT) - (n))))     //циклический сдвиг влево
+#define BIT_CYC_RIG(x, n) ( (n) == 0 ? (x) : ((x) >> ((n) % ((sizeof(x) * CHAR_BIT)))) | ((x) << (((sizeof(x) * CHAR_BIT) - (n)) % ((sizeof(x) * CHAR_BIT)))))     //циклический сдвиг вправо
+#define BIT_CYC_LEF(x, n) ( (n) == 0 ? (x) : ((x) << ((n) % ((sizeof(x) * CHAR_BIT)))) | ((x) >> (((sizeof(x) * CHAR_BIT) - (n)) % ((sizeof(x) * CHAR_BIT)))))     //циклический сдвиг влево
 #define BIT_CYC_VEC(x, n) (((n) < (0)) ? BIT_CYC_RIG((x), -(n)) : BIT_CYC_LEF((x), (n)))                 //сдвиг относительно знака числа, + влево, - вправо
 
 #define BIT_MASK_UP(x, y) COMPILE_WCHDOG(x, y, ((x) | (y)))                                         //выставление битов по единичной маске

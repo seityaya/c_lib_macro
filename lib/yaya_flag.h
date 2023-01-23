@@ -10,7 +10,7 @@
 
 #define FLAG_SET(x)    (((x) == 0) ? (0ULL) : (1ULL << ((x) - 1ULL)))  //установка флага
 #define FLAG_COM(x, y) ((x) & (y))                                     //сравнение двух флагов или масок
-#define FLAG_ALL       (((0ULL) - 1))                                  //выставление всех флагов
-#define FLAG_NUL       (0)                                             //сброс всех флагов
+#define FLAG_SET_ALL   (((0ULL) - 1))                                  //выставление всех флагов
+#define FLAG_RES_ALL   (0)                                             //сброс всех флагов
 
 #endif /*YAYA_FLAG_H*/

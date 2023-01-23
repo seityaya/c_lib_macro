@@ -17,9 +17,9 @@ add_executable(
     main.c
     main.h
     test.h
+    test_arithmetic.c
     test_bit.c
     test_bool.c
-    test_math.c
     test_debug.c
 )
 

@@ -6,10 +6,57 @@
 //Copyright © 2023-2023 Seityagiya Terlekchi. All rights reserved.
 
 #include "test.h"
-#include "yaya_math.h"
+#include "yaya_arithmetic.h"
 
-UT_FUNC_GEN(test_math) {
-    UT_GROUP_BEG(math) {
+UT_FUNC_GEN(test_arithmetic) {
+    UT_GROUP_BEG(arithmetic) {
+        UT_GROUP_BEG(compare) {
+            UT_GROUP_BEG(eq) {
+                UT_ASSERT_BOOL_TRUE(EQ(1, 1));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(nq) {
+                UT_ASSERT_BOOL_TRUE(NQ(1, 2));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(gt) {
+                UT_ASSERT_BOOL_TRUE(GT(2, 1));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(lt) {
+                UT_ASSERT_BOOL_TRUE(LT(1, 2));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(ge) {
+                UT_ASSERT_BOOL_TRUE(GE(2, 1));
+                UT_ASSERT_BOOL_TRUE(GE(2, 2));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(le) {
+                UT_ASSERT_BOOL_TRUE(LE(1, 2));
+                UT_ASSERT_BOOL_TRUE(LE(1, 1));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(ap) {
+                UT_ASSERT_BOOL_TRUE(AP(   1,   1,  0));
+                UT_ASSERT_BOOL_TRUE(AP(   9,  10,  1));
+                UT_ASSERT_BOOL_TRUE(AP(  90, 100, 10));
+                UT_ASSERT_BOOL_TRUE(AP(-100, -90, 10));
+
+                UT_ASSERT_BOOL_FALSE(AP(  1,   2,  0));
+                UT_ASSERT_BOOL_FALSE(AP(100, -90, 10));
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(compare) {
+
+            }UT_GROUP_END;
+
+            UT_GROUP_BEG(compare) {
+
+            }UT_GROUP_END;
+        }UT_GROUP_END;
+
+
         UT_GROUP_BEG(sig) {
             UT_ASSERT_NUM_EQUAL( +1, SIG(i08c(   1)));
             UT_ASSERT_NUM_EQUAL( +1, SIG(i08c(   2)));
@@ -57,11 +104,11 @@ UT_FUNC_GEN(test_math) {
             UT_ASSERT_NUM_EQUAL(-1, MOD(-5,2));
             UT_ASSERT_NUM_EQUAL( 0, MOD(-6,2));
 
-//            UT_ASSERT_NUM_EQUAL( 13.0, MOD(4.0, 0.3));
-//            UT_ASSERT_NUM_EQUAL(-13.0, MOD(4.0,-0.3));
+            //            UT_ASSERT_NUM_EQUAL( 13.0, MOD(4.0, 0.3));
+            //            UT_ASSERT_NUM_EQUAL(-13.0, MOD(4.0,-0.3));
 
-//            UT_ASSERT_NUM_EQUAL(-13.0, 4 % 3);
-       } UT_GROUP_END;
+            //            UT_ASSERT_NUM_EQUAL(-13.0, 4 % 3);
+        } UT_GROUP_END;
 
         UT_GROUP_BEG(div_mod) {
 #define DIV_MOD(x, y) ((y) * DIV(x, y) + MOD(x, y)) == (x)
@@ -73,8 +120,8 @@ UT_FUNC_GEN(test_math) {
             UT_ASSERT_BOOL_TRUE(DIV_MOD(-5, 2));
             UT_ASSERT_BOOL_TRUE(DIV_MOD(-6, 2));
 
-//            UT_ASSERT_NUM_EQUAL( 13.0, DIV(4.0, 0.3));
-//            UT_ASSERT_NUM_EQUAL(-13.0, DIV(4.0,-0.3));
+            //            UT_ASSERT_NUM_EQUAL( 13.0, DIV(4.0, 0.3));
+            //            UT_ASSERT_NUM_EQUAL(-13.0, DIV(4.0,-0.3));
         } UT_GROUP_END;
 
     } UT_GROUP_END;
