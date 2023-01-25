@@ -14,9 +14,17 @@
 #include <math.h>
 
 /*адрес и значение*/
-#define SetAdr(x)       (*x)
-#define GetAdr(x)       (&(x))
-#define GetVal(x)       (*(x))
+#define init_ptr(n, t)     typeof(t) *n = NULL
+#define init_val(n, t)     typeof(t) n = {0}
+
+#define crete_ptr(n, v)    typeof(v) *(n) = &v
+#define crete_val(n, v)    typeof(v)  (n) = v
+
+#define set_adr(n, v)      (*(n)) = (&(v))
+#define set_val(n, v)      (n)  = (v)
+
+#define get_adr(x)         (&(x))
+#define get_val(x)         (*(x))
 
 /*conditional*/
 /*условие*/
@@ -24,90 +32,90 @@
 
 /*присваивание*/
 /*assignment*/
-#define AS(x, y)    COMPILE_WCHDOG(x, y, ((x) = (y)))
+#define as(x, y)    COMPILE_WCHDOG(x, y, ((x) = (y)))
 
 /*обмен значений*/
 /*value exchange*/
-#define SWAP(x, y)  COMPILE_WCHDOG(x, y, { typeof(x) tmp = (x); (x) = (y); (y) = tmp; } )
+#define swap(x, y)  COMPILE_WCHDOG(x, y, { typeof(x) tmp = (x); (x) = (y); (y) = tmp; } )
 
 /*сравнение*/
 /*на равенство*/
 /*equality*/
-#define EQ(x, y)    COMPILE_WCHDOG(x, y, ((x) == (y)))
+#define eq(x, y)    COMPILE_WCHDOG(x, y, ((x) == (y)))
 /*на неравенство*/
 /*inequality*/
-#define NQ(x, y)    COMPILE_WCHDOG(x, y, ((x) != (y)))
+#define nq(x, y)    COMPILE_WCHDOG(x, y, ((x) != (y)))
 /*больше*/
 /*greater then*/
-#define GT(x, y)    COMPILE_WCHDOG(x, y, ((x) > (y)))
+#define gt(x, y)    COMPILE_WCHDOG(x, y, ((x) > (y)))
 /*меньше*/
 /*less then*/
-#define LT(x, y)    COMPILE_WCHDOG(x, y, ((x) < (y)))
+#define lt(x, y)    COMPILE_WCHDOG(x, y, ((x) < (y)))
 /*больше или равно*/
 /*equality or greater then*/
-#define GE(x, y)    COMPILE_WCHDOG(x, y, ((x) >= (y)))
+#define ge(x, y)    COMPILE_WCHDOG(x, y, ((x) >= (y)))
 /*меньше или равно*/
 /*equality or less then*/
-#define LE(x, y)    COMPILE_WCHDOG(x, y, ((x) <= (y)))
+#define le(x, y)    COMPILE_WCHDOG(x, y, ((x) <= (y)))
 /*примерное равно*/
 /*approximation*/
-#define AP(x, y, e) COMPILE_WCHDOG(x, y, (ABS((x) - (y)) <= e))
+#define ap(x, y, e) COMPILE_WCHDOG(x, y, (abs((x) - (y)) <= e))
 
 /*взятие целого*/
-#define GET_INT(x)  ((typeof(x))((i_max_t)(x)))
+#define get_int(x)  ((typeof(x))((i_max_t)(x)))
 /*взятие дробного*/
-#define GET_REM(x)  ((typeof(x))((x) - GET_INT(x)))
+#define get_rem(x)  ((typeof(x))((x) - get_int(x)))
 
 /*знак числа*/
-#define SIG(x)      ({ typeof(x) _x = x; ((_x) > 0) ? (+1) : (((_x) < 0) ? (-1) : (0)); })
+#define sig(x)      ({ typeof(x) _x = x; ((_x) > 0) ? (+1) : (((_x) < 0) ? (-1) : (0)); })
 /*абсолютное значение*/
-#define ABS(x)      ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (((_x) < 0) ? (-(_x)) : (0)); })
+#define abs(x)      ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (((_x) < 0) ? (-(_x)) : (0)); })
 
 /*положительное число*/
-#define POSITIV(x)   ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (-(_x)); })
+#define pos(x)   ({ typeof(x) _x = x; ((_x) > 0) ? (_x) : (-(_x)); })
 /*отрицательное число*/
-#define NEGITIV(x)   ({ typeof(x) _x = x; ((_x) < 0) ? (_x) : (-(_x)); })
+#define neg(x)   ({ typeof(x) _x = x; ((_x) < 0) ? (_x) : (-(_x)); })
 
 /*проверка, что число положительное, но не ноль */
-#define IS_POS(x)          ((x) > 0)
+#define is_pos(x)          ((x) > 0)
 /*проверка, что число отрицательное, но не ноль*/
-#define IS_NEG(x)          ((x) < 0)
+#define is_neg(x)          ((x) < 0)
 /*проверка, что число ноль*/
-#define IS_ZERO(x)         ((x) == 0)
+#define is_zero(x)         ((x) == 0)
 /*проверка, что число положительное или ноль*/
-#define IS_POS_AND_ZERO(x) ((x) >= 0)
+#define is_pos_or_zero(x) ((x) >= 0)
 /*проверка, что число отрицательное или ноль*/
-#define IS_NEG_AND_ZERO(x) ((x) <= 0)
+#define is_neg_or_zero(x) ((x) <= 0)
 
 /*математические операции*/
 /*сумма*/
 /*summa*/
-#define SUM(x, y)   COMPILE_WCHDOG(x, y, ((_x) + (_y)))
+#define sum(x, y)   COMPILE_WCHDOG(x, y, ((_x) + (_y)))
 /*разность*/
 /*difference*/
-#define DIF(x, y)   COMPILE_WCHDOG(x, y, ((_x) - (_y)))
+#define dif(x, y)   COMPILE_WCHDOG(x, y, ((_x) - (_y)))
 /*умножение*/
 /*multiplication*/
-#define MUL(x, y)   COMPILE_WCHDOG(x, y, ((_x) * (_y)))
+#define mul(x, y)   COMPILE_WCHDOG(x, y, ((_x) * (_y)))
 /*целое от деления*/
 /*division*/
-#define DIV(x, y)   COMPILE_WCHDOG(x, y, (signed)((_x) / (_y)))
+#define div(x, y)   COMPILE_WCHDOG(x, y, (signed)((_x) / (_y)))
 /*остаток от деления*/
 /*remainder*/
-#define MOD(x, y)   COMPILE_WCHDOG(x, y, (typeof(x))((_x) - GET_INT((_x) / (_y)) * (_y)))
+#define mod(x, y)   COMPILE_WCHDOG(x, y, (typeof(x))((_x) - get_int((_x) / (_y)) * (_y)))
 /*полное деление*/
 /*quotient*/
-#define QUT(x, y)   COMPILE_WCHDOG(x, y, ((double_t)((double_t)(_x) / (double_t)(_y))))
+#define qut(x, y)   COMPILE_WCHDOG(x, y, ((double_t)((double_t)(_x) / (double_t)(_y))))
 /*возведение в степень*/
-#define POW(x, p)    (pow((x), (p)))
+#define pow(x, p)    (pow((x), (p)))
 /*извлечение корня*/
-#define ROT(x, r)    (pow((x), (double_t)(1.0)/(r)))
+#define rot(x, r)    (pow((x), fl_max_c(1.0)/(r)))
 /*логарифм числа по основанию*/
-#define LOG(x, l)    (log(x) / log(l))
+#define log(x, l)    (log(x) / log(l))
 
 /*обратные величины*/
 /*
- * Z ÷ a = b -> div(Z, a) ~> mod(b, Z) || mul(a, b)
+ * Z ÷ a = b -> div(Z, a) ~> div(b, Z) || mul(a, b)
  * Z / a = b -> qut(Z, a) ~> qut(b, Z) || mul(a, b)
  * X ^ Y = Z -> pow(X, Y) ~> log(Z, X) || rot(Z, Y)
  * Y √ Z = X -> rot(Z, Y) ~> pow(X, Y) || log(Z, X)
@@ -115,38 +123,38 @@
 */
 
 /*округление к ближайшему целому*/
-#define ROUND_INT(x)   rint(x)
+#define round_int(x)   rint(x)
 /*округление в большую сторону*/
-#define ROUND_UP(x)    ceil(x)
+#define round_up(x)    ceil(x)
 /*округление в меньшую сторону*/
-#define ROUND_DN(x)    floor(x)
+#define round_dn(x)    floor(x)
 /*округление к нулю*/
-#define ROUND_ZERO(x)  GET_INT(x)
+#define round_zero(x)  trunc(x)
 /*округление к бесконечности*/
-#define ROUND_INF(x)   ({ typeof(x) _x = x; ((_x) > 0) ? ROUND_UP(x) : ROUND_DN(x); })
+#define round_inf(x)   ({ typeof(x) _x = x; ((_x) > 0) ? round_up(x) : round_dn(x); })
 
 /*округление к ближайшему c шагом*/
-#define ROUND_INT_EPS(x, e)  (MUL(ROUND_INT(QUT((x), (e))), (e)))
+#define round_int_eps(x, e)  (mul(round_int(qut((x), (e))), (e)))
 /*округление в большую сторону c шагом*/
-#define ROUND_UP_EPS(x, e)   (MUL(ROUND_UP(QUT((x), (e))), (e)))
+#define round_up_eps(x, e)   (mul(round_up(qut((x), (e))), (e)))
 /*округление в меньшую сторону c шагом*/
-#define ROUND_DN_EPS(x, e)   (MUL(ROUND_DN(QUT((x), (e))), (e)))
+#define round_dn_eps(x, e)   (mul(round_dn(qut((x), (e))), (e)))
 /*округление к нулю c шагом*/
-#define ROUND_ZERO_EPS(x, e) (MUL(ROUND_ZERO(QUT((x), (e))), (e)))
+#define round_zero_eps(x, e) (mul(round_zero(qut((x), (e))), (e)))
 /*округление к бесконечности c шагом*/
-#define ROUND_INF_EPS(x, e)  (MUL(ROUND_INF(QUT((x), (e))), (e)))
+#define round_inf_eps(x, e)  (mul(round_inf(qut((x), (e))), (e)))
 
 /*минимальное из чисел*/
-#define MIN(x, y)                        COMPILE_WCHDOG(x, y, (((_x) < (_y)) ? (_x) : (_y)))
+#define min(x, y)                        COMPILE_WCHDOG(x, y, (((_x) < (_y)) ? (_x) : (_y)))
 /*максимальное из чисел*/
-#define MAX(x, y)                        COMPILE_WCHDOG(x, y, (((_x) > (_y)) ? (_x) : (_y)))
+#define max(x, y)                        COMPILE_WCHDOG(x, y, (((_x) > (_y)) ? (_x) : (_y)))
 /*минимальное из чисел, но не ноль*/
-#define MIN_NOT_ZERO(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) < (_y)) ? (_x) : (_y)))))
+#define min_not_zero(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) < (_y)) ? (_x) : (_y)))))
 /*максимальное из чисел, но не ноль*/
-#define MAX_NOT_ZERO(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) > (_y)) ? (_x) : (_y)))))
+#define max_not_zero(x, y)               COMPILE_WCHDOG(x, y, (((_x) == 0) ? (_y) : (((_y) == 0) ? (_x) : (((_x) > (_y)) ? (_x) : (_y)))))
 
 /* определяет число как минимальное или максимальное и помещает его в соответствующий аргумент*/
-#define MINMAX_SET(min, max, x)          { min = MIN(min, x);          max = MAX(max, x);          }
-#define MINMAX_NOT_ZERO_SET(min, max, x) { min = MIN_NOT_ZERO(min, x); max = MAX_NOT_ZERO(max, x); }
+#define minmax_set(min, max, x)          { min = min(min, x);          max = max(max, x);          }
+#define minmax_not_zero_set(min, max, x) { min = min_not_zero(min, x); max = max_not_zero(max, x); }
 
 #endif /*YAYA_ARITHMETIC_H*/

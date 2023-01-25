@@ -35,4 +35,6 @@
 
 #define __FUNC__ __func__
 
+
+
 #endif /*YAYA_SUGAR_H*/

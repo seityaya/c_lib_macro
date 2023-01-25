@@ -26,8 +26,8 @@ void yaya_print_but(void *p, size_t size);
 #define __PRINT_TYP_MAIN(x)    printf("%s\n", type_name(x))
 #define __PRINT_TXT_MAIN(x)    printf(#x"\n");
 #define __PRINT_PTR_MAIN(x)    printf("%p\n", (&x))
-#define __PRINT_CHR_MAIN(x)    { ((TYPE_GROUP_CHR   != type_group(x)) ? printf("\'%s\'\n", "[not a text literal]")    : printf("\'%s\'\n", (char[]){ COMPILE_CHR_OR_ZERO(x), '\0'} )                                                        ); }
-#define __PRINT_STR_MAIN(x)    { ((TYPE_GROUP_CHR_P != type_group(x)) ? printf("\'%s\'\n", "[not a text string]")     : printf("\'%s\'\n", (char*) COMPILE_CHRP_OR_NULL(x))                                                                 ); }
+#define __PRINT_CHR_MAIN(x)    { ((TYPE_GROUP_CHAR   != type_group(x)) ? printf("\'%s\'\n", "[not a text literal]")    : printf("\'%s\'\n", (char[]){ COMPILE_CHR_OR_ZERO(x), '\0'} )                                                        ); }
+#define __PRINT_STR_MAIN(x)    { ((TYPE_GROUP_CHAR_P != type_group(x)) ? printf("\'%s\'\n", "[not a text string]")     : printf("\'%s\'\n", (char*) COMPILE_CHRP_OR_NULL(x))                                                                 ); }
 #define __PRINT_INT_MAIN(x)    { ((TYPE_GROUP_INT   != type_group(x)) ? printf("\'%s\'\n", "[not a integer number]")  : ({ char fmt[15] = {0}; snprintf(fmt, 15, "%%%s\n", type_print(x)); printf(fmt, x);                               }) ); }
 #define __PRINT_FLT_MAIN(x)    { ((TYPE_GROUP_FLT   != type_group(x)) ? printf("\'%s\'\n", "[not a floating number]") : ({ char fmt[15] = {0}; snprintf(fmt, 15, "%%%s\n", type_print(x)); printf(fmt, COMPILE_FLT_OR_ZERO(x)); }) ); }
 
@@ -70,10 +70,10 @@ void yaya_print_but(void *p, size_t size);
         PRINT_BIT(x);                                                                                         \
         PRINT_PTR(x);                                                                                         \
         switch(type_group(x)){                                                                                \
-            case TYPE_GROUP_CHR:   { __PRINT_CHR_TYPE(x); __PRINT_CHR_MAIN(COMPILE_CHR_OR_ZERO(x));  break; } \
+            case TYPE_GROUP_CHAR:   { __PRINT_CHR_TYPE(x); __PRINT_CHR_MAIN(COMPILE_CHR_OR_ZERO(x));  break; } \
             case TYPE_GROUP_INT:   { __PRINT_INT_TYPE(x); __PRINT_INT_MAIN(COMPILE_INT_OR_ZERO(x));  break; } \
             case TYPE_GROUP_FLT:   { __PRINT_FLT_TYPE(x); __PRINT_FLT_MAIN(COMPILE_FLT_OR_ZERO(x));  break; } \
-            case TYPE_GROUP_CHR_P: { __PRINT_STR_TYPE(x); __PRINT_STR_MAIN(COMPILE_CHRP_OR_NULL(x)); break; } \
+            case TYPE_GROUP_CHAR_P: { __PRINT_STR_TYPE(x); __PRINT_STR_MAIN(COMPILE_CHRP_OR_NULL(x)); break; } \
             default:               { __PRINT_TYP_TYPE(x); __PRINT_TXT_MAIN('[not find type]');       break; } \
         }                                                                                                     \
     }while(0)

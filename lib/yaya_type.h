@@ -51,15 +51,15 @@
 #define TYPE_GROUP_VOID   +4
 #define TYPE_GROUP_FLT    +3
 #define TYPE_GROUP_INT    +2
-#define TYPE_GROUP_CHR    +1
+#define TYPE_GROUP_CHAR   +1
 #define TYPE_GROUP_NSTDT   0
-#define TYPE_GROUP_CHR_P  -1
+#define TYPE_GROUP_CHAR_P -1
 #define TYPE_GROUP_INT_P  -2
 #define TYPE_GROUP_FLT_P  -3
 #define TYPE_GROUP_VOID_P -4
 
 #define type_group(x) _Generic((x),          \
-    char:                TYPE_GROUP_CHR,     \
+    char:                TYPE_GROUP_CHAR,    \
     signed char:         TYPE_GROUP_INT,     \
     unsigned char:       TYPE_GROUP_INT,     \
     signed int:          TYPE_GROUP_INT,     \
@@ -75,7 +75,7 @@
     double:              TYPE_GROUP_FLT,     \
     long double:         TYPE_GROUP_FLT,     \
     \
-    char*:               TYPE_GROUP_CHR_P,   \
+    char*:               TYPE_GROUP_CHAR_P,  \
     signed char*:        TYPE_GROUP_INT_P,   \
     unsigned char*:      TYPE_GROUP_INT_P,   \
     signed int*:         TYPE_GROUP_INT_P,   \

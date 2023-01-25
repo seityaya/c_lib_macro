@@ -21,6 +21,7 @@ int main() {
                                     {test_bit,        1},
                                     {test_bool,       1},
                                     {test_debug,      0},
+                                    {test_sugar,      1},
                                     {0}
                                   };
 

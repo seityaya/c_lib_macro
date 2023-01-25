@@ -20,6 +20,7 @@ add_executable(
     test_bit.c
     test_bool.c
     test_debug.c
+    test_sugar.c
 )
 
 if (NOT TARGET yaya_unit)

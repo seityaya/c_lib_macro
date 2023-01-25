@@ -5,15 +5,11 @@
 //SPDX-License-Identifier: LGPL-2.1-or-later
 //Copyright © 2023-2023 Seityagiya Terlekchi. All rights reserved.
 
-#ifndef UNIT_TEST_H
-#define UNIT_TEST_H
+#include "test.h"
+#include "yaya_sugar.h"
 
-#include "yaya_unit.h"
+UT_FUNC_GEN(test_sugar) {
+    UT_GROUP_BEG(sugar) {
 
-UT_FUNC_GEN(test_arithmetic);
-UT_FUNC_GEN(test_bit);
-UT_FUNC_GEN(test_bool);
-UT_FUNC_GEN(test_debug);
-UT_FUNC_GEN(test_sugar);
-
-#endif /*UNIT_TEST_H*/
+    } UT_GROUP_END;
+}
