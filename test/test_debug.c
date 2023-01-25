@@ -22,7 +22,7 @@ UT_FUNC_GEN(test_debug) {
     } UT_GROUP_END;
 
     UT_GROUP_BEG(float) {
-        double_t x = 777.777;
+        double x = 777.777;
         PRINT_DEBUG_INFO(x);
         PRINT_DEBUG_ALL(x);
     } UT_GROUP_END;
@@ -47,8 +47,8 @@ UT_FUNC_GEN(test_debug) {
     } UT_GROUP_END;
 
     UT_GROUP_BEG(float_p) {
-        double_t x = 777.777;
-        double_t* p = &x;
+        double x = 777.777;
+        double* p = &x;
         PRINT_DEBUG_INFO(p);
         PRINT_DEBUG_ALL(p);
     } UT_GROUP_END;

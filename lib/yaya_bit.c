@@ -7,14 +7,14 @@
 
 #include "yaya_bit.h"
 
-#define BIT_SET_ALL_1(x, s)   ((sizeof(x) == (s)) ? (umaxc(0) - umaxc(1)) :  (BIT_SHF_LEF(umaxc(1), CHAR_BIT * (s)) - 1))
+#define BIT_SET_ALL_1(x, s)   ((sizeof(x) == (s)) ? (u_max_c(0) - u_max_c(1)) :  (BIT_SHF_LEF(u_max_c(1), CHAR_BIT * (s)) - 1))
 
 /*Возвращает позицию первого (младшего / правого) выключеного бита для заданого размера*/
-i08s yaya_bit_0_beg(umax x, u08s s) {
+i_s8_t yaya_bit_0_beg(u_max_t x, u_s8_t s) {
     if(x == BIT_SET_ALL_1(x, s)){
         return 0;
     }
-    i08s res = 1;
+    i_s8_t res = 1;
     while (BIT_GET(x, res) != 0 && res != (CHAR_BIT * s)) {
         res++;
     }
@@ -22,11 +22,11 @@ i08s yaya_bit_0_beg(umax x, u08s s) {
 }
 
 /*Возвращает позицию последнего (старшего / левого) выключеного бита для заданого размера*/
-i08s yaya_bit_0_end(umax x, u08s s) {
+i_s8_t yaya_bit_0_end(u_max_t x, u_s8_t s) {
     if(x == BIT_SET_ALL_1(x, s)){
         return 0;
     }
-    i08s res = CHAR_BIT * s;
+    i_s8_t res = CHAR_BIT * s;
     while (BIT_GET(x, res) != 0 && res != 0) {
         res--;
     }
@@ -34,12 +34,12 @@ i08s yaya_bit_0_end(umax x, u08s s) {
 }
 
 /*Возвращает количество выключеных битов для заданого размера*/
-i08s yaya_bit_0_cnt(umax x, u08s s) {
-    return (i08s)((CHAR_BIT * s) - yaya_bit_1_cnt(x));
+i_s8_t yaya_bit_0_cnt(u_max_t x, u_s8_t s) {
+    return (i_s8_t)((CHAR_BIT * s) - yaya_bit_1_cnt(x));
 }
 
 /*Возвращает положение одного единственого выключеного бита*/
-i08s yaya_bit_0_pos(umax x, u08s s) {
+i_s8_t yaya_bit_0_pos(u_max_t x, u_s8_t s) {
     if(x == BIT_SET_ALL_1(x, s)){
         return 0;
     }
@@ -50,19 +50,19 @@ i08s yaya_bit_0_pos(umax x, u08s s) {
 }
 
 /*Возвращает позицию первого (младшего / правого) взведенного бита*/
-i08s yaya_bit_1_beg(umax x) {
+i_s8_t yaya_bit_1_beg(u_max_t x) {
     if(x == 0){
         return 0;
     }
-    return (i08s)(yaya_bit_1_cnt((x - 1) & ~x) + (1));
+    return (i_s8_t)(yaya_bit_1_cnt((x - 1) & ~x) + (1));
 }
 
 /*Возвращает позицию последнего (старшего / левого) взведенного бита*/
-i08s yaya_bit_1_end(umax x) {
+i_s8_t yaya_bit_1_end(u_max_t x) {
     if(x == 0){
         return 0;
     }
-    i08s res = 1;
+    i_s8_t res = 1;
     while (x != 1) {
         x >>= 1;
         res++;
@@ -71,18 +71,18 @@ i08s yaya_bit_1_end(umax x) {
 }
 
 /*Возвращает количество взведенных битов*/
-i08s yaya_bit_1_cnt(umax x) {
+i_s8_t yaya_bit_1_cnt(u_max_t x) {
     x = ((x >>  1) & 0x5555555555555555) + (x & 0x5555555555555555);
     x = ((x >>  2) & 0x3333333333333333) + (x & 0x3333333333333333);
     x = ((x >>  4) & 0x0F0F0F0F0F0F0F0F) + (x & 0x0F0F0F0F0F0F0F0F);
     x = ((x >>  8) & 0x00FF00FF00FF00FF) + (x & 0x00FF00FF00FF00FF);
     x = ((x >> 16) & 0x0000FFFF0000FFFF) + (x & 0x0000FFFF0000FFFF);
     x = ((x >> 32) & 0x00000000FFFFFFFF) + (x & 0x00000000FFFFFFFF);
-    return (i08s)(x);
+    return (i_s8_t)(x);
 }
 
 /*Возвращает положение одного единственого взведенного бита*/
-i08s yaya_bit_1_pos(umax x) {
+i_s8_t yaya_bit_1_pos(u_max_t x) {
     if(x == 0){
         return 0;
     }
@@ -93,7 +93,7 @@ i08s yaya_bit_1_pos(umax x) {
 }
 
 /*Развернуть биты в противоположный порядок*/
-umax yaya_bit_revers(umax x, u08s s) {
+u_max_t yaya_bit_revers(u_max_t x, u_s8_t s) {
     {x = (x & 0x00000000FFFFFFFF) << 32 | (x & 0xFFFFFFFF00000000) >> 32;}
     {x = (x & 0x0000FFFF0000FFFF) << 16 | (x & 0xFFFF0000FFFF0000) >> 16;}
     {x = (x & 0x00FF00FF00FF00FF) << 8  | (x & 0xFF00FF00FF00FF00) >> 8 ;}

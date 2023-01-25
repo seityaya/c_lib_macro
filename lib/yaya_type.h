@@ -8,7 +8,8 @@
 #ifndef YAYA_TYPE_H
 #define YAYA_TYPE_H
 
-#include "yaya_number.h"
+#include "stdint.h"
+#include "inttypes.h"
 
 #define type_name(x) _Generic((x),                       \
     char:                "char",                         \
@@ -47,87 +48,87 @@
     default:             "other")
 
 
-#define TYPE_VOID   +4
-#define TYPE_FLT    +3
-#define TYPE_INT    +2
-#define TYPE_CHR    +1
-#define TYPE_NAN     0
-#define TYPE_CHR_P  -1
-#define TYPE_INT_P  -2
-#define TYPE_FLT_P  -3
-#define TYPE_VOID_P -4
+#define TYPE_GROUP_VOID   +4
+#define TYPE_GROUP_FLT    +3
+#define TYPE_GROUP_INT    +2
+#define TYPE_GROUP_CHR    +1
+#define TYPE_GROUP_NSTDT   0
+#define TYPE_GROUP_CHR_P  -1
+#define TYPE_GROUP_INT_P  -2
+#define TYPE_GROUP_FLT_P  -3
+#define TYPE_GROUP_VOID_P -4
 
-#define type_group(x) _Generic((x),       \
-    char:                TYPE_CHR,     \
-    signed char:         TYPE_INT,     \
-    unsigned char:       TYPE_INT,     \
-    signed int:          TYPE_INT,     \
-    unsigned int:        TYPE_INT,     \
-    signed short:        TYPE_INT,     \
-    unsigned short:      TYPE_INT,     \
-    signed long:         TYPE_INT,     \
-    unsigned long:       TYPE_INT,     \
-    signed long long:    TYPE_INT,     \
-    unsigned long long:  TYPE_INT,     \
+#define type_group(x) _Generic((x),          \
+    char:                TYPE_GROUP_CHR,     \
+    signed char:         TYPE_GROUP_INT,     \
+    unsigned char:       TYPE_GROUP_INT,     \
+    signed int:          TYPE_GROUP_INT,     \
+    unsigned int:        TYPE_GROUP_INT,     \
+    signed short:        TYPE_GROUP_INT,     \
+    unsigned short:      TYPE_GROUP_INT,     \
+    signed long:         TYPE_GROUP_INT,     \
+    unsigned long:       TYPE_GROUP_INT,     \
+    signed long long:    TYPE_GROUP_INT,     \
+    unsigned long long:  TYPE_GROUP_INT,     \
     \
-    float:               TYPE_FLT,     \
-    double:              TYPE_FLT,     \
-    long double:         TYPE_FLT,     \
+    float:               TYPE_GROUP_FLT,     \
+    double:              TYPE_GROUP_FLT,     \
+    long double:         TYPE_GROUP_FLT,     \
     \
-    char*:               TYPE_CHR_P,   \
-    signed char*:        TYPE_INT_P,   \
-    unsigned char*:      TYPE_INT_P,   \
-    signed int*:         TYPE_INT_P,   \
-    unsigned int*:       TYPE_INT_P,   \
-    signed short*:       TYPE_INT_P,   \
-    unsigned short*:     TYPE_INT_P,   \
-    signed long*:        TYPE_INT_P,   \
-    unsigned long*:      TYPE_INT_P,   \
-    signed long long*:   TYPE_INT_P,   \
-    unsigned long long*: TYPE_INT_P,   \
+    char*:               TYPE_GROUP_CHR_P,   \
+    signed char*:        TYPE_GROUP_INT_P,   \
+    unsigned char*:      TYPE_GROUP_INT_P,   \
+    signed int*:         TYPE_GROUP_INT_P,   \
+    unsigned int*:       TYPE_GROUP_INT_P,   \
+    signed short*:       TYPE_GROUP_INT_P,   \
+    unsigned short*:     TYPE_GROUP_INT_P,   \
+    signed long*:        TYPE_GROUP_INT_P,   \
+    unsigned long*:      TYPE_GROUP_INT_P,   \
+    signed long long*:   TYPE_GROUP_INT_P,   \
+    unsigned long long*: TYPE_GROUP_INT_P,   \
     \
-    float*:              TYPE_FLT_P,   \
-    double*:             TYPE_FLT_P,   \
-    long double*:        TYPE_FLT_P,   \
+    float*:              TYPE_GROUP_FLT_P,   \
+    double*:             TYPE_GROUP_FLT_P,   \
+    long double*:        TYPE_GROUP_FLT_P,   \
     \
-    void*:               TYPE_VOID_P,  \
-    default:             TYPE_NAN)
+    void*:               TYPE_GROUP_VOID_P,  \
+    default:             TYPE_GROUP_NSTDT)
 
 
 #define type_index(x) _Generic((x), \
-    char:                   'a', \
-    signed char:            'b', \
-    unsigned char:          'c', \
-    signed int:             'd', \
-    unsigned int:           'e', \
-    signed short:           'f', \
-    unsigned short:         'g', \
-    signed long:            'h', \
-    unsigned long:          'i', \
-    signed long long:       'j', \
-    unsigned long long:     'k', \
+    char:                   'a',    \
+    signed char:            'b',    \
+    unsigned char:          'c',    \
+    signed int:             'd',    \
+    unsigned int:           'e',    \
+    signed short:           'f',    \
+    unsigned short:         'g',    \
+    signed long:            'h',    \
+    unsigned long:          'i',    \
+    signed long long:       'j',    \
+    unsigned long long:     'k',    \
     \
-    float:                  'l', \
-    double:                 'm', \
-    long double:            'n', \
+    float:                  'l',    \
+    double:                 'm',    \
+    long double:            'n',    \
     \
-    char*:                  'A', \
-    signed char*:           'B', \
-    unsigned char*:         'C', \
-    signed int*:            'D', \
-    unsigned int*:          'E', \
-    signed short*:          'F', \
-    unsigned short*:        'G', \
-    signed long*:           'H', \
-    unsigned long*:         'I', \
-    signed long long*:      'J', \
-    unsigned long long*:    'K', \
+    char*:                  'A',    \
+    signed char*:           'B',    \
+    unsigned char*:         'C',    \
+    signed int*:            'D',    \
+    unsigned int*:          'E',    \
+    signed short*:          'F',    \
+    unsigned short*:        'G',    \
+    signed long*:           'H',    \
+    unsigned long*:         'I',    \
+    signed long long*:      'J',    \
+    unsigned long long*:    'K',    \
     \
-    float*:                 'L', \
-    double*:                'M', \
-    long double*:           'N', \
+    float*:                 'L',    \
+    double*:                'M',    \
+    long double*:           'N',    \
     \
-    void*:                  'Y', \
+    void*:                  'Y',    \
     default:                'Z')
 
 
@@ -158,10 +159,12 @@
     double*:      "dbl",           \
     long double*: "ldb",           \
     \
+    void*:        "void",          \
     default:      "nan")
 
+
 #define type_print(x) _Generic((x), \
-    char:         PRIi8,            \
+    char:         "c",              \
     int8_t:       PRIi8,            \
     int16_t:      PRIi16,           \
     int32_t:      PRIi32,           \
@@ -174,7 +177,7 @@
     double:       "lf",             \
     long double:  "llf",            \
     \
-    char*:        PRIi8,            \
+    char*:        "s",              \
     int8_t*:      PRIi8,            \
     int16_t*:     PRIi16,           \
     int32_t*:     PRIi32,           \

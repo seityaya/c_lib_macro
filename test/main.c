@@ -6,6 +6,7 @@
 //Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #include "test.h"
+#include "yaya_debug.h"
 
 int main() {
     unit_test_t MyUnTest = {0};

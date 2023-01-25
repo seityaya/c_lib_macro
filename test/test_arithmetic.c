@@ -98,11 +98,11 @@ UT_FUNC_GEN(test_arithmetic) {
         }UT_GROUP_END;
 
         UT_GROUP_BEG(sig) {
-            UT_ASSERT_NUM_EQUAL( +1, SIG(i08c(   1)));
-            UT_ASSERT_NUM_EQUAL( +1, SIG(i08c(   2)));
-            UT_ASSERT_NUM_EQUAL( -1, SIG(i08c(  -1)));
-            UT_ASSERT_NUM_EQUAL( -1, SIG(i08c(  -2)));
-            UT_ASSERT_NUM_EQUAL(  0, SIG(i08c(   0)));
+            UT_ASSERT_NUM_EQUAL( +1, SIG(i_8_c(   1)));
+            UT_ASSERT_NUM_EQUAL( +1, SIG(i_8_c(   2)));
+            UT_ASSERT_NUM_EQUAL( -1, SIG(i_8_c(  -1)));
+            UT_ASSERT_NUM_EQUAL( -1, SIG(i_8_c(  -2)));
+            UT_ASSERT_NUM_EQUAL(  0, SIG(i_8_c(   0)));
             UT_ASSERT_NUM_EQUAL(  0, SIG( 0.0));
             UT_ASSERT_NUM_EQUAL(  1, SIG( 0.1));
             UT_ASSERT_NUM_EQUAL( -1, SIG(-0.1));

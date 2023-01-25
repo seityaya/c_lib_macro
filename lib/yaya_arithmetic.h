@@ -9,6 +9,8 @@
 #define YAYA_ARITHMETIC_H
 
 #include "yaya_chek.h"
+#include "yaya_number.h"
+
 #include <math.h>
 
 /*адрес и значение*/
@@ -26,7 +28,7 @@
 
 /*обмен значений*/
 /*value exchange*/
-#define SWAP(x, y)  COMPILE_WCHDOG(x, y, { typeof(x) tmp = x; x = y; y = tmp; } )
+#define SWAP(x, y)  COMPILE_WCHDOG(x, y, { typeof(x) tmp = (x); (x) = (y); (y) = tmp; } )
 
 /*сравнение*/
 /*на равенство*/
@@ -52,7 +54,7 @@
 #define AP(x, y, e) COMPILE_WCHDOG(x, y, (ABS((x) - (y)) <= e))
 
 /*взятие целого*/
-#define GET_INT(x)  ((typeof(x))((imax)(x)))
+#define GET_INT(x)  ((typeof(x))((i_max_t)(x)))
 /*взятие дробного*/
 #define GET_REM(x)  ((typeof(x))((x) - GET_INT(x)))
 
