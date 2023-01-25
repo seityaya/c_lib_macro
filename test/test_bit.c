@@ -11,7 +11,6 @@
 UT_FUNC_GEN(test_bit) {
     UT_GROUP_BEG(bit) {
         UT_GROUP_BEG(0) {
-
             UT_GROUP_BEG(eql) {
                 UT_ASSERT_BIT_EQUAL(i08c(  0), i08c(0b00000000));
                 UT_ASSERT_BIT_EQUAL(u08c(  0), u08c(0b00000000));

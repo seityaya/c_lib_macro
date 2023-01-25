@@ -10,15 +10,15 @@
 int main() {
     unit_test_t MyUnTest = {0};
     unit_test_sett_t MyUnSett = { .map = false,
-                                  .suse = true,
+                                  .suse = false,
                                   .stat = true,
                                   .fold = false
                                 };
 
     unit_test_func_t MyUnFunc[] = { {0},
                                     {test_arithmetic, 1},
-                                    {test_bit,        0},
-                                    {test_bool,       0},
+                                    {test_bit,        1},
+                                    {test_bool,       1},
                                     {test_debug,      0},
                                     {0}
                                   };

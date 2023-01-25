@@ -15,7 +15,6 @@ project(${PROJECT_NAME})
 add_executable(
     ${PROJECT_NAME}
     main.c
-    main.h
     test.h
     test_arithmetic.c
     test_bit.c

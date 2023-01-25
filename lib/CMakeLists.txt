@@ -35,3 +35,5 @@ set(INC_LIST
     yaya_chek.h)
 
 add_library(${PROJECT_NAME} SHARED ${SRC_LIST} ${INC_LIST})
+
+target_link_libraries(${PROJECT_NAME} m)

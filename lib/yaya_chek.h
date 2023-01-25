@@ -57,6 +57,7 @@
     long double*  : (A), const long double* : (A), \
     default       : (NULL))
 
+
 #define COMPILE_ASSERT(cond, name)                       \
     typedef int ASSERT##name[(cond) ? 1 : -1]
 
@@ -72,6 +73,16 @@
     COMPILE_NO_SIDE(x, y);                               \
     COMPILE_ASSERT(COMPILE_TYPECHEK(_x, _y), _TYPECHEK); \
     (op);                                                \
+    })
+
+#define COMPILE_TYPEMATCH(type, x) ({                     \
+    type _z = (type)(0);                                  \
+    typeof (x) _x = (x);                                  \
+    COMPILE_ASSERT(COMPILE_TYPECHEK(_x, _z), _TYPEMATCH); \
+    })
+
+#define COMPILE_GROUPMATCH(group, x) ({                    \
+    COMPILE_ASSERT((group) == type_group(x), _GROUPMATCH); \
     })
 
 #endif /*YAYA_CHEK_H*/

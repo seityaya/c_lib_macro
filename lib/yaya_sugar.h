@@ -10,15 +10,12 @@
 
 #include "yaya_bool.h"
 
-/*
- * Fun Sugar
-*/
+/*Fun Sugar*/
+
 #define ever      (;;)
 #define forever() for ever
 
-/*
- * Mandatory Semicolon
-*/
+/*Mandatory Semicolon*/
 #define MDSC do{ } while(false)
 
 /*
@@ -35,5 +32,7 @@
 
 #define beg                  do{                    MDSC
 #define end                  break; } while (true); MDSC
+
+#define __FUNC__ __func__
 
 #endif /*YAYA_SUGAR_H*/

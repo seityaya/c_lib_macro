@@ -8,7 +8,9 @@
 #ifndef YAYA_ENDIAN_H
 #define YAYA_ENDIAN_H
 
-#define ENDIAN_BIT() (((union { unsigned x; unsigned char c; }){1}).c) //типа архитектуры
+/*возвращает типа архитектуры*/
+#define ENDIAN_BIT() (((union { unsigned x; unsigned char c; }){1}).c)
+
 #define ENDIAN_BIG 0
 #define ENDIAN_LIT 1
 

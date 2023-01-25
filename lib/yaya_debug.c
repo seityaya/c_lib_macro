@@ -14,11 +14,7 @@
 /*Распечатать число побитово*/
 void yaya_print_bit(void *v, uintmax_t size) {
     uintmax_t p = *((uintmax_t*)(v));
-
-//    if(ENDIAN_BIT() == ENDIAN_LIT){
-//        p = yaya_bit_revers(p, size);
-//        p = BIT_CYC_LEF(p, CHAR_BIT * size);
-//    }
+    p = yaya_bit_revers(p, size);
 
     for(uintmax_t i = 0; i < size; i++){
         for(uintmax_t b = 0; b < CHAR_BIT; b++){
@@ -30,9 +26,10 @@ void yaya_print_bit(void *v, uintmax_t size) {
     printf("\n");
 }
 
-void yaya_print_raw(void *p, uintmax_t size) {
-    for(uintmax_t i = 0; i < size; i++){
-        uint8_t temp = *(((uint8_t*)(p)) + i);
+/*Распечатать число побайтово*/
+void yaya_print_but(void *v, uintmax_t size) {
+    for(intmax_t i = size - 1; i >= 0 ; i--){
+        uint8_t temp = *(((uint8_t*)(v)) + i);
         printf("%02" PRIX8 " ", temp);
     }
     printf("\n");

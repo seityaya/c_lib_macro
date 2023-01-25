@@ -65,6 +65,7 @@
 #define fx64       char
 
 typedef union allt{
+    void*      voidt;
     char       chart;
     imax       imaxt;
     umax       umaxt;

@@ -6,11 +6,9 @@
 //Copyright © 2023-2023 Seityagiya Terlekchi. All rights reserved.
 
 #include "test.h"
-
 #include "yaya_bool.h"
 
-UT_FUNC_GEN(test_bool)
-{
+UT_FUNC_GEN(test_bool) {
     UT_GROUP_BEG(bool) {
         UT_GROUP_BEG(macro) {
             UT_ASSERT_BOOL_TRUE(TRUE);
