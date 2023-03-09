@@ -99,7 +99,7 @@ BEG_C_DECLARATION
 #define c64_c(x)    ((c64_t)(x))
 #define cmax_c(x)   ((cmax_t)(x))
 
-#define null_c(T)    (((T *)0))
+#define null_c(T)    (((T*)0))
 
 typedef union allt{
     void*     voidp;
@@ -132,8 +132,8 @@ typedef union allt{
     uf16_t    uf16t;
     uf32_t    uf32t;
     uf64_t    uf64t;
-    f32_t    fp32t;
-    f64_t    fp64t;
+    f32_t     fp32t;
+    f64_t     fp64t;
 } allt;
 
 #define typemin(x) ({                   \
@@ -147,11 +147,11 @@ typedef union allt{
     us16_t:             0,              \
     us32_t:             0,              \
     us64_t:             0,              \
-    f32_t:             __FLT32_MIN__,   \
-    f64_t:             __FLT64_MIN__,   \
-    f128_t:            __FLT128_MIN__,  \
+    f32_t:              __FLT32_MIN__,  \
+    f64_t:              __FLT64_MIN__,  \
+    f128_t:             __FLT128_MIN__, \
     default:            0);             \
-    })
+})
 
 #define typemax(x) ({                   \
     typeof(x) _x;   _Generic((_x),      \
@@ -164,9 +164,9 @@ typedef union allt{
     us16_t:             UINT16_MAX,     \
     us32_t:             UINT32_MAX,     \
     us64_t:             UINT64_MAX,     \
-    f32_t:             __FLT32_MAX__,   \
-    f64_t:             __FLT64_MAX__,   \
-    f128_t:            __FLT128_MAX__,  \
+    f32_t:              __FLT32_MAX__,  \
+    f64_t:              __FLT64_MAX__,  \
+    f128_t:             __FLT128_MAX__, \
     default:            0);             \
 })
 
@@ -181,11 +181,11 @@ typedef union allt{
     us16_t:             1,                  \
     us32_t:             1,                  \
     us64_t:             1,                  \
-    f32_t:             __FLT32_EPSILON__,  \
-    f64_t:             __FLT64_EPSILON__,  \
-    f128_t:            __FLT128_EPSILON__, \
+    f32_t:             __FLT32_EPSILON__,   \
+    f64_t:             __FLT64_EPSILON__,   \
+    f128_t:            __FLT128_EPSILON__,  \
     default:            0);                 \
-    })
+})
 
 /*UNDEF*/
 #undef intmax_t

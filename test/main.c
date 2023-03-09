@@ -43,6 +43,7 @@ int main(void) {
     unit_test_init(&MyUnTest, MyUnFunc, &MyUnSett);
 
     unit_test_start(&MyUnTest);
+
     unit_test_stats(&MyUnTest);
 
     return 0;

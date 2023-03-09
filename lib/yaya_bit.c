@@ -7,6 +7,9 @@
 
 #include "yaya_bit.h"
 
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
+
 #define BIT_SET_ALL_1(x, s)   ((sizeof(x) == (s)) ? (umax_c(0) - umax_c(1)) :  (bit_shf_lef(umax_c(1), CHAR_BIT * (s)) - 1))
 
 /*Возвращает позицию первого (младшего / правого) выключеного бита для заданого размера*/
@@ -134,3 +137,5 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len){  /* FIXME IMPLEMEN
     }
     return result;
 }
+
+END_C_DECLARATION

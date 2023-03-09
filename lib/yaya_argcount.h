@@ -8,6 +8,9 @@
 #ifndef YAYA_ARGCOUNT_H
 #define YAYA_ARGCOUNT_H
 
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
+
 /*
  * Using:
  * #define F(...) f(ARGCOUNT(__VA_ARGS__),  __VA_ARGS__)
@@ -30,4 +33,5 @@
     31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16, \
     15,14,13,12,11,10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0
 
+END_C_DECLARATION
 #endif /*YAYA_ARGCOUNT_H*/

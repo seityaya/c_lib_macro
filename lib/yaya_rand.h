@@ -55,7 +55,7 @@ extern umax_t __rand_seed;
 /*
  * Возврат случайного целочисленного значения в установленых интервалах включительно
 */
-#define __get_rand(min, max) __sum(__mod(typecast(max, get_random()), __sum(__dis(min, max), one(min))), min)
+#define __get_rand(min, max) __sum(__mod(typecast(max, get_random()), __sum(__dis(min, max), next_num(min))), min)
 #define get_rand(min, max)                                                                                                                           \
     BLOC(                                                                                                                                            \
     COMPILE_WCHDOG(min, max, _min_r, _max_r,                                                                                                             \

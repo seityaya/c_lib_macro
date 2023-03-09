@@ -24,7 +24,6 @@ UT_FUNC_GEN(test_arithmetic_minmax);
 UT_FUNC_GEN(test_arithmetic_progresion);
 UT_FUNC_GEN(test_arithmetic_series);
 UT_FUNC_GEN(test_arithmetic_combinatoric);
-
 UT_FUNC_GEN(test_bit);
 UT_FUNC_GEN(test_bool);
 UT_FUNC_GEN(test_debug);

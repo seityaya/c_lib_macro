@@ -48,8 +48,8 @@ BEG_C_DECLARATION
  * Можно использовать как с фигурными скобками так и без.
  * Можно использовать с другими операторами if/else, switch/case вместо скобок.
  */
-#define beg                  ({ do {
-#define end                  break; } while (true); })
+#define beg                  { do {
+#define end                  break; } while(true); } MD_SC
 
 
 /*

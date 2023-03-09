@@ -5,9 +5,6 @@
 //SPDX-License-Identifier: LGPL-2.1-or-later
 //Copyright © 2023-2023 Seityagiya Terlekchi. All rights reserved.
 
-#include "yaya_cdeclaration.h"
-BEG_C_DECLARATION
-
 #include "stdlib.h"
 #include "string.h"
 #include "malloc.h"
@@ -15,6 +12,9 @@ BEG_C_DECLARATION
 #include "yaya_arithmetic.h"
 #include "yaya_number.h"
 #include "yaya_rand.h"
+
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
 
 umax_t ___gcd(umax_t u, umax_t v) {
     if (v < u) {

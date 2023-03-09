@@ -9,7 +9,7 @@
 #define YAYA_LANG_H
 
 #include "yaya_cdeclaration.h"
-BEG_CDECLARATION
+BEG_C_DECLARATION
 
 /*адрес и значение*/
 #define init_ptr(n, t)     typeof(t) *n = NULL
@@ -67,5 +67,5 @@ BEG_CDECLARATION
 
 
 
-END_CDECLARATION
+END_C_DECLARATION
 #endif /*YAYA_LANG_H*/

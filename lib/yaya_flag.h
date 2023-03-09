@@ -9,7 +9,7 @@
 #define YAYA_FLAG_H
 
 #include "yaya_cdeclaration.h"
-BEG_CDECLARATION
+BEG_C_DECLARATION
 
 #define FLAG_SET(x)    (((x) == 0) ? (0ULL) : (1ULL << ((x) - 1ULL)))  //установка флага
 #define FLAG_COM(x, y) ((x) & (y))                                     //сравнение двух флагов или масок
@@ -17,5 +17,5 @@ BEG_CDECLARATION
 #define FLAG_SET_ALL   (((0ULL) - 1))                                  //выставление всех флагов
 #define FLAG_RES_ALL   (0)                                             //сброс всех флагов
 
-END_CDECLARATION
+END_C_DECLARATION
 #endif /*YAYA_FLAG_H*/
