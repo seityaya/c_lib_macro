@@ -8,7 +8,11 @@
 #ifndef YAYA_UNUSED_H
 #define YAYA_UNUSED_H
 
-#define UNUSED_VAR(x) ((void)(x))
-#define UNUSED_FNC(f) static void f##_UNUSED(){do{ f;} while (0);}
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
 
+#define UNUSED_VAR(x) ((void)(x))
+#define UNUSED_FNC(f) static void f##_UNUSED(){ do{ f;} while (0); }
+
+END_C_DECLARATION
 #endif /*YAYA_UNUSED_H*/

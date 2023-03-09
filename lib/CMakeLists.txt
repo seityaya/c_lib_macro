@@ -11,17 +11,21 @@ add_definitions(-std=c11)
 
 set(VERSION 0.1)
 set(PROJECT_NAME yaya_defines)
-
 project(${PROJECT_NAME})
+
+add_compile_options(-Wall -Wfatal-errors -Wconversion)
 
 set(SRC_LIST
     yaya_bit.c
     yaya_debug.c)
 
 set(INC_LIST
+    yaya_argcount.h
+    yaya_arithmetic.c
     yaya_arithmetic.h
     yaya_bit.h
     yaya_bit.c
+    yaya_cdeclaration.h
     yaya_defines.h
     yaya_bool.h
     yaya_unused.h
@@ -29,8 +33,11 @@ set(INC_LIST
     yaya_concat.h
     yaya_endian.h
     yaya_flag.h
+    yaya_lang.h
     yaya_type.h
     yaya_number.h
+    yaya_rand.c
+    yaya_rand.h
     yaya_debug.h
     yaya_chek.h)
 

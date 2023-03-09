@@ -8,15 +8,34 @@
 #ifndef YAYA_SUGAR_H
 #define YAYA_SUGAR_H
 
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
+
 #include "yaya_bool.h"
 
-/*Fun Sugar*/
+/*
+ * Fun Sugar
+*/
+#define ever           (;;)
+#define forever()      for ever
+#define foreveriter(i) for(int (i) = 0; ; (i)++)
+#define forcount(i, c) for(int (i) = 0; (i) < (c); (i)++)
 
-#define ever      (;;)
-#define forever() for ever
+/*
+ * Compound literals
+*/
+#define const_area(t, ...) ({ (t[]){ __VA_ARGS__ }; })
 
-/*Mandatory Semicolon*/
-#define MDSC do{ } while(false)
+/*
+ * Type cast
+*/
+#define typecast(type, cond) ((typeof(type))(cond))
+
+/*
+ * Blocs
+*/
+#define BLOC(x)  ({ x; })
+#define UNIT(x)  (x)
 
 /*
  * Новый тип блока в котором разрешено использовать break и continue вместо
@@ -29,12 +48,30 @@
  * Можно использовать как с фигурными скобками так и без.
  * Можно использовать с другими операторами if/else, switch/case вместо скобок.
  */
-
-#define beg                  do{                    MDSC
-#define end                  break; } while (true); MDSC
-
-#define __FUNC__ __func__
+#define beg                  ({ do {
+#define end                  break; } while (true); })
 
 
+/*
+ * Переопределение стандартных макросов
+*/
+#define __FUNC__    __func__
+#define nullptr     ((void*)(0))
 
+/*
+ * Определение дополнительных макросов
+*/
+#define ENABLE  TRUE
+#define DISABLE FALSE
+
+/*Mandatory Semicolon*/
+#define MD_SC do{ } while(false)
+
+/*Mandatory open figure brace*/
+#define MD_OFB do
+
+/*Mandatory close figure brace*/
+#define MD_CFB while (false);
+
+END_C_DECLARATION
 #endif /*YAYA_SUGAR_H*/

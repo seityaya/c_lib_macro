@@ -7,6 +7,7 @@
 
 cmake_minimum_required(VERSION 3.0)
 set(CMAKE_C_STANDARD 11)
+add_definitions(-std=c11)
 
 set(VERSION 0.1)
 set(PROJECT_NAME defines_test)
@@ -16,10 +17,24 @@ add_executable(
     ${PROJECT_NAME}
     main.c
     test.h
-    test_arithmetic.c
+    test_arithmetic_constant.c
+    test_arithmetic_unar.c
+    test_arithmetic_assignment.c
+    test_arithmetic_segment.c
+    test_arithmetic_math.c
+    test_arithmetic_decomposition.c
+    test_arithmetic_iter.c
+    test_arithmetic_compare.c
+    test_arithmetic_parity.c
+    test_arithmetic_round.c
+    test_arithmetic_minmax.c
+    test_arithmetic_progresion.c
+    test_arithmetic_series.c
+    test_arithmetic_combinatoric.c
     test_bit.c
     test_bool.c
     test_debug.c
+    test_rand.c
     test_sugar.c
 )
 

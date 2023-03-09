@@ -10,7 +10,7 @@
 
 UT_FUNC_GEN(test_debug) {
     UT_GROUP_BEG(char) {
-        char x = 'T';
+        char x = 'B';
         PRINT_DEBUG_INFO(x);
         PRINT_DEBUG_ALL(x);
     } UT_GROUP_END;

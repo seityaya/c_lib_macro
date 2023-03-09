@@ -6,22 +6,37 @@
 //Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #include "test.h"
-#include "yaya_debug.h"
+#include "yaya_arithmetic.h"
 
-int main() {
+int main(void) {
     unit_test_t MyUnTest = {0};
-    unit_test_sett_t MyUnSett = { .map = false,
+
+    unit_test_sett_t MyUnSett = { .map =  false,
                                   .suse = false,
                                   .stat = true,
                                   .fold = false
                                 };
 
     unit_test_func_t MyUnFunc[] = { {0},
-                                    {test_arithmetic, 1},
-                                    {test_bit,        1},
-                                    {test_bool,       1},
-                                    {test_debug,      0},
-                                    {test_sugar,      1},
+                                    {(void*)test_arithmetic_constant,      1},
+                                    {(void*)test_arithmetic_unar,          1},
+                                    {(void*)test_arithmetic_assignment,    1},
+                                    {(void*)test_arithmetic_segment,       1},
+                                    {(void*)test_arithmetic_decomposition, 1},
+                                    {(void*)test_arithmetic_iter,          1},
+                                    {(void*)test_arithmetic_math,          1},
+                                    {(void*)test_arithmetic_compare,       1},
+                                    {(void*)test_arithmetic_parity,        1},
+                                    {(void*)test_arithmetic_round,         1},
+                                    {(void*)test_arithmetic_minmax,        1},
+                                    {(void*)test_arithmetic_progresion,    1},
+                                    {(void*)test_arithmetic_series,        1},
+                                    {(void*)test_arithmetic_combinatoric,  1},
+                                    {(void*)test_bit,                      1},
+                                    {(void*)test_bool,                     1},
+                                    {(void*)test_debug,                    0},
+                                    {(void*)test_rand,                     1},
+                                    {(void*)test_sugar,                    0},
                                     {0}
                                   };
 

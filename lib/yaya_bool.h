@@ -8,22 +8,28 @@
 #ifndef YAYA_BOOL_H
 #define YAYA_BOOL_H
 
+#include "yaya_cdeclaration.h"
+BEG_C_DECLARATION
+
 #include "stdbool.h"
 
 #ifndef bool
-#define TRUE    (1 == 1)
-#define FALSE   (!TRUE)
-
-typedef enum bool {
+typedef enum bool_t {
     true = TRUE,
     false = FALSE
-}bool;
+}bool_t;
+
+#define BOOL    bool_t
+#define TRUE    (1 == 1)
+#define FALSE   (!TRUE)
 #else
+
+#define bool_t  bool
+#define BOOL    bool
 #define TRUE    true
 #define FALSE   false
+
 #endif
 
-#define ENABLE  TRUE
-#define DISABLE FALSE
-
+END_C_DECLARATION
 #endif /*YAYA_BOOL_H*/

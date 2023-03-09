@@ -26,7 +26,7 @@ UT_FUNC_GEN(test_bool) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(type) {
-            bool A = false;
+            bool_t A = false;
             UT_ASSERT_BOOL_FALSE(A);
             A = 0;
             UT_ASSERT_BOOL_FALSE(A);
