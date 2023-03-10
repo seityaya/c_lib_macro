@@ -307,10 +307,10 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define __powm(x, p)                                                                                                                                 \
     BLOC(                                                                                                                                            \
     UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_UINT, x)) ?                                                                                                \
-    BLOC(__pow_int(x, p)) :                                                                                                                          \
+    BLOC(__pow_int(COMPILE_INT_OR_ZERO(x), COMPILE_INT_OR_ZERO(p))) :                                                                                                                          \
     BLOC(                                                                                                                                            \
     UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_FLT | STD_TYPE_GROUP_COMPLEX, x)) ?                                                                        \
-    BLOC(__pow_flt(x, p)) :                                                                                                                          \
+    BLOC(__pow_flt(COMPILE_FLT_OR_ZERO(x), COMPILE_FLT_OR_ZERO(p))) :                                                                                                                          \
     BLOC(0)))
 #define powm(x, p)                                                                                                                                   \
     BLOC(                                                                                                                                            \

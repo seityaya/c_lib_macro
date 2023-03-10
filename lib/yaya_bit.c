@@ -108,6 +108,9 @@ umax_t ___bit_revers(umax_t x, umax_t s) {
 }
 
 umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len){  /* FIXME IMPLEMENT */
+    if(len > (sizeof(umax_t) * CHAR_BIT)) {
+        return 0;
+    }
     us8_t *bytes = (uint8_t*)ptr;
     us64_t result = 0;
     us32_t result32_1 = 0;

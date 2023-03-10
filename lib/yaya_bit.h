@@ -12,6 +12,7 @@
 BEG_C_DECLARATION
 
 #include "limits.h"
+#include "stddef.h"
 
 #include "yaya_number.h"
 #include "yaya_chek.h"
@@ -37,6 +38,11 @@ umax_t ___bit_revers(umax_t x, umax_t s);
 umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 
 /* = ПОДСЧЕТ И ПОИСК БИТОВ ======================================================================================================================== */
+
+/*
+ * Возвращет количество битов в числе
+*/
+#define bit_cnt(x)      typecast(size_t, sizeof(x) * CHAR_BIT)
 
 /*
  * Опустить все биты в 0
@@ -93,95 +99,101 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Чтение бита на позии
 */
-#define bit_get(x, n)     (typeof(x)) ((n) == 0 ? (0) : ((x) &  (1ULL << ((n) - 1))))
+#define bit_get(x, n)    typecast((x), (n) == (0) ? (0) : ( (x) &  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
 
 /*
  * Выставление бита  на позии
 */
-#define bit_set(x, n)     (typeof(x)) ((n) == 0 ? (x) : ((x) |  (1ULL << ((n) - 1))))
+#define bit_set(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) |  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
 
 /*
  * Сброс бита на позии
 */
-#define bit_res(x, n)     (typeof(x)) ((n) == 0 ? (x) : ((x) & ~(1ULL << ((n) - 1))))
+#define bit_res(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) & ~(typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
 
 /*
  * Переключение бита на позиции
 */
-#define bit_tog(x, n)     (typeof(x)) ((n) == 0 ? (x) : ((x) ^  (1ULL << ((n) - 1))))
+#define bit_tog(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) ^  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
 
 /*
  * Выставление определенного бита на позии
 */
-#define bit_wrt(x, n, v)  (typeof(x)) ((v) ? bit_set((x), (n)) : bit_res((x), (n)))
+#define bit_wrt(x, n, b) typecast((x), ((b) ? bit_set((x), (n)) : bit_res((x), (n))))
 
 /*
  * Инверсия битов в числе
 */
-#define bit_inv(x)        (typeof(x)) (~((umax_t)(x)))
+#define bit_inv(x)       typecast((x), (~((umax_t)(x))))
 
 /*
  * Смена порядка битов то начала к концу
 */
-#define bit_rev(x)        (typeof(x)) ___bit_revers((x), sizeof(x))
+#define bit_rev(x)       typecast((x), ___bit_revers((x), sizeof(x)))
 
 /*
  * Возвращает значение по смещению и длинне последовательности
 */
-#define bit_seq(p, o, l)  ___bit_sequence(p, o, l)
+#define bit_seq(p, o, l) ___bit_sequence(p, o, l)
 
 /* = БИТОВЫЕ СДВИГИ =============================================================================================================================== */
 
 /*
- * Логический сдвиг вправо (c занулением ??)
-*/
-#define bit_shf_rig(x, n) ((x) >> (n))
-
-/*
- * Логический сдвиг влево (с занулением ??)
-*/
-#define bit_shf_lef(x, n) ((x) << (n))
-
-/*
- * Логический сдвиг относительно знака числа
-         * +n - влево
-         * -n - вправо
-*/
-#define bit_shf_vec(x, n) (((n) < (0)) ? bit_shf_rig((x), -(n)) : bit_shf_lef((x), (n)))
-
-/*
- * Циклический сдвиг вправо
-*/
-#define bit_cyc_rig(x, n) ( (n) == 0 ? (x) : ((x) >> ((n) % ((sizeof(x) * CHAR_BIT)))) | ((x) << (((sizeof(x) * CHAR_BIT) - (n)) % ((sizeof(x) * CHAR_BIT)))))
-
-/*
- * Циклический сдвиг влево
-*/
-#define bit_cyc_lef(x, n) ( (n) == 0 ? (x) : ((x) << ((n) % ((sizeof(x) * CHAR_BIT)))) | ((x) >> (((sizeof(x) * CHAR_BIT) - (n)) % ((sizeof(x) * CHAR_BIT)))))
-
-/*
- * Циклический сдвиг относительно знака числа
- * +n - влево
- * -n - вправо
-*/
-#define bit_cyc_vec(x, n) (((n) < (0)) ? bit_cyc_rig((x), -(n)) : bit_cyc_lef((x), (n)))
-
-/*
  * Арифметический сдвиг вправо
 */
-#define bit_ari_rig(x, n)
+#define bit_ari_rig(x, n) typecast((x), typecast(umax_t, x) >> typecast(umax_t, n))
 
 /*
  * Арифметический сдвиг влево
 */
-#define bit_ari_lef(x, n)
+#define bit_ari_lef(x, n) typecast((x), typecast(umax_t, x) << typecast(umax_t, n))
 
 /*
  * Арифметический сдвиг относительно знака числа
  * +n - влево
  * -n - вправо
 */
-#define bit_ari_vec(x, n)
+#define bit_ari_vec(x, n) typecast((x), (n) < (0) ? bit_ari_rig((x), (-(n))) : bit_ari_lef((x), (n)))
+
+
+/*
+ * Логический сдвиг вправо
+*/
+#define bit_shf_rig(x, n) typecast((x), ((x) >= (0)) || ((n) == (0)) ? \
+    typecast(umax_t, x) >> typecast(umax_t, n) : \
+    bit_set(bit_res(x, bit_cnt(x)) >> typecast(umax_t, n), bit_cnt(x) - n) \
+    )
+
+/*
+ * Логический сдвиг влево
+*/
+#define bit_shf_lef(x, n) typecast((x), typecast(umax_t, x) << typecast(umax_t, n))
+
+/*
+ * Логический сдвиг относительно знака числа
+         * +n - влево
+         * -n - вправо
+*/
+#define bit_shf_vec(x, n) typecast((x), (n) < (0) ? bit_shf_rig((x), (-(n))) : bit_shf_lef((x), (n)))
+
+
+/*
+ * Циклический сдвиг вправо
+*/
+#define bit_cyc_rig(x, n) typecast((x), (n) == (0) ? (x) : ((x) >> ((n) % bit_cnt(x))) | ((x) << ((bit_cnt(x) - (n)) % (bit_cnt(x)))))
+
+/*
+ * Циклический сдвиг влево
+*/
+#define bit_cyc_lef(x, n) typecast((x), (n) == (0) ? (x) : ((x) << ((n) % bit_cnt(x))) | ((x) >> ((bit_cnt(x) - (n)) % (bit_cnt(x)))))
+
+/*
+ * Циклический сдвиг относительно знака числа
+ * +n - влево
+ * -n - вправо
+*/
+#define bit_cyc_vec(x, n) typecast((x), (n) < (0) ? bit_cyc_rig((x), (-(n))) : bit_cyc_lef((x), (n)))
+
 
 /* = БИТОВЫЕ МАСКИ ================================================================================================================================ */
 
@@ -189,12 +201,12 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Выставление битов по единичной маске
 */
-#define bit_mask_up(x, y) COMPILE_WCHDOG(x, y, _x, _y, ((x) | (y)))
+#define bit_mask_up(x, y) COMPILE_WCHDOG((x), (y), _x, _y, ((_x) | (_y)))
 
 /*
  * Обнуление битов по единичной маске
 */
-#define bit_mask_dw(x, y) COMPILE_WCHDOG(x, y, _x, _y, ((x) & (y)))
+#define bit_mask_dw(x, y) COMPILE_WCHDOG((x), (y), _x, _y, ((_x) & (_y)))
 
 /* = БИТОВЫЕ ОПЕРРАЦИИ ============================================================================================================================ */
 
@@ -206,23 +218,23 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Битовое ИЛИ
 */
-#define bit_or(x, y)      COMPILE_WCHDOG(x, y, _x, _y, ((x) | (y)))
+#define bit_or(x, y)      COMPILE_WCHDOG((x), (y), _x, _y, ((_x) | (_y)))
 
 /*
  * Битовое И
 */
-#define bit_and(x, y)     COMPILE_WCHDOG(x, y, _x, _y, ((x) & (y)))
+#define bit_and(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, ((_x) & (_y)))
 
 /*
  * Битовое ИСЛЮЧАЮЩЕЕ ИЛИ
  * (Операторы не равны)
 */
-#define bit_xor(x, y)     COMPILE_WCHDOG(x, y, _x, _y, ((x) ^ (y)))
+#define bit_xor(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, ((_x) ^ (_y)))
 
 /*
  * Битовое ИЛИ-НЕ
 */
-#define bit_nor(x, y)     bit_not(bit_or ((x), (y)))
+#define bit_nor(x, y)     bit_not(bit_or((x), (y)))
 
 /*
  * Битовое И-НЕ
@@ -235,7 +247,7 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
  * (Операторы равны)
 */
 #define bit_xnor(x, y)    bit_not(bit_xor((x), (y)))
-#define bit_eqv(x, y)     bit_or(bit_and(bit_not(x), (y)), bit_and((x), bit_not(y)))
+#define bit_eqv(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, bit_or(bit_and(bit_not(_x), (_y)), bit_and((_x), bit_not(_y))))
 
 /* ================================================================================================================================================ */
 
