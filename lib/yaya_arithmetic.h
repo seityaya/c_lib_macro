@@ -63,38 +63,38 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Положительный ноль
 */
-#define pos_zero()                                                                                                                                   \
-    BLOC(fmax_c(+0.0))
+#define pos_zero(x)                                                                                                                                  \
+    BLOC(typecast(x, +0.0))
 
 /*
  * Отрицательный ноль
 */
-#define neg_zero()                                                                                                                                   \
-    BLOC(fmax_c(-0.0))
+#define neg_zero(x)                                                                                                                                  \
+    BLOC(typecast(x, -0.0))
 
 /*
  * Положительная бесконечность
 */
-#define pos_inf()                                                                                                                                    \
-    BLOC(fmax_c(+INFINITY))
+#define pos_inf(x)                                                                                                                                   \
+    BLOC(typecast(x, +INFINITY))
 
 /*
  * Отрицательная бесконечность
 */
-#define neg_inf()                                                                                                                                    \
-    BLOC(fmax_c(-INFINITY))
+#define neg_inf(x)                                                                                                                                   \
+    BLOC(typecast(x, -INFINITY))
 
 /*
  * Положительное "не число"
 */
-#define pos_nan()                                                                                                                                    \
-    BLOC(fmax_c(+NAN))
+#define pos_nan(x)                                                                                                                                   \
+    BLOC(typecast(x, +NAN))
 
 /*
  * Отрицательное "не число"
 */
-#define neg_nan()                                                                                                                                    \
-    BLOC(fmax_c(-NAN))
+#define neg_nan(x)                                                                                                                                   \
+    BLOC(typecast(x, -NAN))
 
 //================= БАЗОВЫЕ УНАРНЫЕ ОПЕРАЦИИ =========================================================================================================
 
@@ -225,6 +225,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define __sum(x, y) BLOC((x) + (y))
 
 /*
+ * Сумма с проверкой
+*/
+#define sum_chk(r, x, y)
+
+/*
  * Разность
  * Difference
  * Принимает:  Два числа типа Х
@@ -238,6 +243,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define __dif(x, y) BLOC((x) - (y))
 
 /*
+ * Разность с проверкой
+*/
+#define dif_chk(r, x, y)
+
+/*
  * Умножение
  * Multiplication
  * Принимает:  Два числа типа Х
@@ -249,6 +259,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     BLOC(__mul(_x_mul, _y_mul))))
 
 #define __mul(x, y) BLOC((x) * (y))
+
+/*
+ * Умножение с проверкой
+*/
+#define mul_chk(r, x, y)
 
 /*
  * Целое от деления
@@ -266,6 +281,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     UNIT(eq(std_type_sigum(x), STD_TYPE_SIGNUM)) ?                                                                                                   \
     BLOC(typecast((x), typecast(imax_t, (x / y)))) :                                                                                                 \
     BLOC(typecast((x), typecast(umax_t, (x / y)))))
+
+/*
+ * Целое от деления с проверкой
+*/
+#define div_chk(r, x, y)
 
 /*
  * Остаток от деления
@@ -286,6 +306,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define __mod_flt(x, y) BLOC(typecast((x), ((x) - __get_int((x) / (y)) * (y))))
 
 /*
+ * Остаток от деления с проверкой
+*/
+#define mod_chk(r, x, y)
+
+/*
  * Полное деление
  * Quotient
  * Принимает:  Два числа типа Х
@@ -297,6 +322,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     BLOC(__qut(_x_qut, _y_qut))))
 
 #define __qut(x, y) BLOC(typecast(fmax_t, typecast(fmax_t, (x)) / typecast(fmax_t, (y))))
+
+/*
+ * Полное деление с проверкой
+*/
+#define qut_chk(r, x, y)
 
 /*
  * Возведение в степень
@@ -329,6 +359,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     default: 0))
 
 /*
+ * Возведение в степень с проверкой
+*/
+#define powm_chk(r, x, y)
+
+/*
  * Извлечение корня по основанию
  * Root
  * Принимает:  Два числа типа Х
@@ -340,6 +375,11 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     BLOC(__root(_x_rot, _r_rot))))
 
 #define __root(x, r) BLOC(__pow_flt((x), typecast(x, (1.0 / r))))
+
+/*
+ * Извлечение корня по основанию с проверкой
+*/
+#define root_chk(r, x, y)
 
 /*
  * Логарифм числа по основанию
@@ -364,6 +404,12 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     default: 0))
 
 /*
+ * Логарифм числа по основанию с проверкой
+*/
+#define logm_chk(r, x, y)
+
+
+/*
  * Обратные величины
  * Z ÷ a = b -> div(Z, a) ~> div(b, Z) || mul(a, b)
  * Z / a = b -> qut(Z, a) ~> qut(b, Z) || mul(a, b)
@@ -371,6 +417,9 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
  * Y √ Z = X -> rot(Z, Y) ~> pow(X, Y) || log(Z, X)
  * Z _ X = Y -> log(Z, X) ~> rot(Y, Z) || pow(X, Y)
 */
+
+
+//================= ДОПОЛНИТЕЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ОПЕРАЦИИ И ФУНКЦИИ =================================================================================
 
 /*
  * Расстояние между значениями
@@ -535,7 +584,7 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     long double:        __prev_num_flt(x),                                                                                                           \
     default:            __prev_num_int(x))
 #define __prev_num_int(x) BLOC(typecast((x), (x) - one(x)))
-#define __prev_num_flt(x) BLOC(nextafter((x), neg_inf()))
+#define __prev_num_flt(x) BLOC(nextafter((x), neg_inf(x)))
 
 /*
  * Следующее представимое число, по направлению к положительной бесконечности
@@ -551,7 +600,7 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     long double:        __next_num_flt(x),                                                                                                           \
     default:            __next_num_int(x))
 #define __next_num_int(x) BLOC(typecast((x), (x) + one(x)))
-#define __next_num_flt(x) BLOC(nextafter((x), pos_inf()))
+#define __next_num_flt(x) BLOC(nextafter((x), pos_inf(x)))
 
 //================= БАЗОВЫЕ ОПЕРАЦИИ СРАВНЕНИЯ =======================================================================================================
 

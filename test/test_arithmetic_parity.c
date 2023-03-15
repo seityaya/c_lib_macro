@@ -65,13 +65,13 @@ UT_FUNC_GEN(test_arithmetic_parity) {
          } UT_GROUP_END;
 
          UT_GROUP_BEG(is_inf) {
-             UT_ASSERT_BOOL_TRUE(is_inf(pos_inf()));
-             UT_ASSERT_BOOL_TRUE(is_inf(neg_inf()));
+             UT_ASSERT_BOOL_TRUE(is_inf(pos_inf(fmax_t)));
+             UT_ASSERT_BOOL_TRUE(is_inf(neg_inf(fmax_t)));
          } UT_GROUP_END;
 
          UT_GROUP_BEG(is_nan) {
-             UT_ASSERT_BOOL_TRUE(is_nan(pos_nan()));
-             UT_ASSERT_BOOL_TRUE(is_nan(neg_nan()));
+             UT_ASSERT_BOOL_TRUE(is_nan(pos_nan(fmax_t)));
+             UT_ASSERT_BOOL_TRUE(is_nan(neg_nan(fmax_t)));
          } UT_GROUP_END;
 
          UT_GROUP_BEG(is_nor) {
@@ -84,10 +84,10 @@ UT_FUNC_GEN(test_arithmetic_parity) {
          } UT_GROUP_END;
 
          UT_GROUP_BEG(fp_classify) {
-             UT_ASSERT_BOOL_TRUE(fp_classify(pos_inf()) ==  FP_INFINITE );
-             UT_ASSERT_BOOL_TRUE(fp_classify(neg_inf()) ==  FP_INFINITE );
-             UT_ASSERT_BOOL_TRUE(fp_classify(pos_nan()) ==  FP_NAN      );
-             UT_ASSERT_BOOL_TRUE(fp_classify(neg_nan()) ==  FP_NAN      );
+             UT_ASSERT_BOOL_TRUE(fp_classify(pos_inf(fmax_t)) ==  FP_INFINITE );
+             UT_ASSERT_BOOL_TRUE(fp_classify(neg_inf(fmax_t)) ==  FP_INFINITE );
+             UT_ASSERT_BOOL_TRUE(fp_classify(pos_nan(fmax_t)) ==  FP_NAN      );
+             UT_ASSERT_BOOL_TRUE(fp_classify(neg_nan(fmax_t)) ==  FP_NAN      );
              UT_ASSERT_BOOL_TRUE(fp_classify(+0.0)      ==  FP_ZERO     );
              UT_ASSERT_BOOL_TRUE(fp_classify(-0.0)      ==  FP_ZERO     );
              UT_ASSERT_BOOL_TRUE(fp_classify( 0.0)      ==  FP_ZERO     );
