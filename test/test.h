@@ -17,6 +17,7 @@ UT_FUNC_GEN(test_arithmetic_segment);
 UT_FUNC_GEN(test_arithmetic_decomposition);
 UT_FUNC_GEN(test_arithmetic_iter);
 UT_FUNC_GEN(test_arithmetic_math);
+UT_FUNC_GEN(test_arithmetic_math_chk);
 UT_FUNC_GEN(test_arithmetic_compare);
 UT_FUNC_GEN(test_arithmetic_parity);
 UT_FUNC_GEN(test_arithmetic_round);

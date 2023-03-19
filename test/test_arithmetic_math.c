@@ -11,6 +11,8 @@
 UT_FUNC_GEN(test_arithmetic_math) {
     UT_GROUP_BEG(math) {
         UT_GROUP_BEG(sum) {
+            UT_ASSERT_NUM_EQUAL(14, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, sum(1, 1))))))))))))));
+
             UT_ASSERT_NUM_EQUAL( 2, sum( 1, 1));
             UT_ASSERT_NUM_EQUAL( 0, sum(-1, 1));
 
@@ -52,14 +54,13 @@ UT_FUNC_GEN(test_arithmetic_math) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(mod) {
-            UT_ASSERT_NUM_EQUAL(   1, mod( 4,  3));
-            UT_ASSERT_NUM_EQUAL(   1, mod( 5,  2));
-            UT_ASSERT_NUM_EQUAL(   1, mod( 5, -2));
-            UT_ASSERT_NUM_EQUAL(   0, mod( 6,  2));
-            UT_ASSERT_NUM_EQUAL(   0, mod( 6, -2));
-
-            UT_ASSERT_NUM_EQUAL(  -1, mod(-5,  2));
-            UT_ASSERT_NUM_EQUAL(   0, mod(-6,  2));
+            UT_ASSERT_NUM_EQUAL(   1, mod(  4,  3));
+            UT_ASSERT_NUM_EQUAL(   1, mod(  5,  2));
+            UT_ASSERT_NUM_EQUAL(   1, mod(  5, -2));
+            UT_ASSERT_NUM_EQUAL(   0, mod(  6,  2));
+            UT_ASSERT_NUM_EQUAL(   0, mod(  6, -2));
+            UT_ASSERT_NUM_EQUAL(  -1, mod( -5,  2));
+            UT_ASSERT_NUM_EQUAL(   0, mod( -6,  2));
 
             UT_ASSERT_FLT_EQUAL( 0.1, mod( 4.0, 0.3));
             UT_ASSERT_FLT_EQUAL( 0.1, mod( 4.0,-0.3));
@@ -75,9 +76,9 @@ UT_FUNC_GEN(test_arithmetic_math) {
             UT_ASSERT_BOOL_TRUE(DIV_MOD( 6,-2));
             UT_ASSERT_BOOL_TRUE(DIV_MOD(-6, 2));
             UT_ASSERT_BOOL_TRUE(DIV_MOD(-6,-2));
-
-            UT_ASSERT_BOOL_TRUE(DIV_MOD(-5, 2));
-            UT_ASSERT_BOOL_TRUE(DIV_MOD(-6, 2));
+            UT_ASSERT_BOOL_TRUE(DIV_MOD( -5, 2));
+            UT_ASSERT_BOOL_TRUE(DIV_MOD( -6, 2));
+            UT_ASSERT_BOOL_TRUE(DIV_MOD(-20, 7));
 
             UT_ASSERT_BOOL_TRUE(DIV_MOD( 4.0, 0.3));
             UT_ASSERT_BOOL_TRUE(DIV_MOD( 4.0,-0.3));
@@ -86,6 +87,9 @@ UT_FUNC_GEN(test_arithmetic_math) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(qut) {
+            UT_ASSERT_FLT_EQUAL( 0.3333333333333333, qut(   1,    3));
+            UT_ASSERT_FLT_EQUAL( 1.3333333333333333, qut(   4,    3));
+
             UT_ASSERT_FLT_EQUAL( 0.3333333333333333, qut( 1.0,  3.0));
             UT_ASSERT_FLT_EQUAL( 1.3333333333333333, qut( 4.0,  3.0));
             UT_ASSERT_FLT_EQUAL( 1.25, qut( 5.0,  4.0));
@@ -101,20 +105,20 @@ UT_FUNC_GEN(test_arithmetic_math) {
             UT_ASSERT_FLT_EQUAL( -INFINITY, qut( -5.0,  0.0));
         } UT_GROUP_END;
 
-        UT_GROUP_BEG(pow) {
+        UT_GROUP_BEG(powm) {
             UT_ASSERT_FLT_EQUAL(8.0, powm( 2.0,  3.0));
             UT_ASSERT_FLT_EQUAL(3.0, powm( 9.0,  0.5));
             UT_ASSERT_FLT_EQUAL(0.33333333333333333, pow( 9.0, -0.5));
         } UT_GROUP_END;
 
-        UT_GROUP_BEG(rot) {
+        UT_GROUP_BEG(root) {
             UT_ASSERT_FLT_EQUAL(4.0, root(16.0,  2.0));
             UT_ASSERT_FLT_EQUAL(2.0, root( 8.0,  3.0));
             UT_ASSERT_FLT_EQUAL(9.0, root( 3.0,  0.5));
             UT_ASSERT_NFLT_EQUAL(9.0, root( 0.33333333333333333333333, -0.5), 0.00000000000001);
         } UT_GROUP_END;
 
-        UT_GROUP_BEG(log) {
+        UT_GROUP_BEG(logm) {
             UT_ASSERT_FLT_EQUAL(3.0, logm(8.0 , 2.0 ));
             UT_ASSERT_FLT_EQUAL(2.0, logm(9.0 , 3.0));
             UT_ASSERT_FLT_EQUAL(0.33333333333333333, logm( 9.0, -0.5));

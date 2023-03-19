@@ -22,6 +22,7 @@ add_executable(
     test_arithmetic_assignment.c
     test_arithmetic_segment.c
     test_arithmetic_math.c
+    test_arithmetic_math_chk.c
     test_arithmetic_decomposition.c
     test_arithmetic_iter.c
     test_arithmetic_compare.c

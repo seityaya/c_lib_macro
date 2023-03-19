@@ -101,22 +101,22 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Унарный постфиксный инкремент
 */
-#define posadd(x) BLOC((x)++)
+#define post_add(x) BLOC((x)++)
 
 /*
  * Унарный постфиксный декремент
 */
-#define posdif(x) BLOC((x)--)
+#define post_dif(x) BLOC((x)--)
 
 /*
  * Унарный префиксный инкремент
 */
-#define preadd(x) BLOC(++(x))
+#define pref_add(x) BLOC(++(x))
 
 /*
  * Унарный префиксный декремент
 */
-#define predif(x) BLOC(--(x))
+#define pref_dif(x) BLOC(--(x))
 
 //================= БАЗОВЫЕ ОПЕРАЦИИ ПРИСВАИВАНИЯ ====================================================================================================
 
@@ -124,11 +124,13 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
  * Присваивание
  * Assignment
 */
-#define as(dest, src)                                                                                                                                \
+#define as(dst, src)                                                                                                                                 \
     BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG((dest), (src), _x, _src_as,                                                                                                       \
-    BLOC(__as((dest), (_src_as)))))
-#define __as(dest, src) BLOC((dest) = (src))
+    COMPILE_WCHDOG((dst), (src), _dst_as, _src_as,                                                                                                   \
+    BLOC(__as((dst), (_src_as)))))
+
+#define __as(dst, src)                                                                                                                               \
+    BLOC((dst) = (src))
 
 /*
  * Обмен
@@ -138,6 +140,12 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     BLOC(                                                                                                                                            \
     COMPILE_WCHDOG((x), (y), _x_swap, _y_swap,                                                                                                       \
     BLOC((x) = _y_swap; (y) = _x_swap)))
+
+#define __swap(x, y)                                                                                                                                 \
+    BLOC(                                                                                                                                            \
+    COMPILE_NO_SIDE((x), _x_swap);                                                                                                                   \
+    COMPILE_NO_SIDE((y), _y_swap);                                                                                                                   \
+    BLOC((x) = _y_swap; (y) = _x_swap))
 
 //================= ЧАСТИ ВЕЩЕСТВЕНЫХ И КОМПЛЕКСНЫХ ЧИСЕЛ ============================================================================================
 
@@ -149,7 +157,6 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define get_int(x)                                                                                                                                   \
     BLOC(                                                                                                                                            \
     COMPILE_NO_SIDE((x), _x_int);                                                                                                                    \
-    COMPILE_ASSERT(nq(std_type_sigum(_x_int), STD_TYPE_UNDEFSIGNUM),   _TYPE_NUM);                                                                   \
     COMPILE_ASSERT(eq(std_type_group(_x_int), STD_TYPE_GROUP_COMPLEX), _TYPE_NUM);                                                                   \
     BLOC(__get_int(_x_int)))
 
@@ -167,16 +174,16 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define get_rem(x)                                                                                                                                   \
     BLOC(                                                                                                                                            \
     COMPILE_NO_SIDE((x), _x_rem);                                                                                                                    \
-    COMPILE_ASSERT(nq(std_type_sigum(_x_rem), STD_TYPE_UNDEFSIGNUM),   _TYPE_NUM);                                                                   \
     COMPILE_ASSERT(eq(std_type_group(_x_rem), STD_TYPE_GROUP_COMPLEX), _TYPE_NUM);                                                                   \
     BLOC(__get_rem(_x_rem)))
 
-#define __get_rem(x) BLOC(typecast(x, __dif(x, __get_int(x))))
+#define __get_rem(x)                                                                                                                                 \
+    BLOC(typecast((x), __dif((x), __get_int(x))))
 
 /*
  * Вещественная часть числа
  * Принимает:  Число типа complex
- * Возвращает: Вещественную часть числа типа fmax_t
+ * Возвращает: Вещественную часть числа типа X
 */
 #define get_real(x)                                                                                                                                  \
     BLOC(                                                                                                                                            \
@@ -184,7 +191,8 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_ASSERT(nq(std_type_group(_x_real), STD_TYPE_GROUP_COMPLEX), _TYPE_NUM);                                                                  \
     BLOC(__get_real(_x_real)))
 
-#define __get_real(x) BLOC(                                                                                                                          \
+#define __get_real(x)                                                                                                                                \
+    BLOC(                                                                                                                                            \
     _Generic(x,                                                                                                                                      \
     float complex: crealf(x),                                                                                                                        \
     double complex: creal(x),                                                                                                                        \
@@ -194,7 +202,7 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Мнимая часть числа
  * Принимает:  Число типа complex
- * Возвращает: Мнимую часть числа типа fmax_t
+ * Возвращает: Мнимую часть числа типа X
 */
 #define get_imag(x)                                                                                                                                  \
     BLOC(                                                                                                                                            \
@@ -202,7 +210,8 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_ASSERT(nq(std_type_group(_x_imag), STD_TYPE_GROUP_COMPLEX), _TYPE_NUM);                                                                  \
     BLOC(__get_imag(_x_imag)))
 
-#define __get_imag(x) BLOC(                                                                                                                          \
+#define __get_imag(x)                                                                                                                                \
+    BLOC(                                                                                                                                            \
     _Generic(x,                                                                                                                                      \
     float complex: cimagf(x),                                                                                                                        \
     double complex: cimag(x),                                                                                                                        \
@@ -222,12 +231,30 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_WCHDOG((x), (y), _x_sum, _y_sum,                                                                                                         \
     BLOC(__sum(_x_sum, _y_sum))))
 
-#define __sum(x, y) BLOC((x) + (y))
+#define __sum(x, y)                                                                                                                                  \
+    BLOC((x) + (y))
 
 /*
  * Сумма с проверкой
+ * Возвращает true - если результат операции дает переполнение
 */
-#define sum_chk(r, x, y)
+#define sum_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_, _x_sum, _y_sum,                                                                                             \
+    BLOC(__sum_chk((r), _x_sum, _y_sum))))
+
+#define __sum_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__sum_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __sum(x, y)); false))
+
+#define __sum_chk_overflow(x, y)                                                                                                                     \
+    BLOC(                                                                                                                                            \
+    COMPILE_NO_SIDE((x), res);                                                                                                                       \
+    __builtin_add_overflow(x, y, &res))        /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Разность
@@ -240,12 +267,30 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_WCHDOG((x), (y), _x_dif, _y_dif,                                                                                                         \
     BLOC(__dif(_x_dif, _y_dif))))
 
-#define __dif(x, y) BLOC((x) - (y))
+#define __dif(x, y)                                                                                                                                  \
+    BLOC((x) - (y))
 
 /*
  * Разность с проверкой
+ * Возвращает true - если результат операции дает переполнение
 */
-#define dif_chk(r, x, y)
+#define dif_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_, _x_dif, _y_dif,                                                                                             \
+    BLOC(__dif_chk((r), _x_dif, _y_dif))))
+
+#define __dif_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__dif_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __dif(x, y)); false))
+
+#define __dif_chk_overflow(x, y)                                                                                                                     \
+    BLOC(                                                                                                                                            \
+    COMPILE_NO_SIDE((x), res);                                                                                                                       \
+    __builtin_sub_overflow(x, y, &res))        /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Умножение
@@ -258,15 +303,35 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_WCHDOG((x), (y), _x_mul, _y_mul,                                                                                                         \
     BLOC(__mul(_x_mul, _y_mul))))
 
-#define __mul(x, y) BLOC((x) * (y))
+#define __mul(x, y)                                                                                                                                  \
+    BLOC((x) * (y))
 
 /*
  * Умножение с проверкой
+ * Возвращает true - если результат операции дает переполнение
 */
-#define mul_chk(r, x, y)
+#define mul_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_, _x_mul, _y_mul,                                                                                             \
+    BLOC(__mul_chk((r), _x_mul, _y_mul))))
+
+#define __mul_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__mul_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __mul(x, y)); false))
+
+#define __mul_chk_overflow(x, y)                                                                                                                     \
+    BLOC(                                                                                                                                            \
+    COMPILE_NO_SIDE((x), res);                                                                                                                       \
+    __builtin_mul_overflow(x, y, &res))        /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
- * Целое от деления
+ * Целое от деления или усеченное деление
+ * При делении отбрасывается дробная часть, или просходит округление к нулю
+ * Остаток вычислется функцией mod
  * Division
  * Принимает:  Два числа типа Х
  * Возвращает: Целое от целочисленного деления типа Х, без потери знака
@@ -278,17 +343,36 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 
 #define __div(x, y)                                                                                                                                  \
     BLOC(                                                                                                                                            \
-    UNIT(eq(std_type_sigum(x), STD_TYPE_SIGNUM)) ?                                                                                                   \
+    UNIT(eq(std_type_sigum(x), STD_TYPE_SIGNUM))   ?                                                                                                 \
     BLOC(typecast((x), typecast(imax_t, (x / y)))) :                                                                                                 \
     BLOC(typecast((x), typecast(umax_t, (x / y)))))
 
 /*
- * Целое от деления с проверкой
+ * Целое от деления
+ * Возвращает true - если результат операции дает переполнение или происходит деление на ноль
 */
-#define div_chk(r, x, y)
+#define div_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_, _x_div, _y_div,                                                                                             \
+    BLOC(__div_chk((r), _x_div, _y_div))))
+
+#define __div_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__div_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __div(x, y)); false))
+
+#define __div_chk_overflow(x, y)                                                                                                                     \
+    BLOC(                                                                                                                                            \
+    UNIT(is_zero(y)) ? BLOC(true) :                                                                                                                  \
+    BLOC((x == typemin(x)) && (y == -one(y)))) /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Остаток от деления
+ * При взятии остатка знак остатка равен знаку делимого
+ * Частное вычисляется функцией div
  * Remainder
  * Принимает:  Два числа типа Х
  * Возвращает: Остаток от целочисленного деления типа Х
@@ -299,16 +383,117 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     BLOC(__mod(_x_mod, _y_mod))))
 
 #define __mod(x, y)                                                                                                                                  \
+    BLOC(                                                                                                                                            \
     UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_CHAR | STD_TYPE_GROUP_SINT | STD_TYPE_GROUP_UINT, x)) ?                                                    \
     BLOC(__mod_int(COMPILE_INT_OR_ZERO(x), COMPILE_INT_OR_ZERO(y))) :                                                                                \
-    BLOC(__mod_flt(COMPILE_FLT_OR_ZERO(x), COMPILE_FLT_OR_ZERO(y)))
+    BLOC(__mod_flt(COMPILE_FLT_OR_ZERO(x), COMPILE_FLT_OR_ZERO(y))))
 #define __mod_int(x, y) BLOC((x) % (y))
 #define __mod_flt(x, y) BLOC(typecast((x), ((x) - __get_int((x) / (y)) * (y))))
 
 /*
- * Остаток от деления с проверкой
+ * Остаток от деления
+ * Возвращает true - если результат операции дает переполнение или происходит взятие модуля от ноля
 */
-#define mod_chk(r, x, y)
+#define mod_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_mod_, _x_mod, _y_mod,                                                                                         \
+    BLOC(__mod_chk(r, _x_mod, _y_mod))))
+
+#define __mod_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__mod_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __mod(x, y)); false))
+
+#define __mod_chk_overflow(x, y)               /* TODO */                                                                                                      \
+    BLOC(is_zero(y))
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+#define r_truncat 1
+#define r_floored 2
+#define r_euclide 3
+#define r_rounded 4
+#define r_ceiling 5
+
+/*
+ * Целое от деления
+ * При делении просходит округление вниз или к отрицательной бесконечности
+ * Division
+ * Принимает:  Два числа типа Х
+ * Возвращает: Целое от целочисленного деления типа Х, без потери знака
+*/
+#define rat(x, y, t)                                                                                                                                 \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_rat, _y_rat,                                                                                                         \
+    BLOC(__rat(_x_rat, _y_rat))))
+
+#define __rat(x, y)                                                                                                                                  \
+    BLOC(                                                                                                                                            \
+    UNIT(eq(std_type_sigum(x), STD_TYPE_SIGNUM)) ?                                                                                                   \
+    BLOC(typecast((x), typecast(imax_t, (0)))) :                                                                                                     \
+    BLOC(typecast((x), typecast(umax_t, (0)))))
+
+/*
+ * Целое от деления по проавилам языка с проверкой
+ * Возвращает true - если результат операции дает переполнение или происходит деление на ноль
+*/
+#define rat_chk(r, x, y, t)                                                                                                                          \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_, _x_rat, _y_rat,                                                                                             \
+    BLOC(__rat_chk((r), _x_rat, _y_rat))))
+
+#define __rat_chk(r, x, y, t)                                                                                                                        \
+    BLOC(                                                                                                                                            \
+    UNIT(__rat_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __rat(x, y)); false))
+
+#define __rat_chk_overflow(x, y)                                                                                                                     \
+    BLOC(0)                                    /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+
+/*
+ * Остаток от деления
+ * При взятии остатка знак остатка равен знаку делителя
+ * Частное вычисляется функцией rat
+ * Remainder
+ * Принимает:  Два числа типа Х
+ * Возвращает: Остаток от целочисленного деления типа Х
+*/
+#define rem(x, y, t)                                                                                                                                 \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_rem, _y_rem,                                                                                                         \
+    BLOC(__rem(_x_rem, _y_rem))))
+
+#define __rem(x, y, t)                                                                                                                               \
+    BLOC(                                                                                                                                            \
+    UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_CHAR | STD_TYPE_GROUP_SINT | STD_TYPE_GROUP_UINT, x)) ?                                                    \
+    BLOC(__rem_int(COMPILE_INT_OR_ZERO(x), COMPILE_INT_OR_ZERO(y))) :                                                                                \
+    BLOC(__rem_flt(COMPILE_FLT_OR_ZERO(x), COMPILE_FLT_OR_ZERO(y))))
+#define __rem_int(x, y) BLOC(0)
+#define __rem_flt(x, y) BLOC(0)
+
+/*
+ * Остаток от деления по проавилам языка с проверкой
+ * Возвращает true - если результат операции дает переполнение или происходит взятие модуля от ноля
+*/
+#define rem_chk(r, x, y, t)                                                                                                                          \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG_3((r), (x), (y), _r_rem_, _x_rem, _y_rem,                                                                                         \
+    BLOC(__rem_chk(r, _x_rem, _y_rem))))
+
+#define __rem_chk(r, x, y, t)                                                                                                                        \
+    BLOC(                                                                                                                                            \
+    UNIT(__rem_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __rem(x, y)); false))
+
+#define __rem_chk_overflow(x, y)                                                                                                                     \
+    BLOC(0)                                    /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Полное деление
@@ -321,12 +506,31 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     COMPILE_WCHDOG((x), (y), _x_qut, _y_qut,                                                                                                         \
     BLOC(__qut(_x_qut, _y_qut))))
 
-#define __qut(x, y) BLOC(typecast(fmax_t, typecast(fmax_t, (x)) / typecast(fmax_t, (y))))
+#define __qut(x, y)                                                                                                                                  \
+    BLOC(                                                                                                                                            \
+    typecast(fmax_t, typecast(fmax_t, (x)) / typecast(fmax_t, (y))))
 
 /*
  * Полное деление с проверкой
+ * Возвращает true - если результат операции дает переполнение или происходит деление на ноль
 */
-#define qut_chk(r, x, y)
+#define qut_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_qut, _y_qut,                                                                                                         \
+    BLOC(__qut_chk((r), _x_qut, _y_qut))))
+
+#define __qut_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__qut_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __qut(x, y)); false))
+
+#define __qut_chk_overflow(x, y)                                                                                                                     \
+    BLOC(                                                                                                                                            \
+    UNIT(is_zero(y)) ? BLOC(true) :                                                                                                                  \
+    BLOC((x == typemin(x)) && (y == -one(y)))) /* TODO */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Возведение в степень
@@ -344,10 +548,10 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_UINT, x)) ?                                                                                                \
     BLOC(__pow_int(COMPILE_INT_OR_ZERO(x), COMPILE_INT_OR_ZERO(p))) :                                                                                \
     BLOC(                                                                                                                                            \
-    UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_FLT | STD_TYPE_GROUP_COMPLEX, x)) ?                                                                        \
+    UNIT(COMPILE_GROUPCHEK(STD_TYPE_GROUP_SINT | STD_TYPE_GROUP_FLT | STD_TYPE_GROUP_COMPLEX, x)) ?                                                  \
     BLOC(__pow_flt(COMPILE_FLT_OR_ZERO(x), COMPILE_FLT_OR_ZERO(p))) :                                                                                \
     BLOC(0)))
-#define __pow_int(x, p) BLOC(fmax_t __x = typecast(fmax_t, x); fmax_t __p = typecast(fmax_t, p); typecast((x), __pow_flt(__x, __p)))
+#define __pow_int(x, p) BLOC(typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __x *= x; } __x; )
 #define __pow_flt(x, p) BLOC(                                                                                                                        \
     _Generic(x,                                                                                                                                      \
     float: powf(x, p),                                                                                                                               \
@@ -361,7 +565,21 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Возведение в степень с проверкой
 */
-#define powm_chk(r, x, y)
+#define powm_chk(r, x, y)                                                                                                                             \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_pow, _y_pow,                                                                                                         \
+    BLOC(__pow_chk((r), _x_pow, _y_pow))))
+
+#define __pow_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__pow_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __pow(x, y)); false))
+
+#define __pow_chk_overflow(x, y)                                                                                                                     \
+    BLOC(true)                                 /* TODO IMPLEMENTATION */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Извлечение корня по основанию
@@ -379,7 +597,21 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Извлечение корня по основанию с проверкой
 */
-#define root_chk(r, x, y)
+#define root_chk(r, x, y)                                                                                                                            \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_rot, _y_rot,                                                                                                         \
+    BLOC(__rot_chk((r), _x_rot, _y_rot))))
+
+#define __rot_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__rot_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __rot(x, y)); false))
+
+#define __rot_chk_overflow(x, y)                                                                                                                     \
+    BLOC(0)                                /* TODO IMPLEMENTATION */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Логарифм числа по основанию
@@ -406,8 +638,21 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 /*
  * Логарифм числа по основанию с проверкой
 */
-#define logm_chk(r, x, y)
+#define logm_chk(r, x, y)                                                                                                                            \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_log, _y_log,                                                                                                         \
+    BLOC(__log_chk((r), _x_log, _y_log))))
 
+#define __log_chk(r, x, y)                                                                                                                           \
+    BLOC(                                                                                                                                            \
+    UNIT(__log_chk_overflow(x, y))             ?                                                                                                     \
+    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
+    BLOC(__as(r, __log(x, y)); false))
+
+#define __log_chk_overflow(x, y)                                                                                                                     \
+    BLOC0)                                     /* TODO IMPLEMENTATION */
+
+//----------------------------------------------------------------------------------------------------------------------------------------------------
 
 /*
  * Обратные величины
@@ -417,7 +662,6 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
  * Y √ Z = X -> rot(Z, Y) ~> pow(X, Y) || log(Z, X)
  * Z _ X = Y -> log(Z, X) ~> rot(Y, Z) || pow(X, Y)
 */
-
 
 //================= ДОПОЛНИТЕЛЬНЫЕ МАТЕМАТИЧЕСКИЕ ОПЕРАЦИИ И ФУНКЦИИ =================================================================================
 
@@ -602,6 +846,38 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
 #define __next_num_int(x) BLOC(typecast((x), (x) + one(x)))
 #define __next_num_flt(x) BLOC(nextafter((x), pos_inf(x)))
 
+/*
+ * Следующее представимое число, по направлению от числа
+*/
+#define prev_num_to(x, n)                                                                                                                            \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_num, _n_num,                                                                                                         \
+    BLOC(__prev_num_to(_x_num, _n_num)))
+
+#define __prev_num_to(x, n) _Generic((x),                                                                                                            \
+    float:                  __prev_num_to_flt(x, n),                                                                                                 \
+    double:                 __prev_num_to_flt(x, n),                                                                                                 \
+    long double:            __prev_num_to_flt(x, n),                                                                                                 \
+    default:                __prev_num_to_int(x, n))
+#define __prev_num_to_int(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+#define __prev_num_to_flt(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+
+/*
+ * Следующее представимое число, по направлению к числу
+*/
+#define next_num_to(x, n)                                                                                                                            \
+    BLOC(                                                                                                                                            \
+    COMPILE_WCHDOG((x), (y), _x_num, _n_num,                                                                                                         \
+    BLOC(__next_num_to(_x_num, _n_num)))
+
+#define __next_num_to(x, n)  _Generic((x),                                                                                                           \
+    float:                   __next_num_to_flt(x),                                                                                                   \
+    double:                  __next_num_to_flt(x),                                                                                                   \
+    long double:             __next_num_to_flt(x),                                                                                                   \
+    default:                 __next_num_to_int(x))
+#define __next_num_to_int(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+#define __next_num_to_flt(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+
 //================= БАЗОВЫЕ ОПЕРАЦИИ СРАВНЕНИЯ =======================================================================================================
 
 /*
@@ -687,31 +963,31 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
  * Проверка, что число положительное, но не ноль
 */
 #define is_pos(x)                                                                                                                                    \
-    BLOC(((x) > 0))
+    BLOC(((x) > zero(x)))
 
 /*
  * Проверка, что число отрицательное, но не ноль
 */
 #define is_neg(x)                                                                                                                                    \
-    BLOC(((x) < 0))
+    BLOC(((x) < zero(x)))
 
 /*
  * Проверка, что число положительное или ноль
 */
 #define is_pos_or_zero(x)                                                                                                                            \
-    BLOC(((x) >= 0))
+    BLOC(((x) >= zero(x)))
 
 /*
  * Проверка, что число отрицательное или ноль
 */
 #define is_neg_or_zero(x)                                                                                                                            \
-    BLOC(((x) <= 0))
+    BLOC(((x) <= zero(x)))
 
 /*
  * Проверка, что число ноль
 */
 #define is_zero(x)                                                                                                                                   \
-    BLOC(((x) == 0))
+    BLOC(((x) == zero(x)))
 
 /*
  * Является ли число конечным
@@ -808,7 +1084,7 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f);
     trunc(x))
 
 /*
- * Округление к бесконечности
+ * Округление к бесконечности или округление от нуля
 */
 #define round_inf(x)                                                                                                                                 \
     BLOC(                                                                                                                                            \

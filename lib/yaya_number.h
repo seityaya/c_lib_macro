@@ -136,38 +136,38 @@ typedef union allt{
     f64_t     fp64t;
 } allt;
 
-#define typemin(x) ({                   \
-    typeof(x) _x;   _Generic((_x),      \
-    char:               CHAR_MIN,       \
-    is8_t:              INT8_MIN,       \
-    is16_t:             INT16_MIN,      \
-    is32_t:             INT32_MIN,      \
-    is64_t:             INT64_MIN,      \
-    us8_t:              0,              \
-    us16_t:             0,              \
-    us32_t:             0,              \
-    us64_t:             0,              \
-    f32_t:              __FLT32_MIN__,  \
-    f64_t:              __FLT64_MIN__,  \
-    f128_t:             __FLT128_MIN__, \
-    default:            0);             \
+#define typemin(x) ({                          \
+    typeof(x) _x;   _Generic((_x),             \
+    char:               CHAR_MIN,              \
+    is8_t:               i8_c(INT8_MIN),       \
+    is16_t:             i16_c(INT16_MIN),      \
+    is32_t:             i32_c(INT32_MIN),      \
+    is64_t:                  (INT64_MIN),      \
+    us8_t:               u8_c(0),              \
+    us16_t:             u16_c(0),              \
+    us32_t:             u32_c(0),              \
+    us64_t:             u64_c(0),              \
+    f32_t:              __FLT32_MIN__,         \
+    f64_t:              __FLT64_MIN__,         \
+    f128_t:             __FLT128_MIN__,        \
+    default:            0);                    \
 })
 
-#define typemax(x) ({                   \
-    typeof(x) _x;   _Generic((_x),      \
-    char:               CHAR_MAX,       \
-    is8_t:              INT8_MAX,       \
-    is16_t:             INT16_MAX,      \
-    is32_t:             INT32_MAX,      \
-    is64_t:             INT64_MAX,      \
-    us8_t:              UINT8_MAX,      \
-    us16_t:             UINT16_MAX,     \
-    us32_t:             UINT32_MAX,     \
-    us64_t:             UINT64_MAX,     \
-    f32_t:              __FLT32_MAX__,  \
-    f64_t:              __FLT64_MAX__,  \
-    f128_t:             __FLT128_MAX__, \
-    default:            0);             \
+#define typemax(x) ({                          \
+    typeof(x) _x;   _Generic((_x),             \
+    char:               CHAR_MAX,              \
+    is8_t:               i8_c(INT8_MAX),       \
+    is16_t:             i16_c(INT16_MAX),      \
+    is32_t:             i32_c(INT32_MAX),      \
+    is64_t:                  (INT64_MAX),      \
+    us8_t:               u8_c(UINT8_MAX),      \
+    us16_t:             u16_c(UINT16_MAX),     \
+    us32_t:                  (UINT32_MAX),     \
+    us64_t:                  (UINT64_MAX),     \
+    f32_t:              __FLT32_MAX__,         \
+    f64_t:              __FLT64_MAX__,         \
+    f128_t:             __FLT128_MAX__,        \
+    default:            0);                    \
 })
 
 #define typeeps(x) ({ \

@@ -6,7 +6,6 @@
 //Copyright © 2020-2023 Seityagiya Terlekchi. All rights reserved.
 
 #include "test.h"
-#include "yaya_arithmetic.h"
 
 int main(void) {
     unit_test_t MyUnTest = {0};
@@ -25,6 +24,7 @@ int main(void) {
                                     {(void*)test_arithmetic_decomposition, 1},
                                     {(void*)test_arithmetic_iter,          1},
                                     {(void*)test_arithmetic_math,          1},
+                                    {(void*)test_arithmetic_math_chk,      1},
                                     {(void*)test_arithmetic_compare,       1},
                                     {(void*)test_arithmetic_parity,        1},
                                     {(void*)test_arithmetic_round,         1},
