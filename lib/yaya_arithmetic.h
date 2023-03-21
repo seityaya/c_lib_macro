@@ -998,7 +998,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     double:             __prev_num_flt(x),                                                                                                           \
     long double:        __prev_num_flt(x),                                                                                                           \
     default:            __prev_num_int(x))
-#define __prev_num_int(x) BLOC(typecast((x), (x) - one(x)))
+#define __prev_num_int(x) BLOC(typecast((x), (x) - one(x))) /* TODO LIMIT */
 #define __prev_num_flt(x) BLOC(typecast((x), nextafter((x), neg(inf(x)))))
 
 /*
@@ -1014,7 +1014,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     double:             __next_num_flt(x),                                                                                                           \
     long double:        __next_num_flt(x),                                                                                                           \
     default:            __next_num_int(x))
-#define __next_num_int(x) BLOC(typecast((x), (x) + one(x)))
+#define __next_num_int(x) BLOC(typecast((x), (x) + one(x))) /* TODO LIMIT */
 #define __next_num_flt(x) BLOC(typecast((x), nextafter((x), pos(inf(x)))))
 
 /*

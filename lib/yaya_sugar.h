@@ -51,7 +51,6 @@ BEG_C_DECLARATION
 #define beg                  { do {
 #define end                  break; } while(true); } MD_SC
 
-
 /*
  * Переопределение стандартных макросов
 */

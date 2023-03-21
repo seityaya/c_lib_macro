@@ -20,33 +20,33 @@ BEG_C_DECLARATION
 #include "yaya_concat.h"
 
 #define COMPILE_CHR_OR_ZERO(A) _Generic((A),                                               \
-    char               : (A), const char               : (A),                              \
-    default            : ('\0'))
+    char                : (A), const char                : (A),                            \
+    default             : ('\0'))
 
 #define COMPILE_INT_OR_ZERO(A) _Generic((A),                                               \
-    signed char        : (A), const signed char        : (A),                              \
-    unsigned char      : (A), const unsigned char      : (A),                              \
-    signed int         : (A), const signed int         : (A),                              \
-    unsigned int       : (A), const unsigned int       : (A),                              \
-    signed short       : (A), const signed short       : (A),                              \
-    unsigned short     : (A), const unsigned short     : (A),                              \
-    signed long        : (A), const signed long        : (A),                              \
-    unsigned long      : (A), const unsigned long      : (A),                              \
-    signed long long   : (A), const signed long long   : (A),                              \
-    unsigned long long : (A), const unsigned long long : (A),                              \
-    default            : (0))
+    signed char         : (A), const signed char         : (A),                            \
+    unsigned char       : (A), const unsigned char       : (A),                            \
+    signed int          : (A), const signed int          : (A),                            \
+    unsigned int        : (A), const unsigned int        : (A),                            \
+    signed short        : (A), const signed short        : (A),                            \
+    unsigned short      : (A), const unsigned short      : (A),                            \
+    signed long         : (A), const signed long         : (A),                            \
+    unsigned long       : (A), const unsigned long       : (A),                            \
+    signed long long    : (A), const signed long long    : (A),                            \
+    unsigned long long  : (A), const unsigned long long  : (A),                            \
+    default             : (0))
 
 #define COMPILE_FLT_OR_ZERO(A) _Generic((A),                                               \
-    float        : (A), const float       : (A),                                           \
-    double       : (A), const double      : (A),                                           \
-    long double  : (A), const long double : (A),                                           \
-    default      : typecast(A, 0))
+    float               : (A), const float               : (A),                            \
+    double              : (A), const double              : (A),                            \
+    long double         : (A), const long double         : (A),                            \
+    default             : typecast(A, 0))
 
 #define COMPILE_CHRP_OR_NULL(A) _Generic((A),                                              \
-    char*          : (A), const char*          : (A),                                      \
-    signed char*   : (A), const signed char*   : (A),                                      \
-    unsigned char* : (A), const unsigned char* : (A),                                      \
-    default        : (NULL))
+    char*               : (A), const char*               : (A),                            \
+    signed char*        : (A), const signed char*        : (A),                            \
+    unsigned char*      : (A), const unsigned char*      : (A),                            \
+    default             : (NULL))
 
 #define COMPILE_INTP_OR_NULL(A) _Generic((A),                                              \
     signed int*         : (A), const signed int*         : (A),                            \
@@ -60,19 +60,19 @@ BEG_C_DECLARATION
     default             : (NULL))
 
 #define COMPILE_FLTP_OR_NULL(A) _Generic((A),                                              \
-    float*        : (A), const float*       : (A),                                         \
-    double*       : (A), const double*      : (A),                                         \
-    long double*  : (A), const long double* : (A),                                         \
-    default       : (NULL))
+    float*              : (A), const float*              : (A),                            \
+    double*             : (A), const double*             : (A),                            \
+    long double*        : (A), const long double*        : (A),                            \
+    default             : (NULL))
 
 
-#define ASSERT_NAME(name) CAT_2(CAT_2(CAT_2(ASSERT, name), __LINE_), __LINE__)
-#define COMPILE_ASSERT(cond, name) ({                                                      \
+#define ASSERT_NAME(name) CAT_2(ASSERT##name##__LINE_, __LINE__)
+#define COMPILE_ASSERT(cond, name)                                                         \
+    ({                                                                                     \
     typedef int ASSERT_NAME(name)[(cond) ? 1 : -1];                                        \
     ASSERT_NAME(name) t;                                                                   \
     UNUSED_VAR(t);                                                                         \
     })
-
 
 #define COMPILE_TYPECHEK(x, y)                                                             \
     (                                                                                      \
@@ -138,7 +138,7 @@ BEG_C_DECLARATION
     })
 
 #define COMPILE_WCHDOG_TYPE_3(type, x, y, z, _x_unique, _y_unique, _z_unique, op) ({       \
-    type __type_unique;                                                                    \
+    type __type_unique = {0};                                                              \
     COMPILE_NO_SIDE(x, _x_unique);                                                         \
     COMPILE_NO_SIDE(y, _y_unique);                                                         \
     COMPILE_NO_SIDE(z, _z_unique);                                                         \
@@ -148,7 +148,7 @@ BEG_C_DECLARATION
     BLOC(op);                                                                              \
     })
 
-#define COMPILE_WCHDOG_GROUP_2(group, x, y, _x_unique, _y_unique, op) ({                     \
+#define COMPILE_WCHDOG_GROUP_2(group, x, y, _x_unique, _y_unique, op) ({                   \
     COMPILE_NO_SIDE(x, _x_unique);                                                         \
     COMPILE_NO_SIDE(y, _y_unique);                                                         \
     COMPILE_ASSERT(COMPILE_GROUPCHEK((group), (_x_unique)), _GROUPMATCH);                  \

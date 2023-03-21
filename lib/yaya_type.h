@@ -24,9 +24,7 @@ BEG_C_DECLARATION
 #define YAYA_USING_COMPLEX 1
 #include "complex.h"
 #endif /*YAYA_USING_COMPLEX*/
-
 #endif /*YAYA_USING_FLOATING*/
-
 
 /* ТЕКСТОВОЕ ИМЯ */
 
@@ -109,15 +107,15 @@ BEG_C_DECLARATION
 #define STD_TYPE_GROUP_VOID_P    0b01100000U
 
 #if YAYA_USING_FLOATING
-#define __std_type_group_flt        \
+#define __std_type_group_flt                        \
     float:                STD_TYPE_GROUP_FLT,       \
     double:               STD_TYPE_GROUP_FLT,       \
-    long double:          STD_TYPE_GROUP_FLT
+    long double:          STD_TYPE_GROUP_FLT,
 
-#define __std_type_group_flt_p      \
+#define __std_type_group_flt_p                      \
     float*:               STD_TYPE_GROUP_FLT_P,     \
     double*:              STD_TYPE_GROUP_FLT_P,     \
-    long double*:         STD_TYPE_GROUP_FLT_P
+    long double*:         STD_TYPE_GROUP_FLT_P,
 #else
 #define __std_type_group_flt
 #define __std_type_group_flt_p
@@ -127,12 +125,12 @@ BEG_C_DECLARATION
 #define __std_type_group_cpl                        \
     float complex:        STD_TYPE_GROUP_COMPLEX,   \
     double complex:       STD_TYPE_GROUP_COMPLEX,   \
-    long double complex:  STD_TYPE_GROUP_COMPLEX
+    long double complex:  STD_TYPE_GROUP_COMPLEX,
 
 #define __std_type_group_cpl_p                      \
     float complex*:       STD_TYPE_GROUP_COMPLEX_P, \
     double complex*:      STD_TYPE_GROUP_COMPLEX_P, \
-    long double complex*: STD_TYPE_GROUP_COMPLEX_P
+    long double complex*: STD_TYPE_GROUP_COMPLEX_P,
 #else
 #define __std_type_group_cpl
 #define __std_type_group_cpl_p
@@ -150,8 +148,8 @@ BEG_C_DECLARATION
     unsigned long:         STD_TYPE_GROUP_UINT,      \
     signed long long:      STD_TYPE_GROUP_SINT,      \
     unsigned long long:    STD_TYPE_GROUP_UINT,      \
-    __std_type_group_flt,                            \
-    __std_type_group_cpl,                            \
+    __std_type_group_flt                             \
+    __std_type_group_cpl                             \
     \
     char*:                 STD_TYPE_GROUP_CHAR_P,    \
     signed char*:          STD_TYPE_GROUP_SINT_P,    \
@@ -164,10 +162,10 @@ BEG_C_DECLARATION
     unsigned long*:        STD_TYPE_GROUP_UINT_P,    \
     signed long long*:     STD_TYPE_GROUP_SINT_P,    \
     unsigned long long*:   STD_TYPE_GROUP_UINT_P,    \
-    __std_type_group_flt_p,                          \
-    __std_type_group_cpl_p,                          \
+    __std_type_group_flt_p                           \
+    __std_type_group_cpl_p                           \
     \
-    void*:                STD_TYPE_GROUP_VOID_P,    \
+    void*:                STD_TYPE_GROUP_VOID_P,     \
     default:              STD_TYPE_GROUP_NSTDT)
 
 
@@ -178,12 +176,11 @@ BEG_C_DECLARATION
 #define STD_TYPE_UNSIGNUM     (+1) /*если число беззнаковое*/
 #define STD_TYPE_UNDEFSIGNUM  ( 0) /*если у значения не удаётся определить знак*/
 
-#define std_type_sigum(x)                                                 \
-    (\
-    ((std_type_group(x) == STD_TYPE_GROUP_SINT) || (std_type_group(x) == STD_TYPE_GROUP_FLT)) ?   \
-    STD_TYPE_SIGNUM :                                                     \
+#define std_type_sigum(x) (                                                                        \
+    ((std_type_group(x) == STD_TYPE_GROUP_SINT) || (std_type_group(x) == STD_TYPE_GROUP_FLT)) ?    \
+    STD_TYPE_SIGNUM :                                                                              \
     (((std_type_group(x) == STD_TYPE_GROUP_UINT) || (std_type_group(x) == STD_TYPE_GROUP_CHAR)) ?  \
-    STD_TYPE_UNSIGNUM :                                                   \
+    STD_TYPE_UNSIGNUM :                                                                            \
     STD_TYPE_UNDEFSIGNUM))
 
 
@@ -193,12 +190,12 @@ BEG_C_DECLARATION
 #define __std_type_index_flt            \
     float:                  'l',        \
     double:                 'm',        \
-    long double:            'n'
+    long double:            'n',
 
 #define __std_type_index_flt_p          \
     float*:                 'L',        \
     double*:                'M',        \
-    long double*:           'N'
+    long double*:           'N',
 #else
 #define __std_type__flt
 #define __std_type__flt_p
@@ -208,12 +205,12 @@ BEG_C_DECLARATION
 #define __std_type_index_cpl            \
     float complex:          'o',        \
     double complex:         'p',        \
-    long double complex:    'r'
+    long double complex:    'r',
 
 #define __std_type_index_cpl_p          \
     float complex*:         'O',        \
     double complex*:        'P',        \
-    long double complex*:   'R'
+    long double complex*:   'R',
 #else
 #define __std_type_index_cpl
 #define __std_type_index_cpl_p
@@ -231,8 +228,8 @@ BEG_C_DECLARATION
     unsigned long:          'i',        \
     signed long long:       'j',        \
     unsigned long long:     'k',        \
-    __std_type_index_flt,               \
-    __std_type_index_cpl,               \
+    __std_type_index_flt                \
+    __std_type_index_cpl                \
     \
     char*:                  'A',        \
     signed char*:           'B',        \
@@ -245,8 +242,8 @@ BEG_C_DECLARATION
     unsigned long*:         'I',        \
     signed long long*:      'J',        \
     unsigned long long*:    'K',        \
-    __std_type_index_flt_p,             \
-    __std_type_index_cpl_p,             \
+    __std_type_index_flt_p              \
+    __std_type_index_cpl_p              \
     \
     void*:                  'Y',        \
     default:                'Z')
@@ -258,11 +255,11 @@ BEG_C_DECLARATION
 #define __std_type_spec_flt             \
     float:                "flt",        \
     double:               "dbl",        \
-    long double:          "ldb"
+    long double:          "ldb",
 #define __std_type_spec_flt_p           \
     float*:               "flt",        \
     double*:              "dbl",        \
-    long double*:         "ldb"
+    long double*:         "ldb",
 #else
 #define __std_type_spec_flt
 #define __std_type_spec_flt_p
@@ -272,12 +269,12 @@ BEG_C_DECLARATION
 #define __std_type_spec_cpl             \
     float complex:        "fcp",        \
     double complex:       "cpl",        \
-    long double complex:  "lcp"
+    long double complex:  "lcp",
 
 #define __std_type_spec_cpl_p           \
     float complex*:       "fcp",        \
     double complex*:      "cpl",        \
-    long double complex*: "lcp"
+    long double complex*: "lcp",
 #else
 #define __std_type__cpl
 #define __std_type__cpl_p
@@ -293,8 +290,8 @@ BEG_C_DECLARATION
     uint16_t:             "u16",        \
     uint32_t:             "u32",        \
     uint64_t:             "u64",        \
-    __std_type_spec_flt,                \
-    __std_type_spec_cpl,                \
+    __std_type_spec_flt                 \
+    __std_type_spec_cpl                 \
     \
     char*:                "chr",        \
     int8_t*:              "i08",        \
@@ -305,8 +302,8 @@ BEG_C_DECLARATION
     uint16_t*:            "u16",        \
     uint32_t*:            "u32",        \
     uint64_t*:            "u64",        \
-    __std_type_spec_flt_p,              \
-    __std_type_spec_cpl_p,              \
+    __std_type_spec_flt_p               \
+    __std_type_spec_cpl_p               \
     \
     void*:                "void",       \
     default:              "nan")
@@ -318,12 +315,12 @@ BEG_C_DECLARATION
 #define __std_type_print_flt              \
     float:                  "f",          \
     double:                 "lf",         \
-    long double:            "llf"
+    long double:            "llf",
 
 #define __std_type_print_flt_p            \
     float*:                 "f",          \
     double*:                "lf",         \
-    long double*:           "llf"
+    long double*:           "llf",
 #else
 #define __std_type_print_flt
 #define __std_type_print_flt_p
@@ -333,12 +330,12 @@ BEG_C_DECLARATION
 #define __std_type_print_cpl              \
     float complex:          "f",          \
     double complex:         "lf",         \
-    long double complex:    "llf"
+    long double complex:    "llf",
 
 #define __std_type_print_cpl_p            \
     float complex*:         "f",          \
     double complex*:        "lf",         \
-    long double complex*:   "llf"
+    long double complex*:   "llf",
 #else
 #define __std_type_print_cpl
 #define __std_type_print_cpl_p
@@ -354,8 +351,8 @@ BEG_C_DECLARATION
     uint16_t:               PRIu16,       \
     uint32_t:               PRIu32,       \
     uint64_t:               PRIu64,       \
-    __std_type_print_flt,                 \
-    __std_type_print_cpl,                 \
+    __std_type_print_flt                  \
+    __std_type_print_cpl                  \
     \
     char*:                  "s",          \
     int8_t*:                PRIi8,        \
@@ -366,8 +363,8 @@ BEG_C_DECLARATION
     uint16_t*:              PRIu16,       \
     uint32_t*:              PRIu32,       \
     uint64_t*:              PRIu64,       \
-    __std_type_print_flt_p,               \
-    __std_type_print_cpl_p,               \
+    __std_type_print_flt_p                \
+    __std_type_print_cpl_p                \
     \
     void*:                "p",            \
     default:              "nan")

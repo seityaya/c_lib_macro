@@ -23,9 +23,11 @@ BEG_C_DECLARATION
 #endif /*YAYA_USING_COMPLEX*/
 #endif /*YAYA_USING_FLOATING*/
 
-
-
 /*ALIASES*/
+
+/*char types*/
+#define char_t       char
+
 /*max types*/
 #define imax_t       intmax_t
 #define umax_t       uintmax_t
@@ -78,18 +80,20 @@ BEG_C_DECLARATION
 #define c128_t       long double complex
 
 /*CONST NUMBER*/
-#define i8_c(x)     ((is8_t) (INT8_C(x)))
-#define i16_c(x)    ((is16_t)(INT16_C(x)))
-#define i32_c(x)    ((is32_t)(INT32_C(x)))
-#define i64_c(x)    ((is64_t)(INT64_C(x)))
-#define imax_c(x)   ((imax_t)(INTMAX_C(x)))
+#define char_c(x)   ((char_t)(x))
 
-#define u8_c(x)     ((us8_t) (UINT8_C(x)))
-#define u16_c(x)    ((us16_t)(UINT16_C(x)))
-#define u32_c(x)    ((us32_t)(UINT32_C(x)))
-#define u64_c(x)    ((us64_t)(UINT64_C(x)))
-#define u64_c(x)    ((us64_t)(UINT64_C(x)))
-#define umax_c(x)   ((umax_t)(UINTMAX_C(x)))
+#define i8_c(x)     ((is8_t) (x))
+#define i16_c(x)    ((is16_t)(x))
+#define i32_c(x)    ((is32_t)(x))
+#define i64_c(x)    ((is64_t)(x))
+#define imax_c(x)   ((imax_t)(x))
+
+#define u8_c(x)     ((us8_t) (x))
+#define u16_c(x)    ((us16_t)(x))
+#define u32_c(x)    ((us32_t)(x))
+#define u64_c(x)    ((us64_t)(x))
+#define u64_c(x)    ((us64_t)(x))
+#define umax_c(x)   ((umax_t)(x))
 
 #define f32_c(x)    ((f32_t)(x))
 #define f64_c(x)    ((f64_t)(x))
@@ -137,56 +141,51 @@ typedef union allt{
     f64_t     fp64t;
 } allt;
 
-#define typemin(x) ({                          \
-    typeof(x) _x;   _Generic((_x),             \
-    char:               CHAR_MIN,              \
-    is8_t:               i8_c(INT8_MIN),       \
-    is16_t:             i16_c(INT16_MIN),      \
-    is32_t:             i32_c(INT32_MIN),      \
-    is64_t:                  (INT64_MIN),      \
-    us8_t:               u8_c(0),              \
-    us16_t:             u16_c(0),              \
-    us32_t:             u32_c(0),              \
-    us64_t:             u64_c(0),              \
-    f32_t:              __FLT32_MIN__,         \
-    f64_t:              __FLT64_MIN__,         \
-    f128_t:             __FLT128_MIN__,        \
-    default:            0);                    \
-})
+#define typemin(x) _Generic((x),                 \
+    char:               char_c(CHAR_MIN),        \
+    is8_t:                i8_c(INT8_MIN),        \
+    is16_t:              i16_c(INT16_MIN),       \
+    is32_t:              i32_c(INT32_MIN),       \
+    is64_t:              i64_c(INT64_MIN),       \
+    us8_t:                u8_c(0),               \
+    us16_t:              u16_c(0),               \
+    us32_t:              u32_c(0),               \
+    us64_t:              u64_c(0),               \
+    f32_t:               f32_c(__FLT32_MIN__),   \
+    f64_t:               f64_c(__FLT64_MIN__),   \
+    f128_t:             f128_c(__FLT128_MIN__),  \
+    default:            0)
 
-#define typemax(x) ({                          \
-    typeof(x) _x;   _Generic((_x),             \
-    char:               CHAR_MAX,              \
-    is8_t:               i8_c(INT8_MAX),       \
-    is16_t:             i16_c(INT16_MAX),      \
-    is32_t:             i32_c(INT32_MAX),      \
-    is64_t:                  (INT64_MAX),      \
-    us8_t:               u8_c(UINT8_MAX),      \
-    us16_t:             u16_c(UINT16_MAX),     \
-    us32_t:                  (UINT32_MAX),     \
-    us64_t:                  (UINT64_MAX),     \
-    f32_t:              __FLT32_MAX__,         \
-    f64_t:              __FLT64_MAX__,         \
-    f128_t:             __FLT128_MAX__,        \
-    default:            0);                    \
-})
 
-#define typeeps(x) ({ \
-    typeof(x) _x;   _Generic((_x),          \
-    char:               1,                  \
-    is8_t:              1,                  \
-    is16_t:             1,                  \
-    is32_t:             1,                  \
-    is64_t:             1,                  \
-    us8_t:              1,                  \
-    us16_t:             1,                  \
-    us32_t:             1,                  \
-    us64_t:             1,                  \
-    f32_t:             __FLT32_EPSILON__,   \
-    f64_t:             __FLT64_EPSILON__,   \
-    f128_t:            __FLT128_EPSILON__,  \
-    default:            0);                 \
-})
+#define typemax(x) _Generic((x),                 \
+    char:               char_c(CHAR_MAX),        \
+    is8_t:                i8_c(INT8_MAX),        \
+    is16_t:              i16_c(INT16_MAX),       \
+    is32_t:              i32_c(INT32_MAX),       \
+    is64_t:              i64_c(INT64_MAX),       \
+    us8_t:                u8_c(UINT8_MAX),       \
+    us16_t:              u16_c(UINT16_MAX),      \
+    us32_t:              u32_c(UINT32_MAX),      \
+    us64_t:              u64_c(UINT64_MAX),      \
+    f32_t:               f32_c(__FLT32_MAX__),   \
+    f64_t:               f64_c(__FLT64_MAX__),   \
+    f128_t:             f128_c(__FLT128_MAX__),  \
+    default:            0)
+
+#define typeeps(x) _Generic((x),                   \
+    char:              char_c(1),                  \
+    is8_t:               i8_c(1),                  \
+    is16_t:             i16_c(1),                  \
+    is32_t:             i32_c(1),                  \
+    is64_t:             i64_c(1),                  \
+    us8_t:               u8_c(1),                  \
+    us16_t:             u16_c(1),                  \
+    us32_t:             u32_c(1),                  \
+    us64_t:             u64_c(1),                  \
+    f32_t:              f32_c(__FLT32_EPSILON__),  \
+    f64_t:              f64_c(__FLT64_EPSILON__),  \
+    f128_t:            f128_c(__FLT128_EPSILON__), \
+    default:           0)
 
 /*UNDEF*/
 #undef intmax_t
@@ -222,5 +221,4 @@ typedef union allt{
 #undef uint_fast64_t
 
 END_C_DECLARATION
-
 #endif /*YAYA_NUMBER_H*/
