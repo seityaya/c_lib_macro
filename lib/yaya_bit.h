@@ -42,7 +42,7 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Возвращет количество битов в числе
 */
-#define bit_cnt(x)      typecast(size_t, sizeof(x) * CHAR_BIT)
+#define bit_cnt(x)        typecast(umax_t, sizeof(x) * CHAR_BIT)
 
 /*
  * Опустить все биты в 0
@@ -99,22 +99,22 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Чтение бита на позии
 */
-#define bit_get(x, n)    typecast((x), (n) == (0) ? (0) : ( (x) &  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
+#define bit_get(x, n)    typecast((x), (n) == (0) ? typecast((x), (0)) : typecast((x), (typecast(umax_t, x) &  (typecast(umax_t, 1) << ((typecast(umax_t, n) - 1) % bit_cnt(x))))))
 
 /*
  * Выставление бита  на позии
 */
-#define bit_set(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) |  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
+#define bit_set(x, n)    typecast((x), (n) == (0) ? typecast((x), (x)) : typecast((x), (typecast(umax_t, x) |  (typecast(umax_t, 1) << ((typecast(umax_t, n) - 1) % bit_cnt(x))))))
 
 /*
  * Сброс бита на позии
 */
-#define bit_res(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) & ~(typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
+#define bit_res(x, n)    typecast((x), (n) == (0) ? typecast((x), (x)) : typecast((x), (typecast(umax_t, x) & ~(typecast(umax_t, 1) << ((typecast(umax_t, n) - 1) % bit_cnt(x))))))
 
 /*
  * Переключение бита на позиции
 */
-#define bit_tog(x, n)    typecast((x), (n) == (0) ? (x) : ( (x) ^  (typecast(size_t, 1) << ((typecast(size_t, n) - 1) % bit_cnt(x))) ))
+#define bit_tog(x, n)    typecast((x), (n) == (0) ? typecast((x), (x)) : typecast((x), (typecast(umax_t, x) ^  (typecast(umax_t, 1) << ((typecast(umax_t, n) - 1) % bit_cnt(x))))))
 
 /*
  * Выставление определенного бита на позии
@@ -159,10 +159,8 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Логический сдвиг вправо
 */
-#define bit_shf_rig(x, n) typecast((x), ((x) >= (0)) || ((n) == (0)) ? \
-    typecast(umax_t, x) >> typecast(umax_t, n) : \
-    bit_set(bit_res(x, bit_cnt(x)) >> typecast(umax_t, n), bit_cnt(x) - n) \
-    )
+#define bit_shf_rig(x, n) typecast((x), ((x) > (0)) || ((x) == (0)) || ((n) == (0)) ? \
+    bit_ari_rig(x, n) : bit_set(bit_res(x, bit_cnt(x)) >> typecast(umax_t, n), bit_cnt(x) - n))
 
 /*
  * Логический сдвиг влево
@@ -201,12 +199,12 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Выставление битов по единичной маске
 */
-#define bit_mask_up(x, y) COMPILE_WCHDOG((x), (y), _x, _y, ((_x) | (_y)))
+#define bit_mask_up(x, y) COMPILE_WCHDOG_2((x), (y), _x, _y, ((_x) | (_y)))
 
 /*
  * Обнуление битов по единичной маске
 */
-#define bit_mask_dw(x, y) COMPILE_WCHDOG((x), (y), _x, _y, ((_x) & (_y)))
+#define bit_mask_dw(x, y) COMPILE_WCHDOG_2((x), (y), _x, _y, ((_x) & (_y)))
 
 /* = БИТОВЫЕ ОПЕРРАЦИИ ============================================================================================================================ */
 
@@ -218,18 +216,18 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 /*
  * Битовое ИЛИ
 */
-#define bit_or(x, y)      COMPILE_WCHDOG((x), (y), _x, _y, ((_x) | (_y)))
+#define bit_or(x, y)      COMPILE_WCHDOG_2((x), (y), _x, _y, ((_x) | (_y)))
 
 /*
  * Битовое И
 */
-#define bit_and(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, ((_x) & (_y)))
+#define bit_and(x, y)     COMPILE_WCHDOG_2((x), (y), _x, _y, ((_x) & (_y)))
 
 /*
  * Битовое ИСЛЮЧАЮЩЕЕ ИЛИ
  * (Операторы не равны)
 */
-#define bit_xor(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, ((_x) ^ (_y)))
+#define bit_xor(x, y)     COMPILE_WCHDOG_2((x), (y), _x, _y, ((_x) ^ (_y)))
 
 /*
  * Битовое ИЛИ-НЕ
@@ -247,7 +245,7 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
  * (Операторы равны)
 */
 #define bit_xnor(x, y)    bit_not(bit_xor((x), (y)))
-#define bit_eqv(x, y)     COMPILE_WCHDOG((x), (y), _x, _y, bit_or(bit_and(bit_not(_x), (_y)), bit_and((_x), bit_not(_y))))
+#define bit_eqv(x, y)     COMPILE_WCHDOG_2((x), (y), _x, _y, bit_or(bit_and(bit_not(_x), (_y)), bit_and((_x), bit_not(_y))))
 
 /* ================================================================================================================================================ */
 

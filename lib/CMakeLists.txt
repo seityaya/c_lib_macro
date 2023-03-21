@@ -13,7 +13,7 @@ set(VERSION 0.1)
 set(PROJECT_NAME yaya_defines)
 project(${PROJECT_NAME})
 
-add_compile_options(-Wall -Wfatal-errors -Wconversion)
+add_compile_options(-Wall -Wfatal-errors -Wconversion -Warith-conversion -Wfloat-conversion -Wsign-conversion -Wenum-conversion)
 
 set(SRC_LIST
     yaya_bit.c

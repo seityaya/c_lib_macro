@@ -11,11 +11,11 @@
 UT_FUNC_GEN(test_bool) {
     UT_GROUP_BEG(bool) {
         UT_GROUP_BEG(macro) {
-            UT_ASSERT_BOOL_TRUE(TRUE);
-            UT_ASSERT_BOOL_FALSE(FALSE);
+            UT_ASSERT_BOOL_TR(TRUE);
+            UT_ASSERT_BOOL_FL(FALSE);
 
-            UT_ASSERT_BOOL_TRUE(true);
-            UT_ASSERT_BOOL_FALSE(false);
+            UT_ASSERT_BOOL_TR(true);
+            UT_ASSERT_BOOL_FL(false);
         } UT_GROUP_END;
 
         UT_GROUP_BEG(cros) {
@@ -27,16 +27,16 @@ UT_FUNC_GEN(test_bool) {
 
         UT_GROUP_BEG(type) {
             bool_t A = false;
-            UT_ASSERT_BOOL_FALSE(A);
+            UT_ASSERT_BOOL_FL(A);
             A = 0;
-            UT_ASSERT_BOOL_FALSE(A);
+            UT_ASSERT_BOOL_FL(A);
 
             A = true;
-            UT_ASSERT_BOOL_TRUE(A);
+            UT_ASSERT_BOOL_TR(A);
             A = 1;
-            UT_ASSERT_BOOL_TRUE(A);
+            UT_ASSERT_BOOL_TR(A);
             A = 2;
-            UT_ASSERT_BOOL_TRUE(A);
+            UT_ASSERT_BOOL_TR(A);
         } UT_GROUP_END;
     } UT_GROUP_END;
 }

@@ -237,4 +237,34 @@ umax_t ___combination(umax_t n, umax_t k, bool_t f){
     }
 }
 
+inline char   ___abs_char(char   x){ return __pos(x); }
+inline is8_t  ___abs_is8 (is8_t  x){ return __pos(x); }
+inline is16_t ___abs_is16(is16_t x){ return __pos(x); }
+inline is32_t ___abs_is32(is32_t x){ return __pos(x); }
+inline is64_t ___abs_is64(is64_t x){ return __pos(x); }
+inline  us8_t ___abs_us8 (us8_t  x){ return __pos(x); }
+inline us16_t ___abs_us16(us16_t x){ return __pos(x); }
+inline us32_t ___abs_us32(us32_t x){ return __pos(x); }
+inline us64_t ___abs_us64(us64_t x){ return __pos(x); }
+
+inline char   ___pow_char(char   x, char   p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline is8_t  ___pow_is8 (is8_t  x, is8_t  p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline is16_t ___pow_is16(is16_t x, is16_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline is32_t ___pow_is32(is32_t x, is32_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline is64_t ___pow_is64(is64_t x, is64_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline us8_t  ___pow_us8 (us8_t  x, us8_t  p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline us16_t ___pow_us16(us16_t x, us16_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline us32_t ___pow_us32(us32_t x, us32_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+inline us64_t ___pow_us64(us64_t x, us64_t p){ typeof(x) __x = 1; typeof(p) __p = p; while(__p--){ __as(__x, __x * x); } return __x; }
+
+inline char   ___copysign_char(char   r, char   s){ (void)(r); return ((s) > 0) ? __pos(one(s)) : (((s) < 0) ? __neg(one(s)) : zero(s)); }
+inline is8_t  ___copysign_is8 (is8_t  r, is8_t  s){ (void)(r); return ((s) > 0) ? __pos(one(s)) : (((s) < 0) ? __neg(one(s)) : zero(s)); }
+inline is16_t ___copysign_is16(is16_t r, is16_t s){ (void)(r); return ((s) > 0) ? __pos(one(s)) : (((s) < 0) ? __neg(one(s)) : zero(s)); }
+inline is32_t ___copysign_is32(is32_t r, is32_t s){ (void)(r); return ((s) > 0) ? __pos(one(s)) : (((s) < 0) ? __neg(one(s)) : zero(s)); }
+inline is64_t ___copysign_is64(is64_t r, is64_t s){ (void)(r); return ((s) > 0) ? __pos(one(s)) : (((s) < 0) ? __neg(one(s)) : zero(s)); }
+inline us8_t  ___copysign_us8 (us8_t  r, us8_t  s){ (void)(r); return one(s); }
+inline us16_t ___copysign_us16(us16_t r, us16_t s){ (void)(r); return one(s); }
+inline us32_t ___copysign_us32(us32_t r, us32_t s){ (void)(r); return one(s); }
+inline us64_t ___copysign_us64(us64_t r, us64_t s){ (void)(r); return one(s); }
+
 END_C_DECLARATION

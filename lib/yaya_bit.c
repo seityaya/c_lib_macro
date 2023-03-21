@@ -17,8 +17,8 @@ imax_t ___bit_0_beg(umax_t x, umax_t s) {
     if(x == BIT_SET_ALL_1(x, s)){
         return 0;
     }
-    is8_t res = 1;
-    while (bit_get(x, res) != 0 && res != (CHAR_BIT * s)) {
+    imax_t res = 1;
+    while (bit_get(x, res) != 0 && res != bit_cnt(s)) {
         res++;
     }
     return res;
@@ -117,25 +117,25 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len){  /* FIXME IMPLEMEN
     us32_t result32_2 = 0;
     if(len <= 16) {
         for (us64_t i = 0; i < len; i++) {
-            result |= ((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i;
+            result |= (us64_t)(((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i);
         }
         return result;
     }
     if(len <= 32) {
         for (us64_t i = 0; i < len; i++) {
-            result32_1 |= ((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i;
+            result32_1 |= (us32_t)(((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i);
         }
         result = result32_1;
         return result;
     }
     if(len <= 64) {
         for (us64_t i = 0; i < 32; i++) {
-            result32_1 |= ((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i;
+            result32_1 |= (us32_t)(((bytes[(offset + i) / 8] >> ((offset + i) % 8)) & 1) << i);
         }
         for (us64_t i = 0; i < 64 - (len - 32); i++) {
-            result32_2 |= ((bytes[(offset + 32 + i) / 8] >> ((offset + i) % 8)) & 1) << i;
+            result32_2 |= (us32_t)(((bytes[(offset + 32 + i) / 8] >> ((offset + i) % 8)) & 1) << i);
         }
-        result = (us64_t)result32_1 | ((us64_t)result32_2) << 32;
+        result = ((us64_t)(result32_1) | ((us64_t)(result32_2) << 32));
         return result;
     }
     return result;

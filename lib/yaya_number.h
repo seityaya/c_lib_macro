@@ -93,6 +93,7 @@ BEG_C_DECLARATION
 
 #define f32_c(x)    ((f32_t)(x))
 #define f64_c(x)    ((f64_t)(x))
+#define f128_c(x)   ((f128_t)(x))
 #define fmax_c(x)   ((fmax_t)(x))
 
 #define c32_c(x)    ((c32_t)(x))

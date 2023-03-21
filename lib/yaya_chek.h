@@ -71,7 +71,7 @@ BEG_C_DECLARATION
     typedef int ASSERT_NAME(name)[(cond) ? 1 : -1];                                        \
     ASSERT_NAME(name) t;                                                                   \
     UNUSED_VAR(t);                                                                         \
-})
+    })
 
 
 #define COMPILE_TYPECHEK(x, y)                                                             \
@@ -87,25 +87,36 @@ BEG_C_DECLARATION
 #define COMPILE_NO_SIDE(x, __x_unique)                                                     \
     typeof(x) __x_unique = (x)
 
-    
-#define COMPILE_TYPEMATCH(type, x) ({                                                      \
+
+#define COMPILE_TYPEMATCH_EQ(type, x) ({                                                   \
     typeof (x) _x_unique = {0};                                                            \
     type       _x_type   = {0};                                                            \
-    COMPILE_ASSERT(COMPILE_TYPECHEK(_x_type, _x_unique), _TYPEMATCH);                      \
-})
+    COMPILE_ASSERT(COMPILE_TYPECHEK(_x_type, _x_unique), _TYPEMATCH_EQ);                   \
+    })
 
 
-#define COMPILE_GROUPMATCH(group, x) ({                                                    \
-    COMPILE_ASSERT(COMPILE_GROUPCHEK((group), (x)), _GROUPMATCH);                          \
-})
+#define COMPILE_GROUPMATCH_EQ(group, x) ({                                                 \
+    COMPILE_ASSERT(COMPILE_GROUPCHEK((group), (x)), _GROUPMATCH_EQ);                       \
+    })
+
+#define COMPILE_TYPEMATCH_NQ(type, x) ({                                                   \
+    typeof (x) _x_unique = {0};                                                            \
+    type       _x_type   = {0};                                                            \
+    COMPILE_ASSERT(!COMPILE_TYPECHEK(_x_type, _x_unique), _TYPEMATCH_NQ);                  \
+    })
 
 
-#define COMPILE_WCHDOG(x, y, _x_unique, _y_unique, op) ({                                  \
+#define COMPILE_GROUPMATCH_NQ(group, x) ({                                                 \
+    COMPILE_ASSERT(!COMPILE_GROUPCHEK((group), (x)), _GROUPMATCH_NQ);                      \
+    })
+
+
+#define COMPILE_WCHDOG_2(x, y, _x_unique, _y_unique, op) ({                                \
     COMPILE_NO_SIDE((x), (_x_unique));                                                     \
     COMPILE_NO_SIDE((y), (_y_unique));                                                     \
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_y_unique)), _TYPECHEK);                 \
     op;                                                                                    \
-})
+    })
 
 #define COMPILE_WCHDOG_3(x, y, z, _x_unique, _y_unique, _z_unique, op) ({                  \
     COMPILE_NO_SIDE((x), (_x_unique));                                                     \
@@ -114,17 +125,17 @@ BEG_C_DECLARATION
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_y_unique)), _TYPECHEK);                 \
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_z_unique)), _TYPECHEK);                 \
     BLOC(op);                                                                              \
-})
+    })
 
 
-#define COMPILE_WCHDOG_TYPE(type, x, y, _x_unique, _y_unique, op) ({                       \
+#define COMPILE_WCHDOG_TYPE_2(type, x, y, _x_unique, _y_unique, op) ({                     \
     type __type_unique = {0};                                                              \
     COMPILE_NO_SIDE(x, _x_unique);                                                         \
     COMPILE_NO_SIDE(y, _y_unique);                                                         \
     COMPILE_ASSERT(COMPILE_TYPECHEK((__type_unique), _x_unique), _TYPECHEK);               \
     COMPILE_ASSERT(COMPILE_TYPECHEK((__type_unique), _y_unique), _TYPECHEK);               \
     BLOC(op);                                                                              \
-})
+    })
 
 #define COMPILE_WCHDOG_TYPE_3(type, x, y, z, _x_unique, _y_unique, _z_unique, op) ({       \
     type __type_unique;                                                                    \
@@ -135,16 +146,16 @@ BEG_C_DECLARATION
     COMPILE_ASSERT(COMPILE_TYPECHEK((__type_unique), _y_unique), _TYPECHEK);               \
     COMPILE_ASSERT(COMPILE_TYPECHEK((__type_unique), _z_unique), _TYPECHEK);               \
     BLOC(op);                                                                              \
-})
+    })
 
-#define COMPILE_WCHDOG_GROUP(group, x, y, _x_unique, _y_unique, op) ({                     \
+#define COMPILE_WCHDOG_GROUP_2(group, x, y, _x_unique, _y_unique, op) ({                     \
     COMPILE_NO_SIDE(x, _x_unique);                                                         \
     COMPILE_NO_SIDE(y, _y_unique);                                                         \
     COMPILE_ASSERT(COMPILE_GROUPCHEK((group), (_x_unique)), _GROUPMATCH);                  \
     COMPILE_ASSERT(COMPILE_GROUPCHEK((group), (_y_unique)), _GROUPMATCH);                  \
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_y_unique)), _TYPECHEK);                 \
     BLOC(op);                                                                              \
-})
+    })
 
 #define COMPILE_WCHDOG_GROUP_3(group, x, y, z, _x_unique, _y_unique, _z_unique, op) ({     \
     COMPILE_NO_SIDE(x, _x_unique);                                                         \
@@ -156,7 +167,7 @@ BEG_C_DECLARATION
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_y_unique)), _TYPECHEK);                 \
     COMPILE_ASSERT(COMPILE_TYPECHEK((_x_unique), (_z_unique)), _TYPECHEK);                 \
     BLOC(op);                                                                              \
-})
+    })
 
 END_C_DECLARATION
 #endif /*YAYA_CHEK_H*/

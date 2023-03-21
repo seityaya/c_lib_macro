@@ -9,14 +9,19 @@
 BEG_C_DECLARATION
 
 #include "yaya_number.h"
+#include "yaya_unused.h"
 
 umax_t __rand_seed = 0;
 
 fmax_t __get_rand_normal(fmax_t mu, fmax_t sigma){ /* FIXME IMPLEMENT */
+    UNUSED_VAR(mu);
+    UNUSED_VAR(sigma);
     return 0.0;
 }
 
 fmax_t __get_rand_beta(fmax_t a, fmax_t b){        /* FIXME IMPLEMENT */
+    UNUSED_VAR(a);
+    UNUSED_VAR(b);
     return 0.0;
 }
 

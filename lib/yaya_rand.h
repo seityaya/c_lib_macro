@@ -58,7 +58,7 @@ extern umax_t __rand_seed;
 #define __get_rand(min, max) __sum(__mod(typecast(max, get_random()), __sum(__dis(min, max), next_num(min))), min)
 #define get_rand(min, max)                                                                                                                           \
     BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG(min, max, _min_r, _max_r,                                                                                                             \
+    COMPILE_WCHDOG_2(min, max, _min_r, _max_r,                                                                                                             \
     BLOC(__get_rand(_min_r, _max_r))))
 
 /*
@@ -85,7 +85,7 @@ extern umax_t __rand_seed;
 #define __get_rand_normal(mu, sigma) __get_rand_normal(mu, sigma)
 #define get_rand_normal(mu, sigma)                                                                                                                   \
     BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG_GROUP(STD_TYPE_GROUP_FLT, mu, sigma, _mu, _sigma,                                                                                 \
+    COMPILE_WCHDOG_GROUP_2(STD_TYPE_GROUP_FLT, mu, sigma, _mu, _sigma,                                                                                 \
     BLOC(__get_rand_normal(_mu, _sigma))))
 
 /*
@@ -94,7 +94,7 @@ extern umax_t __rand_seed;
 #define __get_rand_beta(a, b) __get_rand_beta(a, b)
 #define get_rand_beta(a, b)                                                                                                                          \
     BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG_GROUP(STD_TYPE_GROUP_FLT, a, b, _a, _b,                                                                                           \
+    COMPILE_WCHDOG_GROUP_2(STD_TYPE_GROUP_FLT, a, b, _a, _b,                                                                                           \
     BLOC(__get_rand_beta(_a, _b))))
 
 //====================================================================================================================================================

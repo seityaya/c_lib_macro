@@ -13,6 +13,8 @@ set(VERSION 0.1)
 set(PROJECT_NAME defines_test)
 project(${PROJECT_NAME})
 
+add_compile_options(-Wall -Wfatal-errors -Wconversion -Warith-conversion -Wfloat-conversion -Wsign-conversion -Wenum-conversion)
+
 add_executable(
     ${PROJECT_NAME}
     main.c
