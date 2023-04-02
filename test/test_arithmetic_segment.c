@@ -26,11 +26,11 @@ UT_FUNC_GEN(test_arithmetic_segment) {
             UT_ASSERT_NUM_EQ(INT_MAX , get_int(INT_MAX));
             UT_ASSERT_NUM_EQ(UINT_MAX, get_int(UINT_MAX));
 
-            UT_ASSERT_TYPE_EQ(get_int((umax_t)(-1.1)), umax_c(0));
-            UT_ASSERT_TYPE_EQ(get_int((imax_t)(-1.1)), imax_c(0));
+            UT_ASSERT_TYP_EQ(get_int((umax_t)(-1.1)), umax_c(0));
+            UT_ASSERT_TYP_EQ(get_int((imax_t)(-1.1)), imax_c(0));
 
-            UT_ASSERT_TYPE_NQ(get_int((umax_t)(-1.1)), imax_c(0));
-            UT_ASSERT_TYPE_NQ(get_int((imax_t)(-1.1)), umax_c(0));
+            UT_ASSERT_TYP_NQ(get_int((umax_t)(-1.1)), imax_c(0));
+            UT_ASSERT_TYP_NQ(get_int((imax_t)(-1.1)), umax_c(0));
         }UT_GROUP_END;
 
         UT_GROUP_BEG(get_rem) {

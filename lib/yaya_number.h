@@ -34,7 +34,7 @@ BEG_C_DECLARATION
 #define iptr_t       intptr_t
 #define uptr_t       uintptr_t
 #define fmax_t       long double
-#define cmax_t       long double
+#define cmax_t       long double complex
 
 /*strict types*/
 #define is8_t        int8_t
@@ -106,7 +106,7 @@ BEG_C_DECLARATION
 
 #define null_c(T)    (((T*)0))
 
-typedef union allt{
+typedef union allt_t{
     void*     voidp;
     char      chart;
     imax_t    imaxt;
@@ -139,7 +139,7 @@ typedef union allt{
     uf64_t    uf64t;
     f32_t     fp32t;
     f64_t     fp64t;
-} allt;
+} allt_t;
 
 #define typemin(x) _Generic((x),                 \
     char:               char_c(CHAR_MIN),        \

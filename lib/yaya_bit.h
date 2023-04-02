@@ -239,11 +239,8 @@ umax_t ___bit_sequence(void *ptr, umax_t offset, umax_t len);
 
 /*
  * Битовое ИСКЛЮЧАЮЩЕЕ ИЛИ-НЕ
- * Битовое ЭКВИВАЛЕНТНОСТЬ
- * (Операторы равны)
 */
 #define bit_xnor(x, y)    bit_not(bit_xor((x), (y)))
-#define bit_eqv(x, y)     COMPILE_WCHDOG_2((x), (y), _x, _y, bit_or(bit_and(bit_not(_x), (_y)), bit_and((_x), bit_not(_y))))
 
 /* ================================================================================================================================================ */
 

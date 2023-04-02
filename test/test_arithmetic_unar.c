@@ -19,6 +19,10 @@ UT_FUNC_GEN(test_arithmetic_unar) {
         UT_ASSERT_NUM_EQ(i8_c(1), post_dif(x));
         UT_ASSERT_NUM_EQ(i8_c(0), x);
 
+        x = 127;
+        UT_ASSERT_NUM_EQ(i8_c( 127), post_add(x));
+        UT_ASSERT_NUM_EQ(i8_c(-128), post_add(x));
+
         x = 0;
         UT_ASSERT_NUM_EQ(i8_c(0), x);
         UT_ASSERT_NUM_EQ(i8_c(1), sum(post_add(x), post_add(x)));

@@ -19,10 +19,10 @@ UT_FUNC_GEN(test_bool) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(cros) {
-            UT_ASSERT_BOOL(TRUE == true);
-            UT_ASSERT_BOOL(FALSE == false);
-            UT_ASSERT_BOOL(TRUE != false);
-            UT_ASSERT_BOOL(FALSE != true);
+            UT_ASSERT_BOOL_TR(TRUE == true);
+            UT_ASSERT_BOOL_TR(FALSE == false);
+            UT_ASSERT_BOOL_TR(TRUE != false);
+            UT_ASSERT_BOOL_TR(FALSE != true);
         } UT_GROUP_END;
 
         UT_GROUP_BEG(type) {

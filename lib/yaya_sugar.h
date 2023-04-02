@@ -8,10 +8,10 @@
 #ifndef YAYA_SUGAR_H
 #define YAYA_SUGAR_H
 
+#include "yaya_bool.h"
+
 #include "yaya_cdeclaration.h"
 BEG_C_DECLARATION
-
-#include "yaya_bool.h"
 
 /*
  * Fun Sugar
@@ -36,7 +36,7 @@ BEG_C_DECLARATION
 */
 #define BLOC(x)  ({ x; })
 #define UNIT(x)  (x)
-
+#define VOID()   ({0;})
 /*
  * Новый тип блока в котором разрешено использовать break и continue вместо
  * конструкции do{ }while (false) или while (true){ }, (где, кстати невозможно
@@ -56,6 +56,8 @@ BEG_C_DECLARATION
 */
 #define __FUNC__    __func__
 #define nullptr     ((void*)(0))
+#define VP_NULL     ((void*)(0))
+
 
 /*
  * Определение дополнительных макросов
@@ -71,6 +73,39 @@ BEG_C_DECLARATION
 
 /*Mandatory close figure brace*/
 #define MD_CFB while (false);
+
+/*
+ * Условие
+ * Conditional
+*/
+#define ter(_cond, _true_cond, _false_cond)                                                                                                          \
+    BLOC((_cond) ? (_true_cond) : (_false_cond))
+
+/*
+ * Адрес и значение
+*/
+#define init_ptr(n, t)     typeof(t) *n = NULL
+#define init_val(n, t)     typeof(t)  n = {0}
+
+#define crete_ptr(n, v)    typeof(v) *(n) = &v
+#define crete_val(n, v)    typeof(v)  (n) = v
+
+#define set_adr(n, v)      (*(n)) = (&(v))
+#define set_val(n, v)      (n)    = (v)
+
+#define get_adr(x)         (&(x))
+#define get_val(x)         (*(x))
+
+
+/*обращение по адресу или по значению*/
+// .
+// ->
+
+/*оператор запятая*/
+// ,
+
+/*оператор массива*/
+// [ ]
 
 END_C_DECLARATION
 #endif /*YAYA_SUGAR_H*/

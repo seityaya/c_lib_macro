@@ -21,65 +21,67 @@ BEG_C_DECLARATION
 void yaya_print_bit(void* p, size_t size);
 void yaya_print_but(void *p, size_t size);
 
-#define __PRINT_VAR_MAIN(x)    BLOC(printf(#x); PRINT_NLN())
-#define __PRINT_TXT_MAIN(x)    BLOC(printf(#x); PRINT_NLN())
-#define __PRINT_LOC_MAIN(x)    BLOC(printf("%s : %d", __FILE__, __LINE__); PRINT_NLN())
-#define __PRINT_FNC_MAIN(x)    BLOC(printf("%s : %d", __FUNC__, __LINE__); PRINT_NLN())
-#define __PRINT_SIZ_MAIN(x)    BLOC(printf("%" PRIuPTR " * %" PRIuMAX "bit", sizeof(x), (uintmax_t)(CHAR_BIT)); PRINT_NLN())
-#define __PRINT_TYP_MAIN(x)    BLOC(printf("%s", std_type_name(x)); PRINT_NLN())
-#define __PRINT_PTR_MAIN(x)    BLOC(printf("%p", (&x)); PRINT_NLN())
+#define __PRINT(...) printf(__VA_ARGS__); fflush(stdout);
+
+#define __PRINT_VAR_MAIN(x)    BLOC(__PRINT(#x); PRINT_NLN())
+#define __PRINT_TXT_MAIN(x)    BLOC(__PRINT(#x); PRINT_NLN())
+#define __PRINT_LOC_MAIN(x)    BLOC(__PRINT("%s : %d", __FILE__, __LINE__); PRINT_NLN())
+#define __PRINT_FNC_MAIN(x)    BLOC(__PRINT("%s : %d", __FUNC__, __LINE__); PRINT_NLN())
+#define __PRINT_SIZ_MAIN(x)    BLOC(__PRINT("%" PRIuPTR " * %" PRIuMAX "bit", sizeof(x), (uintmax_t)(CHAR_BIT)); PRINT_NLN())
+#define __PRINT_TYP_MAIN(x)    BLOC(__PRINT("%s", std_type_name(x)); PRINT_NLN())
+#define __PRINT_PTR_MAIN(x)    BLOC(__PRINT("%p", (&x)); PRINT_NLN())
 #define __PRINT_BIT_MAIN(x)    BLOC(yaya_print_bit(&(x), sizeof(x)))
 #define __PRINT_RAW_MAIN(x)    BLOC(yaya_print_but(&(x), sizeof(x)))
 
 #define __PRINT_CHR_MAIN(x) BLOC(\
     BLOC(std_type_group(x) != STD_TYPE_GROUP_CHAR) ? \
-    BLOC(printf("\'%s\'", "[not a text literal]")) : \
-    BLOC(printf("\'%s\'", (char[]){ COMPILE_CHR_OR_ZERO(x), '\0'} )); PRINT_NLN())
+    BLOC(__PRINT("\'%s\'", "[not a text literal]")) : \
+    BLOC(__PRINT("\'%s\'", (char[]){ COMPILE_CHR_OR_ZERO(x), '\0'} )); PRINT_NLN())
 
 #define __PRINT_STR_MAIN(x) BLOC(\
     BLOC(STD_TYPE_GROUP_CHAR_P != std_type_group(x)) ? \
-    BLOC(printf("\'%s\'", "[not a text string]")) : \
-    BLOC(printf("\'%s\'", (char*) COMPILE_CHRP_OR_NULL(x))); PRINT_NLN())
+    BLOC(__PRINT("\'%s\'", "[not a text string]")) : \
+    BLOC(__PRINT("\'%s\'", (char*) COMPILE_CHRP_OR_NULL(x))); PRINT_NLN())
 
 #define __PRINT_NUM_MAIN(x) BLOC(\
     BLOC((std_type_group(x) != STD_TYPE_GROUP_SINT) && (std_type_group(x) != STD_TYPE_GROUP_UINT)) ? \
-    BLOC(printf("\'%s\'", "[not a integer number]")) : \
-    BLOC(char fmt[15] = {0}; snprintf(fmt, 15, "%%%s", std_type_print(x)); printf(fmt, x)); PRINT_NLN())
+    BLOC(__PRINT("\'%s\'", "[not a integer number]")) : \
+    BLOC(char fmt[15] = {0}; snprintf(fmt, 15, "%%%s", std_type_print(x)); __PRINT(fmt, x)); PRINT_NLN())
 
 #define __PRINT_FLP_MAIN(x) BLOC(\
     BLOC(STD_TYPE_GROUP_FLT != std_type_group(x)) ? \
-    BLOC(printf("\'%s\'", "[not a floating number]")) : \
-    BLOC(char fmt[15] = {0}; snprintf(fmt, 15, "%%%s", std_type_print(x)); printf(fmt, COMPILE_FLT_OR_ZERO(x))); PRINT_NLN())
+    BLOC(__PRINT("\'%s\'", "[not a floating number]")) : \
+    BLOC(char fmt[15] = {0}; snprintf(fmt, 15, "%%%s", std_type_print(x)); __PRINT(fmt, COMPILE_FLT_OR_ZERO(x))); PRINT_NLN())
 
 
-#define __PRINT_VAR_TYPE(x)    printf("[var] ")
-#define __PRINT_TXT_TYPE(x)    printf("[txt] ")
-#define __PRINT_LOC_TYPE(x)    printf("[loc] ")
-#define __PRINT_FNC_TYPE(x)    printf("[fnk] ")
-#define __PRINT_SIZ_TYPE(x)    printf("[siz] ")
-#define __PRINT_TYP_TYPE(x)    printf("[typ] ")
-#define __PRINT_PTR_TYPE(x)    printf("[ptr] ")
-#define __PRINT_BIT_TYPE(x)    printf("[bit] ")
-#define __PRINT_RAW_TYPE(x)    printf("[raw] ")
-#define __PRINT_CHR_TYPE(x)    printf("[chr] ")
-#define __PRINT_STR_TYPE(x)    printf("[str] ")
-#define __PRINT_NUM_TYPE(x)    printf("[%3s] ", std_type_spec(x))
-#define __PRINT_FLP_TYPE(x)    printf("[%3s] ", std_type_spec(x))
+#define __PRINT_VAR_TYPE(x)    __PRINT("[var] ")
+#define __PRINT_TXT_TYPE(x)    __PRINT("[txt] ")
+#define __PRINT_LOC_TYPE(x)    __PRINT("[loc] ")
+#define __PRINT_FNC_TYPE(x)    __PRINT("[fnk] ")
+#define __PRINT_SIZ_TYPE(x)    __PRINT("[siz] ")
+#define __PRINT_TYP_TYPE(x)    __PRINT("[typ] ")
+#define __PRINT_PTR_TYPE(x)    __PRINT("[ptr] ")
+#define __PRINT_BIT_TYPE(x)    __PRINT("[bit] ")
+#define __PRINT_RAW_TYPE(x)    __PRINT("[raw] ")
+#define __PRINT_CHR_TYPE(x)    __PRINT("[chr] ")
+#define __PRINT_STR_TYPE(x)    __PRINT("[str] ")
+#define __PRINT_NUM_TYPE(x)    __PRINT("[%3s] ", std_type_spec(x))
+#define __PRINT_FLP_TYPE(x)    __PRINT("[%3s] ", std_type_spec(x))
 
 
 #define PRINT_TXT(x)    __PRINT_TXT_TYPE(x);                   __PRINT_TXT_MAIN(x)
-#define PRINT_LOC(x)    __PRINT_LOC_TYPE(x); printf(#x " = "); __PRINT_LOC_MAIN(x)
-#define PRINT_FNC(x)    __PRINT_FNC_TYPE(x); printf(#x " = "); __PRINT_FNC_MAIN(x)
-#define PRINT_SIZ(x)    __PRINT_SIZ_TYPE(x); printf(#x " = "); __PRINT_SIZ_MAIN(x)
-#define PRINT_TYP(x)    __PRINT_TYP_TYPE(x); printf(#x " = "); __PRINT_TYP_MAIN(x)
-#define PRINT_PTR(x)    __PRINT_PTR_TYPE(x); printf(#x " = "); __PRINT_PTR_MAIN(x)
-#define PRINT_BIT(x)    __PRINT_BIT_TYPE(x); printf(#x " = "); __PRINT_BIT_MAIN(x)
-#define PRINT_RAW(x)    __PRINT_RAW_TYPE(x); printf(#x " = "); __PRINT_RAW_MAIN(x)
-#define PRINT_CHR(x)    __PRINT_CHR_TYPE(x); printf(#x " = "); __PRINT_CHR_MAIN(x)
-#define PRINT_STR(x)    __PRINT_STR_TYPE(x); printf(#x " = "); __PRINT_STR_MAIN(x)
-#define PRINT_NUM(x)    __PRINT_NUM_TYPE(x); printf(#x " = "); __PRINT_NUM_MAIN(x)
-#define PRINT_FLP(x)    __PRINT_FLP_TYPE(x); printf(#x " = "); __PRINT_FLP_MAIN(x)
-#define PRINT_NLN( )    printf("\n"); fflush(stdout)
+#define PRINT_LOC(x)    __PRINT_LOC_TYPE(x); __PRINT(#x " = "); __PRINT_LOC_MAIN(x)
+#define PRINT_FNC(x)    __PRINT_FNC_TYPE(x); __PRINT(#x " = "); __PRINT_FNC_MAIN(x)
+#define PRINT_SIZ(x)    __PRINT_SIZ_TYPE(x); __PRINT(#x " = "); __PRINT_SIZ_MAIN(x)
+#define PRINT_TYP(x)    __PRINT_TYP_TYPE(x); __PRINT(#x " = "); __PRINT_TYP_MAIN(x)
+#define PRINT_PTR(x)    __PRINT_PTR_TYPE(x); __PRINT(#x " = "); __PRINT_PTR_MAIN(x)
+#define PRINT_BIT(x)    __PRINT_BIT_TYPE(x); __PRINT(#x " = "); __PRINT_BIT_MAIN(x)
+#define PRINT_RAW(x)    __PRINT_RAW_TYPE(x); __PRINT(#x " = "); __PRINT_RAW_MAIN(x)
+#define PRINT_CHR(x)    __PRINT_CHR_TYPE(x); __PRINT(#x " = "); __PRINT_CHR_MAIN(x)
+#define PRINT_STR(x)    __PRINT_STR_TYPE(x); __PRINT(#x " = "); __PRINT_STR_MAIN(x)
+#define PRINT_NUM(x)    __PRINT_NUM_TYPE(x); __PRINT(#x " = "); __PRINT_NUM_MAIN(x)
+#define PRINT_FLP(x)    __PRINT_FLP_TYPE(x); __PRINT(#x " = "); __PRINT_FLP_MAIN(x)
+#define PRINT_NLN( )    __PRINT("\n"); fflush(stdout)
 
 
 #define PRINT_DEBUG_INFO(x)                                                                                                                          \

@@ -25,6 +25,20 @@ UT_FUNC_GEN(test_bit) {
             UT_ASSERT_BIT_EQ(u8_c(256), u8_c(0b000000000));
         }UT_GROUP_END;
 
+        UT_GROUP_BEG(cnt) {
+            UT_ASSERT_BIT_EQ(umax_c(  8), bit_cnt( i8_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 16), bit_cnt(i16_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 32), bit_cnt(i32_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 64), bit_cnt(i64_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c(  8), bit_cnt( u8_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 16), bit_cnt(u16_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 32), bit_cnt(u32_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 64), bit_cnt(u64_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 32), bit_cnt(f32_c(0)));
+            UT_ASSERT_BIT_EQ(umax_c( 64), bit_cnt(f64_c(0)));
+        }UT_GROUP_END;
+
+
         UT_GROUP_BEG(0) {
             UT_GROUP_BEG(beg) {
                 UT_ASSERT_BIT_EQ(imax_c(1), bit_0_beg(u8_c(0b00000000)));

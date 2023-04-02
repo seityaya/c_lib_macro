@@ -33,7 +33,6 @@ set(INC_LIST
     yaya_concat.h
     yaya_endian.h
     yaya_flag.h
-    yaya_lang.h
     yaya_type.h
     yaya_number.h
     yaya_rand.c

@@ -40,13 +40,13 @@ UT_FUNC_GEN(test_arithmetic_progresion) {
             fmax_t a = 2;
             fmax_t b = 2;
             UT_GROUP_BEG(get) {
-                UT_ASSERT_FLT_EQ( 0.25, progresion_geometric(a, b, -3));
-                UT_ASSERT_FLT_EQ(  0.5, progresion_geometric(a, b, -2));
-                UT_ASSERT_FLT_EQ(  1.0, progresion_geometric(a, b, -1));
-                UT_ASSERT_FLT_EQ(  2.0, progresion_geometric(a, b,  0));
-                UT_ASSERT_FLT_EQ(  4.0, progresion_geometric(a, b,  1));
-                UT_ASSERT_FLT_EQ(  8.0, progresion_geometric(a, b,  2));
-                UT_ASSERT_FLT_EQ( 16.0, progresion_geometric(a, b,  3));
+                UT_ASSERT_FLT_EQ(fmax_c(0.25), progresion_geometric(a, b, -3));
+                UT_ASSERT_FLT_EQ(fmax_c( 0.5), progresion_geometric(a, b, -2));
+                UT_ASSERT_FLT_EQ(fmax_c( 1.0), progresion_geometric(a, b, -1));
+                UT_ASSERT_FLT_EQ(fmax_c( 2.0), progresion_geometric(a, b,  0));
+                UT_ASSERT_FLT_EQ(fmax_c( 4.0), progresion_geometric(a, b,  1));
+                UT_ASSERT_FLT_EQ(fmax_c( 8.0), progresion_geometric(a, b,  2));
+                UT_ASSERT_FLT_EQ(fmax_c(16.0), progresion_geometric(a, b,  3));
             } UT_GROUP_END;
 
             UT_GROUP_BEG(is) {
@@ -67,14 +67,14 @@ UT_FUNC_GEN(test_arithmetic_progresion) {
             fmax_t a = 1;
             fmax_t b = 2;
             UT_GROUP_BEG(get) {
-                UT_ASSERT_FLT_EQ_E( -0.200000, progresion_harmonic(a, b, -3), 0.0001);
-                UT_ASSERT_FLT_EQ_E( -0.333333, progresion_harmonic(a, b, -2), 0.0001);
-                UT_ASSERT_FLT_EQ_E( -1.000000, progresion_harmonic(a, b, -1), 0.0001);
-                UT_ASSERT_FLT_EQ_E(  1.000000, progresion_harmonic(a, b,  0), 0.0001);
-                UT_ASSERT_FLT_EQ_E(  0.333333, progresion_harmonic(a, b,  1), 0.0001);
-                UT_ASSERT_FLT_EQ_E(  0.200000, progresion_harmonic(a, b,  2), 0.0001);
-                UT_ASSERT_FLT_EQ_E(  0.142857, progresion_harmonic(a, b,  3), 0.0001);
-                UT_ASSERT_FLT_EQ_E(  0.111111, progresion_harmonic(a, b,  4), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c(-0.200000), progresion_harmonic(a, b, -3), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c(-0.333333), progresion_harmonic(a, b, -2), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c(-1.000000), progresion_harmonic(a, b, -1), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c( 1.000000), progresion_harmonic(a, b,  0), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c( 0.333333), progresion_harmonic(a, b,  1), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c( 0.200000), progresion_harmonic(a, b,  2), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c( 0.142857), progresion_harmonic(a, b,  3), 0.0001);
+                UT_ASSERT_FLT_EQ_E(fmax_c( 0.111111), progresion_harmonic(a, b,  4), 0.0001);
             } UT_GROUP_END;
 
             UT_GROUP_BEG(is) {

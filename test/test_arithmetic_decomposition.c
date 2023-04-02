@@ -51,7 +51,7 @@ UT_FUNC_GEN(test_arithmetic_decomposition) {
         UT_ASSERT_FLT_EQ(fmax_c( 1), get_sign(fmax_c( 0.1)));
         UT_ASSERT_FLT_EQ(fmax_c(-1), get_sign(fmax_c(-0.1)));
 
-        UT_ASSERT_BOOL(get_sign(2) == get_sign(2));
+        UT_ASSERT_BOOL_TR(get_sign(2) == get_sign(2));
 
         int a = -1;
         UT_ASSERT_NUM_EQ( -1, get_sign(a));
@@ -69,14 +69,14 @@ UT_FUNC_GEN(test_arithmetic_decomposition) {
 
     UT_GROUP_BEG(components_float) {
         UT_GROUP_BEG(get_mantissa) {
-            UT_ASSERT_FLT_EQ( 0.640625, get_mantissa(x));
-            UT_ASSERT_FLT_EQ( 0.640625, get_mantissa(X));
+            UT_ASSERT_FLT_EQ(f32_c(0.640625), get_mantissa(x));
+            UT_ASSERT_FLT_EQ(f32_c(0.640625), get_mantissa(X));
 
-            UT_ASSERT_FLT_EQ( 0.5006103515625, get_mantissa(y));
-            UT_ASSERT_FLT_EQ( 0.5006103515625, get_mantissa(Y));
+            UT_ASSERT_FLT_EQ(f64_c(0.5006103515625), get_mantissa(y));
+            UT_ASSERT_FLT_EQ(f64_c(0.5006103515625), get_mantissa(Y));
 
-            UT_ASSERT_FLT_EQ( 0.900074005126953125, get_mantissa(z));
-            UT_ASSERT_FLT_EQ( 0.900074005126953125, get_mantissa(Z));
+            UT_ASSERT_FLT_EQ(f128_c(0.900074005126953125), get_mantissa(z));
+            UT_ASSERT_FLT_EQ(f128_c(0.900074005126953125), get_mantissa(Z));
         } UT_GROUP_END;
 
         UT_GROUP_BEG(get_exponent) {
@@ -93,19 +93,19 @@ UT_FUNC_GEN(test_arithmetic_decomposition) {
 
         UT_GROUP_BEG(destruc_struct_2) {
 #define S_M_2E(x) (get_sign(x) * get_mantissa(x) * powm(typecast(x, 2.0), typecast(x, get_exponent(x))))
-            UT_ASSERT_FLT_EQ(  10.25, S_M_2E(x));
-            UT_ASSERT_FLT_EQ( -10.25, S_M_2E(X));
+            UT_ASSERT_FLT_EQ(f32_c( 10.25), S_M_2E(x));
+            UT_ASSERT_FLT_EQ(f32_c(-10.25), S_M_2E(X));
         } UT_GROUP_END;
 
         UT_GROUP_BEG(get_mantissa10) {
-            UT_ASSERT_FLT_EQ_E( f32_c(1.0249998569488525390625), get_mantissa10(x), 0.00000000001);
-            UT_ASSERT_FLT_EQ_E( f32_c(1.0249998569488525390625), get_mantissa10(X), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f32_c(1.0249998569488525390625), get_mantissa10(x), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f32_c(1.0249998569488525390625), get_mantissa10(X), 0.00000000001);
 
-            UT_ASSERT_FLT_EQ_E( f64_c(2.050499999999998212985019563348032534122467041015625000), get_mantissa10(y), 0.00000000001);
-            UT_ASSERT_FLT_EQ_E( f64_c(2.050499999999998212985019563348032534122467041015625000), get_mantissa10(Y), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f64_c(2.050499999999998212985019563348032534122467041015625000), get_mantissa10(y), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f64_c(2.050499999999998212985019563348032534122467041015625000), get_mantissa10(Y), 0.00000000001);
 
-            UT_ASSERT_FLT_EQ_E( f128_c(5.89872500000000000346458972622087912895949557423591613769531250), get_mantissa10(z), 0.00000000001);
-            UT_ASSERT_FLT_EQ_E( f128_c(5.89872500000000000346458972622087912895949557423591613769531250), get_mantissa10(Z), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f128_c(5.89872500000000000346458972622087912895949557423591613769531250), get_mantissa10(z), 0.00000000001);
+            UT_ASSERT_FLT_EQ_E(f128_c(5.89872500000000000346458972622087912895949557423591613769531250), get_mantissa10(Z), 0.00000000001);
         } UT_GROUP_END;
 
 

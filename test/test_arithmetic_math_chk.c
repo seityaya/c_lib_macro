@@ -12,6 +12,7 @@ UT_FUNC_GEN(test_arithmetic_math_chk) {
     UT_GROUP_BEG(math) {
         is8_t  r_i = 0;
         us8_t  r_s = 0;
+        fmax_t r_f = 0;
 
         int k = 0;
         UT_GROUP_BEG(sum_chk) {
@@ -435,19 +436,19 @@ UT_FUNC_GEN(test_arithmetic_math_chk) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(powm_chk) {
+            UT_ASSERT_BOOL_TR(powm_chk(r_f, 0.0, 0.0));       UT_ASSERT_FLT_EQ(fmax_c(0.0), r_f);
+            UT_ASSERT_BOOL_FL(powm_chk(r_f, 2.0, 2.0));       UT_ASSERT_FLT_EQ(fmax_c(4.0), r_f);
 
         } UT_GROUP_END;
 
         UT_GROUP_BEG(root_chk) {
-
+            UT_ASSERT_BOOL_TR(root_chk(r_f, 0.0, 0.0));       UT_ASSERT_FLT_EQ(fmax_c(0.0), r_f);
+            UT_ASSERT_BOOL_FL(root_chk(r_f, 4.0, 2.0));       UT_ASSERT_FLT_EQ(fmax_c(2.0), r_f);
         } UT_GROUP_END;
 
         UT_GROUP_BEG(logm_chk) {
-
-        } UT_GROUP_END;
-
-        UT_GROUP_BEG(abs_chk) {
-
+            UT_ASSERT_BOOL_TR(logm_chk(r_f, 0.0, 0.0));       UT_ASSERT_FLT_EQ(fmax_c(0.0), r_f);
+            UT_ASSERT_BOOL_FL(logm_chk(r_f, 4.0, 2.0));       UT_ASSERT_FLT_EQ(fmax_c(2.0), r_f);
         } UT_GROUP_END;
     } UT_GROUP_END;
 }

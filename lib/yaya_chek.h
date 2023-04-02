@@ -127,6 +127,12 @@ BEG_C_DECLARATION
     BLOC(op);                                                                              \
     })
 
+#define COMPILE_WCHDOG_TYPE_1(type, x, _x_unique, op) ({                                   \
+    type __type_unique = {0};                                                              \
+    COMPILE_NO_SIDE(x, _x_unique);                                                         \
+    COMPILE_ASSERT(COMPILE_TYPECHEK((__type_unique), _x_unique), _TYPECHEK);               \
+    BLOC(op);                                                                              \
+    })
 
 #define COMPILE_WCHDOG_TYPE_2(type, x, y, _x_unique, _y_unique, op) ({                     \
     type __type_unique = {0};                                                              \

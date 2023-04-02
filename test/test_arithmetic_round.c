@@ -111,7 +111,6 @@ UT_FUNC_GEN(test_arithmetic_round) {
         } UT_GROUP_END;
 
         UT_GROUP_BEG(round_math_eps) {
-            //            UT_ASSERT_FLT_EQUAL(   5, round_int_eps(   3 ,   5));
             UT_ASSERT_FLT_EQ( 1.0, round_eps( 0.9 , 0.5, round_int));
             UT_ASSERT_FLT_EQ( 1.0, round_eps( 1.0 , 0.5, round_int));
             UT_ASSERT_FLT_EQ( 1.0, round_eps( 1.1 , 0.5, round_int));
@@ -217,6 +216,12 @@ UT_FUNC_GEN(test_arithmetic_round) {
             UT_ASSERT_FLT_EQ(-2.0, round_eps(-1.9 , 0.5, round_inf));
             UT_ASSERT_FLT_EQ(-2.0, round_eps(-2.0 , 0.5, round_inf));
             UT_ASSERT_FLT_EQ(-2.5, round_eps(-2.1 , 0.5, round_inf));
+        } UT_GROUP_END;
+
+        UT_GROUP_BEG(scale) {
+            UT_ASSERT_FLT_EQ(4.5, scale( 9.0, 10.0, 20.0, 5.0, 10.0));
+            UT_ASSERT_FLT_EQ(5.5, scale(11.0, 10.0, 20.0, 5.0, 10.0));
+            UT_ASSERT_FLT_EQ(6.5, scale(13.0, 10.0, 20.0, 5.0, 10.0));
         } UT_GROUP_END;
     } UT_GROUP_END;
 }

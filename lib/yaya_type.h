@@ -293,7 +293,7 @@ BEG_C_DECLARATION
     __std_type_spec_flt                 \
     __std_type_spec_cpl                 \
     \
-    char*:                "chr",        \
+    char*:                "str",        \
     int8_t*:              "i08",        \
     int16_t*:             "i16",        \
     int32_t*:             "i32",        \
@@ -305,7 +305,7 @@ BEG_C_DECLARATION
     __std_type_spec_flt_p               \
     __std_type_spec_cpl_p               \
     \
-    void*:                "void",       \
+    void*:                "vpt",        \
     default:              "nan")
 
 
@@ -315,12 +315,12 @@ BEG_C_DECLARATION
 #define __std_type_print_flt              \
     float:                  "f",          \
     double:                 "lf",         \
-    long double:            "llf",
+    long double:            "Lf",
 
 #define __std_type_print_flt_p            \
     float*:                 "f",          \
     double*:                "lf",         \
-    long double*:           "llf",
+    long double*:           "Lf",
 #else
 #define __std_type_print_flt
 #define __std_type_print_flt_p
@@ -330,12 +330,12 @@ BEG_C_DECLARATION
 #define __std_type_print_cpl              \
     float complex:          "f",          \
     double complex:         "lf",         \
-    long double complex:    "llf",
+    long double complex:    "Lf",
 
 #define __std_type_print_cpl_p            \
     float complex*:         "f",          \
     double complex*:        "lf",         \
-    long double complex*:   "llf",
+    long double complex*:   "Lf",
 #else
 #define __std_type_print_cpl
 #define __std_type_print_cpl_p

@@ -29,9 +29,9 @@ UT_FUNC_GEN(test_arithmetic_assignment) {
         UT_ASSERT_NUM_EQ(i8_c(1), x);
 
         fmax_t y = 1.0;
-        UT_ASSERT_FLT_EQ(1.0, y);
+        UT_ASSERT_FLT_EQ(fmax_c(1.0), y);
         as(y, fmax_c(2));
-        UT_ASSERT_FLT_EQ(2.0, y);
+        UT_ASSERT_FLT_EQ(fmax_c(2.0), y);
     } UT_GROUP_END;
 
 

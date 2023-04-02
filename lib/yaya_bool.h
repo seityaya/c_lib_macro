@@ -14,6 +14,7 @@ BEG_C_DECLARATION
 #include "stdbool.h"
 
 #ifndef bool
+
 typedef enum bool_t {
     true = TRUE,
     false = FALSE
@@ -22,6 +23,7 @@ typedef enum bool_t {
 #define BOOL    bool_t
 #define TRUE    (1 == 1)
 #define FALSE   (!TRUE)
+
 #else
 
 #define bool_t  bool

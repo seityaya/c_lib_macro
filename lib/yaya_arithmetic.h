@@ -12,6 +12,7 @@
 BEG_C_DECLARATION
 
 #include "math.h"
+#include "tgmath.h"
 #include "stddef.h"
 #include "malloc.h"
 
@@ -465,7 +466,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float: frexpf,                                                                                                                                   \
     double: frexp,                                                                                                                                   \
     long double: frexpl,                                                                                                                             \
-    default: 0)(x, &e)))
+    default: typecast(x, 0))(x, &e)))
 
 /*
  * Экспонента числа по основанию 2
@@ -786,11 +787,11 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 #define __pow_chk(r, x, y)                                                                                                                           \
     BLOC(                                                                                                                                            \
     UNIT(__pow_chk_overflow(x, y))             ?                                                                                                     \
-    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
-    BLOC(__as(r, __pow(x, y)); false))
+    BLOC(__as(r,      zero(r)); true )         :                                                                                                     \
+    BLOC(__as(r, __powm(x, y)); false))
 
 #define __pow_chk_overflow(x, y)                                                                                                                     \
-    BLOC(true)                                 /* TODO IMPLEMENTATION */
+    BLOC((is_zero(y) && is_zero(y)) || is_nan(x) || is_nan(y))
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -807,7 +808,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 
 #define __root(x, r)                                                                                                                                 \
     BLOC(                                                                                                                                            \
-    __powm((x), typecast(x, (1.0 / r))))    /* TODO */
+    __powm((x), typecast(x, (1.0 / r))))
 
 /*
  * Извлечение корня по основанию с проверкой
@@ -820,11 +821,11 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 #define __rot_chk(r, x, y)                                                                                                                           \
     BLOC(                                                                                                                                            \
     UNIT(__rot_chk_overflow(x, y))             ?                                                                                                     \
-    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
-    BLOC(__as(r, __rot(x, y)); false))
+    BLOC(__as(r,      zero(r)); true )         :                                                                                                     \
+    BLOC(__as(r, __root(x, y)); false))
 
 #define __rot_chk_overflow(x, y)                                                                                                                     \
-    BLOC(true)                                 /* TODO IMPLEMENTATION */
+    BLOC((is_zero(y) && is_zero(y)) || is_nan(x) || is_nan(y))
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -840,7 +841,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     BLOC(__logm(_x_log, _l_log))))
 
 #define __logm(x, l)                                                                                                                                 \
-    BLOC(__log_flt(x) / __log_flt(l))          /* TODO */
+    BLOC(__log_flt(x) / __log_flt(l))
 
 #define __log_flt(x)                                                                                                                                 \
     BLOC(                                                                                                                                            \
@@ -851,7 +852,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float complex: clogf,                                                                                                                            \
     double complex: clog,                                                                                                                            \
     long double complex: clogl,                                                                                                                      \
-    default: 0)(x))                            /* TODO */
+    default: 0)(x))
 
 /*
  * Логарифм числа по основанию с проверкой
@@ -864,11 +865,11 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 #define __log_chk(r, x, y)                                                                                                                           \
     BLOC(                                                                                                                                            \
     UNIT(__log_chk_overflow(x, y))             ?                                                                                                     \
-    BLOC(__as(r,     zero(r)); true )          :                                                                                                     \
-    BLOC(__as(r, __log(x, y)); false))
+    BLOC(__as(r,      zero(r)); true )         :                                                                                                     \
+    BLOC(__as(r, __logm(x, y)); false))
 
 #define __log_chk_overflow(x, y)                                                                                                                     \
-    BLOC(true)                                 /* TODO IMPLEMENTATION */
+    BLOC((is_zero(y) && is_zero(y)) || is_nan(x) || is_nan(y))
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -988,66 +989,50 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 /*
  * Следующее представимое число, по направлению к отрицательной бесконечности
 */
-#define prev_num(x)                                                                                                                                  \
+#define num_prev(x)                                                                                                                                  \
     BLOC(                                                                                                                                            \
     COMPILE_NO_SIDE(x, _x_num);                                                                                                                      \
-    BLOC(__prev_num(_x_num)))
+    BLOC(__num_prev(_x_num)))
 
-#define __prev_num(x)  _Generic((x),                                                                                                                 \
-    float:              __prev_num_flt(x),                                                                                                           \
-    double:             __prev_num_flt(x),                                                                                                           \
-    long double:        __prev_num_flt(x),                                                                                                           \
-    default:            __prev_num_int(x))
-#define __prev_num_int(x) BLOC(typecast((x), (x) - one(x))) /* TODO LIMIT */
-#define __prev_num_flt(x) BLOC(typecast((x), nextafter((x), neg(inf(x)))))
+#define __num_prev(x)  _Generic((x),                                                                                                                 \
+    float:              __num_prev_flt(x),                                                                                                           \
+    double:             __num_prev_flt(x),                                                                                                           \
+    long double:        __num_prev_flt(x),                                                                                                           \
+    default:            __num_prev_int(x))
+#define __num_prev_int(x) BLOC(typecast((x), __eq((x), typemin(x)) ? (x) : (x) - one(x)))
+#define __num_prev_flt(x) BLOC(typecast((x), nextafter((x), neg(inf(x)))))
 
 /*
  * Следующее представимое число, по направлению к положительной бесконечности
 */
-#define next_num(x)                                                                                                                                  \
+#define num_next(x)                                                                                                                                  \
     BLOC(                                                                                                                                            \
     COMPILE_NO_SIDE(x, _x_num);                                                                                                                      \
-    BLOC(__next_num(_x_num)))
+    BLOC(__num_next(_x_num)))
 
-#define __next_num(x)  _Generic((x),                                                                                                                 \
-    float:              __next_num_flt(x),                                                                                                           \
-    double:             __next_num_flt(x),                                                                                                           \
-    long double:        __next_num_flt(x),                                                                                                           \
-    default:            __next_num_int(x))
-#define __next_num_int(x) BLOC(typecast((x), (x) + one(x))) /* TODO LIMIT */
-#define __next_num_flt(x) BLOC(typecast((x), nextafter((x), pos(inf(x)))))
-
-/*
- * Следующее представимое число, по направлению от числа
-*/
-#define prev_num_to(x, n)                                                                                                                            \
-    BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG_2((x), (y), _x_num, _n_num,                                                                                                       \
-    BLOC(__prev_num_to(_x_num, _n_num)))
-
-#define __prev_num_to(x, n) _Generic((x),                                                                                                            \
-    float:                  __prev_num_to_flt(x, n),                                                                                                 \
-    double:                 __prev_num_to_flt(x, n),                                                                                                 \
-    long double:            __prev_num_to_flt(x, n),                                                                                                 \
-    default:                __prev_num_to_int(x, n))
-#define __prev_num_to_int(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
-#define __prev_num_to_flt(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+#define __num_next(x)  _Generic((x),                                                                                                                 \
+    float:              __num_next_flt(x),                                                                                                           \
+    double:             __num_next_flt(x),                                                                                                           \
+    long double:        __num_next_flt(x),                                                                                                           \
+    default:            __num_next_int(x))
+#define __num_next_int(x) BLOC(typecast((x), __eq((x), typemax(x)) ? (x) : (x) + one(x)))
+#define __num_next_flt(x) BLOC(typecast((x), nextafter((x), pos(inf(x)))))
 
 /*
  * Следующее представимое число, по направлению к числу
 */
-#define next_num_to(x, n)                                                                                                                            \
+#define num_after(x, n)                                                                                                                              \
     BLOC(                                                                                                                                            \
-    COMPILE_WCHDOG_2((x), (y), _x_num, _n_num,                                                                                                       \
-    BLOC(__next_num_to(_x_num, _n_num)))
+    COMPILE_WCHDOG_2((x), (n), _x_num, _n_num,                                                                                                       \
+    BLOC(__num_after(_x_num, _n_num))))
 
-#define __next_num_to(x, n)  _Generic((x),                                                                                                           \
-    float:                   __next_num_to_flt(x),                                                                                                   \
-    double:                  __next_num_to_flt(x),                                                                                                   \
-    long double:             __next_num_to_flt(x),                                                                                                   \
-    default:                 __next_num_to_int(x))
-#define __next_num_to_int(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
-#define __next_num_to_flt(x, n) BLOC(0)                 /* TODO IMPLEMENTATION */
+#define __num_after(x, n) _Generic((x),                                                                                                              \
+    float:                  __num_after_flt(x, n),                                                                                                   \
+    double:                 __num_after_flt(x, n),                                                                                                   \
+    long double:            __num_after_flt(x, n),                                                                                                   \
+    default:                __num_after_int(x, n))
+#define __num_after_int(x, n) BLOC(typecast((x), __eq((x), (n))        ? (x) : (__gt((x), (n)) ? __num_prev_int(x) : __num_next_int(x))))
+#define __num_after_flt(x, n) BLOC(typecast((x), nextafter((x), (n))))
 
 //================= ОКРУГЛЕНИЕ =======================================================================================================================
 
@@ -1061,7 +1046,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float:       rintf,                                                                                                                              \
     double:      rint,                                                                                                                               \
     long double: rintl,                                                                                                                              \
-    default: 0)(x))
+    default: typecast(x, 0))(x))
 
 /*
  * Округление в большую сторону
@@ -1073,7 +1058,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float:       ceilf,                                                                                                                              \
     double:      ceil,                                                                                                                               \
     long double: ceill,                                                                                                                              \
-    default: 0)(x))
+    default: typecast(x, 0))(x))
 
 /*
  * Округление в меньшую сторону
@@ -1085,7 +1070,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float:       floorf,                                                                                                                             \
     double:      floor,                                                                                                                              \
     long double: floorl,                                                                                                                             \
-    default: 0)(x))
+    default: typecast(x, 0))(x))
 
 /*
  * Округление к нулю
@@ -1097,7 +1082,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     float:       truncf,                                                                                                                             \
     double:      trunc,                                                                                                                              \
     long double: truncl,                                                                                                                             \
-    default: 0)(x))
+    default: typecast(x, 0))(x))
 
 /*
  * Округление к бесконечности или округление от нуля
@@ -1116,7 +1101,18 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
 #define round_eps(x, e, func)                                                                                                                        \
     BLOC(                                                                                                                                            \
     COMPILE_WCHDOG_2(x, e, _x_rei, _e_rei,                                                                                                           \
-    BLOC(__mul(func(__qut((_x_rei), (_e_rei))), (_e_rei)))))
+    BLOC(typecast(x, __mul(func(__qut((_x_rei), (_e_rei))), (_e_rei))))))
+
+/*
+ * Масштабирует значение
+*/
+#define scale(x, get_min, get_max, to_min, to_max)                  \
+    COMPILE_WCHDOG_3((get_min), (get_max), (x), _gmin, _gmax, _y,   \
+    COMPILE_WCHDOG_3(( to_min), ( to_max), (x), _tmin, _tmax, _x,   \
+    BLOC(__scale(_x, _gmin, _gmax, _tmin, _tmax))))
+
+#define __scale(x, get_min, get_max, to_min, to_max)                \
+    sum(mul(dif(x, get_min), typecast(x, qut(dis(to_min, to_max), dis(get_min, get_max)))), to_min)
 
 //================= ПОИСК МИНИМАЛЬНОГО И МАКСИМАЛЬНОГО ЗНАЧЕНИЯ ======================================================================================
 
@@ -1252,7 +1248,7 @@ us64_t ___copysign_us64(us64_t r, us64_t s);
     BLOC(__progresion_harmonic(_a_har, _b_har, _n_har))))
 
 #define __progresion_harmonic(a, b, n)                                                                                                               \
-    BLOC(__qut(one(fmax_t), typecast(fmax_t, __progresion_arithmetic(a, b, n))))
+    BLOC(typecast(a, __qut(one(fmax_t), typecast(fmax_t, __progresion_arithmetic(a, b, n)))))
 
 /*
  * Проверить, что число соответствует формуле  или гармоническая прогрессия
