@@ -1,15 +1,22 @@
-//Author                 : Seityagiya Terlekchi
-//Contacts               : seityaya@ukr.net
-//Creation Date          : 2023.01
-//License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
-//SPDX-License-Identifier: LGPL-2.1-or-later
-//Copyright © 2023-2023 Seityagiya Terlekchi. All rights reserved.
+// Author                 : Seityagiya Terlekchi
+// Contacts               : seityaya@ukr.net
+// License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
+// SPDX-License-Identifier: LGPL-2.1-or-later
+// Copyright © Seityagiya Terlekchi. All rights reserved.
 
-#include "test.h"
+#include "yaya_unit.h"
+
 #include "yaya_debug.h"
 
 UT_FUNC_GEN(test_debug) {
-    UT_SPASE_TEST_BEG{
+    UT_SPASE_TEST_BEG {
+        UT_GROUP_BEG(bool) {
+            bool_t x = true;
+            PRINT_DEBUG_INFO(x);
+            PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
+        } UT_GROUP_END;
+
         UT_GROUP_BEG(char) {
             char x = 'B';
             PRINT_DEBUG_INFO(x);
@@ -38,8 +45,37 @@ UT_FUNC_GEN(test_debug) {
             PRINT_NLN();
         } UT_GROUP_END;
 
+        UT_GROUP_BEG(long double) {
+            long double x = 888.888;
+            PRINT_DEBUG_INFO(x);
+            PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
+        } UT_GROUP_END;
+
+        UT_GROUP_BEG(bool_p) {
+            bool_t x = true;
+            bool_t *p = &x;
+            PRINT_DEBUG_INFO(p);
+            PRINT_DEBUG_ALL(p);
+            PRINT_NLN();
+        } UT_GROUP_END;
+
         UT_GROUP_BEG(char_p) {
             char* x = "Test Text";
+            PRINT_DEBUG_INFO(x);
+            PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
+        } UT_GROUP_END;
+
+        UT_GROUP_BEG(char_m) {
+            char x[] = "Test Text";
+            PRINT_DEBUG_INFO(x);
+            PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
+        } UT_GROUP_END;
+
+        UT_GROUP_BEG(char_m) {
+            char x[] = {'0', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
             PRINT_NLN();
@@ -68,5 +104,5 @@ UT_FUNC_GEN(test_debug) {
             PRINT_DEBUG_ALL(p);
             PRINT_NLN();
         } UT_GROUP_END;
-    }UT_SPASE_TEST_END;
+    } UT_SPASE_TEST_END;
 }
