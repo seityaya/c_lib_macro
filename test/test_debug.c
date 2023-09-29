@@ -14,30 +14,35 @@ UT_FUNC_GEN(test_debug) {
             char x = 'B';
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(int) {
             int x = 666;
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(float) {
             double x = 777.777;
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(double) {
             double x = 888.888;
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(char_p) {
             char* x = "Test Text";
             PRINT_DEBUG_INFO(x);
             PRINT_DEBUG_ALL(x);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(int_p) {
@@ -45,6 +50,7 @@ UT_FUNC_GEN(test_debug) {
             int16_t* p = &x;
             PRINT_DEBUG_INFO(p);
             PRINT_DEBUG_ALL(p);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(float_p) {
@@ -52,6 +58,7 @@ UT_FUNC_GEN(test_debug) {
             double* p = &x;
             PRINT_DEBUG_INFO(p);
             PRINT_DEBUG_ALL(p);
+            PRINT_NLN();
         } UT_GROUP_END;
 
         UT_GROUP_BEG(double_p) {
@@ -59,6 +66,7 @@ UT_FUNC_GEN(test_debug) {
             double* p = &x;
             PRINT_DEBUG_INFO(p);
             PRINT_DEBUG_ALL(p);
+            PRINT_NLN();
         } UT_GROUP_END;
     }UT_SPASE_TEST_END;
 }

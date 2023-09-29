@@ -86,7 +86,6 @@ void yaya_print_but(void *p, size_t size);
 
 #define PRINT_DEBUG_INFO(x)                                                                                                                          \
     BLOC(                                                                                                                                            \
-    PRINT_NLN();                                                                                                                                     \
     __PRINT_TXT_MAIN(INFO:);                                                                                                                         \
     __PRINT_VAR_TYPE(x); __PRINT_VAR_MAIN(x);                                                                                                        \
     __PRINT_FNC_TYPE(x); __PRINT_FNC_MAIN(x);                                                                                                        \

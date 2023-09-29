@@ -11,10 +11,11 @@ int main(void) {
     unit_test_t MyUnTest = {0};
 
     unit_test_sett_t MyUnSett = { .suse = false,
-                                  .stat = true,
+                                  .stat = false,
                                 };
 
     unit_test_func_t MyUnFunc[] = { { NULL },
+                                    { test_debug,                    1 },
                                     { test_arithmetic_constant,      1 },
                                     { test_arithmetic_unar,          1 },
                                     { test_arithmetic_assignment,    1 },
@@ -32,15 +33,15 @@ int main(void) {
                                     { test_arithmetic_combinatoric,  1 },
                                     { test_bit,                      1 },
                                     { test_bool,                     1 },
-                                    { test_debug,                    0 },
                                     { test_rand,                     1 },
-                                    { test_sugar,                    0 },
+                                    { test_sugar,                    1 },
                                     { NULL }
                                   };
 
     unit_test_init(&MyUnTest, MyUnFunc, &MyUnSett);
 
 //    unit_test_print(&MyUnTest);
+
     unit_test_start(&MyUnTest);
 
     unit_test_stats(&MyUnTest);

@@ -10,7 +10,7 @@ set(CMAKE_C_STANDARD 11)
 add_definitions(-std=c11)
 
 set(VERSION 0.1)
-set(PROJECT_NAME yaya_defines)
+set(PROJECT_NAME yaya_define)
 project(${PROJECT_NAME})
 
 add_compile_options(-Wall -Wfatal-errors -Wconversion -Warith-conversion -Wfloat-conversion -Wsign-conversion -Wenum-conversion)
