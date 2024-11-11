@@ -1,8 +1,9 @@
 // Author                 : Seityagiya Terlekchi
-// Contacts               : seityaya@ukr.net
+// Contacts               : terlekchiseityaya@gmail.com
+// Creation Date          : 2020.05
 // License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 // SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © Seityagiya Terlekchi. All rights reserved.
+// Copyright © 2020-2024 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_CHECK_H
 #define YAYA_CHECK_H
@@ -114,7 +115,7 @@ BEG_C_DECLARATION
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
-#define COMPILE_SIGN_CHECK(sign, var)                                                                                                             \
+#define COMPILE_SIGN_CHECK(sign, var)                                                                                                                \
     (base_type_sign((var)) ==  (sign))
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
