@@ -3,27 +3,35 @@
 // Creation Date          : 2020.05
 // License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 // SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © 2020-2024 Seityagiya Terlekchi. All rights reserved.
+// Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
+#include "test.h"
 #include "yaya_bool.h"
 
 bool_t b_t = true;
 bool_t b_f = false;
 
 int test_bool(void) {
-    if(true == 0){
-        return -1;
-    }
-    if(false != 0){
-        return -1;
-    }
+    ASSERT_BOOL_TR(true);
+    ASSERT_BOOL_FL(false);
 
-    if(true != b_t){
-        return -1;
-    }
-    if(false != b_f){
-        return -1;
-    }
+    ASSERT_BOOL_TR(b_t);
+    ASSERT_BOOL_FL(b_f);
+
+    bool_t A = false;
+    ASSERT_BOOL_FL(A);
+    A = 0;
+    ASSERT_BOOL_FL(A);
+
+    A = true;
+    ASSERT_BOOL_TR(A);
+    A = 1;
+    ASSERT_BOOL_TR(A);
+    A = 2;
+    ASSERT_BOOL_TR(A);
+
+    ASSERT_NUM_NQ(true, 0);
+    ASSERT_NUM_EQ(false, 0);
 
     return 0;
 }

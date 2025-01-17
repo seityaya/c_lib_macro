@@ -3,7 +3,7 @@
 // Creation Date          : 2020.05
 // License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 // SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © 2020-2024 Seityagiya Terlekchi. All rights reserved.
+// Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_TYPE_H
 #define YAYA_TYPE_H
@@ -20,28 +20,18 @@ BEG_C_DECLARATION
 /*
  * Settings
 */
-#ifndef YAYA_USING_FLOATING
+#if !defined(YAYA_USING_FLOATING) || (YAYA_USING_FLOATING != 0)
 #define YAYA_USING_FLOATING 1
-#include "float.h"
-
-/*TODO Del*/
-#define FLT32_MIN__      FLT_MIN
-#define FLT64_MIN__      DBL_MIN
-#define FLT128_MIN__     LDBL_MIN
-
-#define FLT32_MAX__      FLT_MAX
-#define FLT64_MAX__      DBL_MAX
-#define FLT128_MAX__     LDBL_MAX
-
-#define FLT32_EPSILON__  FLT_EPSILON
-#define FLT64_EPSILON__  DBL_EPSILON
-#define FLT128_EPSILON__ LDBL_EPSILON
-
-#ifndef YAYA_USING_COMPLEX
-#define YAYA_USING_COMPLEX 1
-#include "complex.h"
-#endif /*YAYA_USING_COMPLEX*/
+    #include "float.h"
+    #if !defined(YAYA_USING_COMPLEX) || (YAYA_USING_COMPLEX != 0)
+    #define YAYA_USING_COMPLEX 1
+        #include "complex.h"
+    #endif /*YAYA_USING_COMPLEX*/
 #endif /*YAYA_USING_FLOATING*/
+
+#if (YAYA_USING_COMPLEX != 0) && (YAYA_USING_FLOATING == 0)
+#error (YAYA_USING_COMPLEX == 0) if (YAYA_USING_FLOATING == 0)
+#endif
 
 //================= TYPE CAST ========================================================================================================================
 /*
@@ -135,7 +125,8 @@ BEG_C_DECLARATION
         __base_type_name_flt_p                                                                                                                       \
         __base_type_name_cpl_p                                                                                                                       \
         __base_type_name_void_p                                                                                                                      \
-        default                        : "base type full name undefined")
+        default                        : "base type full name undefined"                                                                             \
+    )
 
 //================= TYPE SHORT NAME TEXT =============================================================================================================
 /*
@@ -198,8 +189,8 @@ BEG_C_DECLARATION
     double complex*                    : "cpl",                                                                                                      \
     long double complex*               : "lcp",
 #else
-#define __base_type__cpl
-#define __base_type__cpl_p
+#define __base_type_spec_cpl
+#define __base_type_spec_cpl_p
 #endif
 
 #define __base_type_spec_void_p                                                                                                                      \
@@ -218,7 +209,8 @@ BEG_C_DECLARATION
         __base_type_spec_flt_p                                                                                                                       \
         __base_type_spec_cpl_p                                                                                                                       \
         __base_type_spec_void_p                                                                                                                      \
-        default                        : "und")
+        default                        : "und"                                                                                                       \
+    )
 
 //================= TYPE GROUP =======================================================================================================================
 /*
@@ -323,7 +315,8 @@ BEG_C_DECLARATION
         __base_type_group_flt_p                                                                                                                      \
         __base_type_group_cpl_p                                                                                                                      \
         __base_type_group_void_p                                                                                                                     \
-        default                        : BASE_TYPE_GROUP_UNDEFINED)
+        default                        : BASE_TYPE_GROUP_UNDEFINED                                                                                   \
+    )
 
 //================= TYPE SIGN ========================================================================================================================
 /*
@@ -331,8 +324,8 @@ BEG_C_DECLARATION
 */
 /* Определение типа */
 #define BASE_TYPE_SIGN_SIGNUM    (-1) /*если тип имеет знак числа*/
-#define BASE_TYPE_SIGN_UNSIGNUM  (+1) /*если тип беззнаковое*/
-#define BASE_TYPE_SIGN_UNDEFINED ( 0) /*если у значения не удаётся определить знак*/
+#define BASE_TYPE_SIGN_UNSIGNUM  (+1) /*если тип беззнаковый*/
+#define BASE_TYPE_SIGN_UNDEFINED ( 0) /*если у типа не удаётся определить знак*/
 
 #define base_type_sign(x)                                                                                                                            \
     (                                                                                                                                                \
@@ -392,8 +385,8 @@ BEG_C_DECLARATION
     double*                            : 'M',                                                                                                        \
     long double*                       : 'N',
 #else
-#define __base_type__flt
-#define __base_type__flt_p
+#define __base_type_uid_flt
+#define __base_type_uid_flt_p
 #endif
 
 #if YAYA_USING_COMPLEX
@@ -407,8 +400,8 @@ BEG_C_DECLARATION
     double complex*                    : 'P',                                                                                                        \
     long double complex*               : 'R',
 #else
-#define __base_type_id_cpl
-#define __base_type_id_cpl_p
+#define __base_type_uid_cpl
+#define __base_type_uid_cpl_p
 #endif
 
 #define __base_type_uid_void_p                                                                                                                       \
@@ -427,7 +420,8 @@ BEG_C_DECLARATION
         __base_type_uid_flt_p                                                                                                                        \
         __base_type_uid_cpl_p                                                                                                                        \
         __base_type_uid_void_p                                                                                                                       \
-        default                        : 'Z')
+        default                        : 'Z'                                                                                                         \
+    )
 
 //================= TYPE PRINT =======================================================================================================================
 /*
@@ -511,12 +505,14 @@ BEG_C_DECLARATION
         __base_type_print_flt_p                                                                                                                      \
         __base_type_print_cpl_p                                                                                                                      \
         __base_type_print_void_p                                                                                                                     \
-        default                        : "%")
+        default                        : "%"                                                                                                         \
+    )
 
 //================= NULLPTR ==========================================================================================================================
 /*
  * Nullptr
 */
+
 #define nullptr                        ((void*)(0))
 typedef typeof(nullptr)                nullptr_t;
 
@@ -528,66 +524,74 @@ typedef void                           void_t;
 
 typedef char                           char_t;
 
-//TODO i (int) -> s(signed)
-
-typedef intmax_t                       imax_t;
+typedef intmax_t                       smax_t;
 typedef uintmax_t                      umax_t;
-typedef intptr_t                       iptr_t;
+typedef intptr_t                       sptr_t;
 typedef uintptr_t                      uptr_t;
+
+#if YAYA_USING_FLOATING
 typedef long double                    fmax_t;
+
+#if YAYA_USING_COMPLEX
 typedef long double complex            cmax_t;
+#endif
+#endif
 
-//TODO is , us -> s, u
-
-typedef int8_t                         is8_t;
-typedef int16_t                        is16_t;
-typedef int32_t                        is32_t;
-typedef int64_t                        is64_t;
+typedef int8_t                         ss8_t;
+typedef int16_t                        ss16_t;
+typedef int32_t                        ss32_t;
+typedef int64_t                        ss64_t;
 
 typedef uint8_t                        us8_t;
 typedef uint16_t                       us16_t;
 typedef uint32_t                       us32_t;
 typedef uint64_t                       us64_t;
 
-typedef int_least8_t                   il8_t;
-typedef int_least16_t                  il16_t;
-typedef int_least32_t                  il32_t;
-typedef int_least64_t                  il64_t;
+typedef int_least8_t                   sl8_t;
+typedef int_least16_t                  sl16_t;
+typedef int_least32_t                  sl32_t;
+typedef int_least64_t                  sl64_t;
 
 typedef uint_least8_t                  ul8_t;
 typedef uint_least16_t                 ul16_t;
 typedef uint_least32_t                 ul32_t;
 typedef uint_least64_t                 ul64_t;
 
-typedef int_fast8_t                    if8_t;
-typedef int_fast16_t                   if16_t;
-typedef int_fast32_t                   if32_t;
-typedef int_fast64_t                   if64_t;
+typedef int_fast8_t                    sf8_t;
+typedef int_fast16_t                   sf16_t;
+typedef int_fast32_t                   sf32_t;
+typedef int_fast64_t                   sf64_t;
 
 typedef uint_fast8_t                   uf8_t;
 typedef uint_fast16_t                  uf16_t;
 typedef uint_fast32_t                  uf32_t;
 typedef uint_fast64_t                  uf64_t;
 
+#if YAYA_USING_FLOATING
 typedef float                          f32_t;
 typedef double                         f64_t;
 typedef long double                    f128_t;
+#endif
 
+#if YAYA_USING_COMPLEX
 typedef float complex                  c32_t;
 typedef double complex                 c64_t;
 typedef long double complex            c128_t;
+#endif
 
 //================= CONST NUMBER =====================================================================================================================
 /*
  * Const number
 */
+#define null_c(T)                      (((T*)0))
+
 #define char_c(x)                      ((char_t)(x))
 
-#define i8_c(x)                        ((is8_t) (x))
-#define i16_c(x)                       ((is16_t)(x))
-#define i32_c(x)                       ((is32_t)(x))
-#define i64_c(x)                       ((is64_t)(x))
-#define imax_c(x)                      ((imax_t)(x))
+#define s8_c(x)                        ((ss8_t) (x))
+#define s16_c(x)                       ((ss16_t)(x))
+#define s32_c(x)                       ((ss32_t)(x))
+#define s64_c(x)                       ((ss64_t)(x))
+#define smax_c(x)                      ((smax_t)(x))
 
 #define u8_c(x)                        ((us8_t) (x))
 #define u16_c(x)                       ((us16_t)(x))
@@ -596,65 +600,91 @@ typedef long double complex            c128_t;
 #define u64_c(x)                       ((us64_t)(x))
 #define umax_c(x)                      ((umax_t)(x))
 
+#if YAYA_USING_FLOATING
 #define f32_c(x)                       ((f32_t)(x))
 #define f64_c(x)                       ((f64_t)(x))
 #define f128_c(x)                      ((f128_t)(x))
 #define fmax_c(x)                      ((fmax_t)(x))
+#endif
 
+#if YAYA_USING_COMPLEX
 #define c32_c(x)                       ((c32_t)(x))
 #define c64_c(x)                       ((c64_t)(x))
 #define cmax_c(x)                      ((cmax_t)(x))
-
-#define null_c(T)                      (((T*)0))
+#endif
 
 //================= TYPE INFO ========================================================================================================================
 /*
  * Type info
 */
+#if YAYA_USING_FLOATING
+#define __base_type_min_flt                                                                                                                          \
+        f32_t:                          f32_c(FLT_MIN),                                                                                              \
+        f64_t:                          f64_c(DBL_MIN),                                                                                              \
+        f128_t:                        f128_c(LDBL_MIN)
+#else
+#define __base_type_min_flt
+#endif
+
 #define base_type_min(x)                                                                                                                             \
     _Generic((x),                                                                                                                                    \
         char:                          char_c(CHAR_MIN),                                                                                             \
-        is8_t:                           i8_c(INT8_MIN),                                                                                             \
-        is16_t:                         i16_c(INT16_MIN),                                                                                            \
-        is32_t:                         i32_c(INT32_MIN),                                                                                            \
-        is64_t:                         i64_c(INT64_MIN),                                                                                            \
+        ss8_t:                           s8_c(INT8_MIN),                                                                                             \
+        ss16_t:                         s16_c(INT16_MIN),                                                                                            \
+        ss32_t:                         s32_c(INT32_MIN),                                                                                            \
+        ss64_t:                         s64_c(INT64_MIN),                                                                                            \
         us8_t:                           u8_c(0),                                                                                                    \
         us16_t:                         u16_c(0),                                                                                                    \
         us32_t:                         u32_c(0),                                                                                                    \
         us64_t:                         u64_c(0),                                                                                                    \
-        f32_t:                          f32_c(FLT32_MIN__),                                                                                          \
-        f64_t:                          f64_c(FLT64_MIN__),                                                                                          \
-        f128_t:                        f128_c(FLT128_MIN__))
+        __base_type_min_flt                                                                                                                          \
+    )
+
+#if YAYA_USING_FLOATING
+#define __base_type_max_flt                                                                                                                          \
+        f32_t:                          f32_c(FLT_MAX),                                                                                              \
+        f64_t:                          f64_c(DBL_MAX),                                                                                              \
+        f128_t:                        f128_c(LDBL_MAX)
+#else
+#define __base_type_max_flt
+#endif
 
 #define base_type_max(x)                                                                                                                             \
     _Generic(x,                                                                                                                                      \
         char:                          char_c(CHAR_MAX),                                                                                             \
-        is8_t:                           i8_c(INT8_MAX),                                                                                             \
-        is16_t:                         i16_c(INT16_MAX),                                                                                            \
-        is32_t:                         i32_c(INT32_MAX),                                                                                            \
-        is64_t:                         i64_c(INT64_MAX),                                                                                            \
+        ss8_t:                           s8_c(INT8_MAX),                                                                                             \
+        ss16_t:                         s16_c(INT16_MAX),                                                                                            \
+        ss32_t:                         s32_c(INT32_MAX),                                                                                            \
+        ss64_t:                         s64_c(INT64_MAX),                                                                                            \
         us8_t:                           u8_c(UINT8_MAX),                                                                                            \
         us16_t:                         u16_c(UINT16_MAX),                                                                                           \
         us32_t:                         u32_c(UINT32_MAX),                                                                                           \
         us64_t:                         u64_c(UINT64_MAX),                                                                                           \
-        f32_t:                          f32_c(FLT32_MAX__),                                                                                          \
-        f64_t:                          f64_c(FLT64_MAX__),                                                                                          \
-        f128_t:                        f128_c(FLT128_MAX__))
+        __base_type_max_flt                                                                                                                          \
+    )
+
+#if YAYA_USING_FLOATING
+#define __base_type_eps_flt                                                                                                                          \
+        f32_t:                          f32_c(FLT_EPSILON),                                                                                          \
+        f64_t:                          f64_c(DBL_EPSILON),                                                                                          \
+        f128_t:                        f128_c(LDBL_EPSILON)
+#else
+#define __base_type_eps_flt
+#endif
 
 #define base_type_eps(x)                                                                                                                             \
      _Generic((x),                                                                                                                                   \
         char:                         char_c(1),                                                                                                     \
-        is8_t:                          i8_c(1),                                                                                                     \
-        is16_t:                        i16_c(1),                                                                                                     \
-        is32_t:                        i32_c(1),                                                                                                     \
-        is64_t:                        i64_c(1),                                                                                                     \
+        ss8_t:                          s8_c(1),                                                                                                     \
+        ss16_t:                        s16_c(1),                                                                                                     \
+        ss32_t:                        s32_c(1),                                                                                                     \
+        ss64_t:                        s64_c(1),                                                                                                     \
         us8_t:                          u8_c(1),                                                                                                     \
         us16_t:                        u16_c(1),                                                                                                     \
         us32_t:                        u32_c(1),                                                                                                     \
         us64_t:                        u64_c(1),                                                                                                     \
-        f32_t:                         f32_c(FLT32_EPSILON__),                                                                                       \
-        f64_t:                         f64_c(FLT64_EPSILON__),                                                                                       \
-        f128_t:                       f128_c(FLT128_EPSILON__))
+        __base_type_eps_flt                                                                                                                          \
+    )
 
 //================= TYPE CONVERSION ==================================================================================================================
 /*
@@ -662,7 +692,7 @@ typedef long double complex            c128_t;
 */
 #define base_type_cast_to_uint(x)                                                                                                                    \
     _Generic((x),                                                                                                                                    \
-        char:                          char_c(x),                                                                                                    \
+        char:                            u8_c(x),                                                                                                    \
         is8_t:                           u8_c(x),                                                                                                    \
         is16_t:                         u16_c(x),                                                                                                    \
         is32_t:                         u32_c(x),                                                                                                    \
@@ -671,14 +701,14 @@ typedef long double complex            c128_t;
         us16_t:                         u16_c(x),                                                                                                    \
         us32_t:                         u32_c(x),                                                                                                    \
         us64_t:                         u64_c(x),                                                                                                    \
-        f32_t:                          f32_c(x),                                                                                                    \
-        f64_t:                          f64_c(x),                                                                                                    \
-        f128_t:                        f128_c(x)                                                                                                     \
+        f32_t:                         umax_c(x),                                                                                                    \
+        f64_t:                         umax_c(x),                                                                                                    \
+        f128_t:                        umax_c(x)                                                                                                     \
     )
 
 #define base_type_cast_to_sint(x)                                                                                                                    \
     _Generic((x),                                                                                                                                    \
-        char:                          char_c(x),                                                                                                    \
+        char:                            i8_c(x),                                                                                                    \
         is8_t:                           i8_c(x),                                                                                                    \
         is16_t:                         i16_c(x),                                                                                                    \
         is32_t:                         i32_c(x),                                                                                                    \
@@ -687,9 +717,9 @@ typedef long double complex            c128_t;
         us16_t:                         i16_c(x),                                                                                                    \
         us32_t:                         i32_c(x),                                                                                                    \
         us64_t:                         i64_c(x),                                                                                                    \
-        f32_t:                          f32_c(x),                                                                                                    \
-        f64_t:                          f64_c(x),                                                                                                    \
-        f128_t:                        f128_c(x)                                                                                                     \
+        f32_t:                         imax_c(x),                                                                                                    \
+        f64_t:                         imax_c(x),                                                                                                    \
+        f128_t:                        imax_c(x)                                                                                                     \
     )
 
 //================= UNDEF ============================================================================================================================

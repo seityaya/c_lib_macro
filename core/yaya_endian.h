@@ -3,7 +3,7 @@
 // Creation Date          : 2020.05
 // License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 // SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © 2020-2024 Seityagiya Terlekchi. All rights reserved.
+// Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_ENDIAN_H
 #define YAYA_ENDIAN_H
@@ -22,7 +22,7 @@ BEG_C_DECLARATION
 #define MID_LIT_ENDIAN_BYTE_ORDER       __ORDER_PDP_ENDIAN__    //(0x02010403)
 #define MID_BIG_ENDIAN_BYTE_ORDER       (0x03040102)            //(0x03040102)
 
-#define IS_CURRENT_BYTE_ORDER(ORDER)  (CURRENT_BYTE_ORDER == (ORDER))
+#define IS_CURRENT_BYTE_ORDER(ORDER)    (CURRENT_BYTE_ORDER == (ORDER))
 
 //====================================================================================================================================================
 

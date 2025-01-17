@@ -3,13 +3,14 @@
 // Creation Date          : 2020.05
 // License Link           : https://spdx.org/licenses/LGPL-2.1-or-later.html
 // SPDX-License-Identifier: LGPL-2.1-or-later
-// Copyright © 2020-2024 Seityagiya Terlekchi. All rights reserved.
+// Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
 #ifndef YAYA_SUGAR_H
 #define YAYA_SUGAR_H
 
 #include "yaya_bool.h"
 #include "yaya_concat.h"
+#include "yaya_type.h"
 
 // clang-format off
 #include "yaya_cdecl.h"
@@ -53,6 +54,17 @@ BEG_C_DECLARATION
  */
 #define beg_block  { do {
 #define end_block  break; } while(true); }  do{ } while(false)
+
+//================= DEFER OPERATOR ===================================================================================================================
+
+#define __DEFER__(F, V)                                                                                                                              \
+  auto void F(int*);                                                                                                                                 \
+  [[gnu::cleanup(F)]] int V;                                                                                                                         \
+  auto void F(int*)
+
+#define __DEFER_(N) __DEFER__(__DEFER_FUNCTION_ ## N, __DEFER_VARIABLE_ ## N)
+#define __DEFER(N) __DEFER_(N)
+#define defer __DEFER(__COUNTER__)
 
 //================= TEXT MACRO =======================================================================================================================
 /*
