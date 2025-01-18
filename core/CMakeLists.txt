@@ -21,6 +21,6 @@ file(GLOB FILES *.c *.h)
 
 set(SOURSE_LIST ${FILES})
 
-add_library(${PROJECT_NAME} ${SOURSE_LIST})
+add_library(${PROJECT_NAME} INTERFACE ${SOURSE_LIST})
 
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
