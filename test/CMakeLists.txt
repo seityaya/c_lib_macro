@@ -9,7 +9,7 @@ cmake_minimum_required(VERSION 3.0)
 
 project(yaya_macro_test)
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 23)
 
 file(GLOB FILES *.c *.h)
 

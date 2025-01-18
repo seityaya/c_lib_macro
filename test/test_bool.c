@@ -7,6 +7,7 @@
 
 #include "test.h"
 #include "yaya_bool.h"
+#include "yaya_type.h"
 
 bool_t b_t = true;
 bool_t b_f = false;
@@ -30,8 +31,8 @@ int test_bool(void) {
     A = 2;
     ASSERT_BOOL_TR(A);
 
-    ASSERT_NUM_NQ(true, 0);
-    ASSERT_NUM_EQ(false, 0);
+    ASSERT_NUM_NQ(s8_c(true), s8_c(0));
+    ASSERT_NUM_EQ(s8_c(false), s8_c(0));
 
     return 0;
 }

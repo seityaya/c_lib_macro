@@ -15,7 +15,7 @@ project(
     DESCRIPTION  "All macro in one project"
 )
 
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 23)
 
 file(GLOB FILES *.c *.h)
 

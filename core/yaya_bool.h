@@ -16,14 +16,18 @@ BEG_C_DECLARATION
 
 //================= BOOL =============================================================================================================================
 
-#ifdef bool
-    #undef  bool
-    #define bool_t  _Bool
+#if __STDC_VERSION__ < 202311L
+    #ifdef bool
+        #undef  bool
+        #define bool_t  _Bool
+    #else
+        typedef enum bool_t {
+            true  = 1,
+            false = 0
+        } bool_t;
+    #endif
 #else
-    typedef enum bool_t {
-        true  = 1,
-        false = 0
-    } bool_t;
+    #define bool_t  _Bool
 #endif
 
 //====================================================================================================================================================

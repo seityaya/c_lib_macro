@@ -60,5 +60,8 @@ int test_type(void) {
         ASSERT_STR_EQ("s", base_type_print(cp));
     }
 
+    {
+        nullptr_t n = nullptr;
+    }
     return 0;
 }

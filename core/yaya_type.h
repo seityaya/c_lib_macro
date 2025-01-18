@@ -10,6 +10,7 @@
 
 #include "inttypes.h"
 #include "limits.h"
+#include "stddef.h"
 #include "stdint.h"
 
 // clang-format off
@@ -512,9 +513,10 @@ BEG_C_DECLARATION
 /*
  * Nullptr
 */
-
 #define nullptr                        ((void*)(0))
+#if __STDC_VERSION__ < 202311L
 typedef typeof(nullptr)                nullptr_t;
+#endif
 
 //================= ALIASES ==========================================================================================================================
 /*
