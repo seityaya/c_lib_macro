@@ -17,8 +17,8 @@ BEG_C_DECLARATION
 
 //================= COMPTIME ASSERT ==================================================================================================================
 
-#define COMPILE_NO_SIDE_EFFECT_VARIABLE(x, __x_unique)                                                                                               \
-    typeof(x) (__x_unique) = (x)
+#define COMPILE_NO_SIDE_EFFECT_VARIABLE(x_value, x_name)                                                                                             \
+    typeof(x_value) (x_name) = (x_value)
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 

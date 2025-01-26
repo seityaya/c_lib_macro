@@ -695,10 +695,10 @@ typedef long double complex            c128_t;
 #define base_type_cast_to_uint(x)                                                                                                                    \
     _Generic((x),                                                                                                                                    \
         char:                            u8_c(x),                                                                                                    \
-        is8_t:                           u8_c(x),                                                                                                    \
-        is16_t:                         u16_c(x),                                                                                                    \
-        is32_t:                         u32_c(x),                                                                                                    \
-        is64_t:                         u64_c(x),                                                                                                    \
+        ss8_t:                           u8_c(x),                                                                                                    \
+        ss16_t:                         u16_c(x),                                                                                                    \
+        ss32_t:                         u32_c(x),                                                                                                    \
+        ss64_t:                         u64_c(x),                                                                                                    \
         us8_t:                           u8_c(x),                                                                                                    \
         us16_t:                         u16_c(x),                                                                                                    \
         us32_t:                         u32_c(x),                                                                                                    \
@@ -711,10 +711,10 @@ typedef long double complex            c128_t;
 #define base_type_cast_to_sint(x)                                                                                                                    \
     _Generic((x),                                                                                                                                    \
         char:                            i8_c(x),                                                                                                    \
-        is8_t:                           i8_c(x),                                                                                                    \
-        is16_t:                         i16_c(x),                                                                                                    \
-        is32_t:                         i32_c(x),                                                                                                    \
-        is64_t:                         i64_c(x),                                                                                                    \
+        ss8_t:                           i8_c(x),                                                                                                    \
+        ss16_t:                         i16_c(x),                                                                                                    \
+        ss32_t:                         i32_c(x),                                                                                                    \
+        ss64_t:                         i64_c(x),                                                                                                    \
         us8_t:                           i8_c(x),                                                                                                    \
         us16_t:                         i16_c(x),                                                                                                    \
         us32_t:                         i32_c(x),                                                                                                    \
