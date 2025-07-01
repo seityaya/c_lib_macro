@@ -19,7 +19,7 @@ BEG_C_DECLARATION
 //================= SUGAR ============================================================================================================================
 /*
  * Fun Sugar
-*/
+ */
 #define loop           while(true)
 #define ever           (;;)
 #define forever()      for ever
@@ -29,18 +29,21 @@ BEG_C_DECLARATION
 //================= BLOCKS ===========================================================================================================================
 /*
  * Block
-*/
+ */
 #define BLOCK(x) ({ x; })
 #define UNIT(x)  (  x   )
 #define VOID()   ({ 0; })
 
 /*
- * Условие
  * Conditional
  */
 #define TERNARIUS(_cond, _true_cond, _false_cond) BLOCK(UNIT(_cond) ? BLOCK(_true_cond) : BLOCK(_false_cond))
 
 //================= NEW TYPE BLOCK ===================================================================================================================
+/*
+ * Block
+ */
+
 /*
  * Новый тип блока в котором разрешено использовать break и continue вместо
  * конструкции do{ }while (false) или while (true){ }, (где, кстати невозможно
@@ -56,6 +59,9 @@ BEG_C_DECLARATION
 #define end_block  break; } while(true); }  do{ } while(false)
 
 //================= DEFER OPERATOR ===================================================================================================================
+/*
+ * Defer
+ */
 
 #define __DEFER__(F, V)                                                                                                                              \
   auto void F(int*);                                                                                                                                 \
@@ -69,7 +75,8 @@ BEG_C_DECLARATION
 //================= TEXT MACRO =======================================================================================================================
 /*
  * Переопределение стандартных макросов
-*/
+ */
+
 #ifndef __FILE__
 #define __FILE__
 #endif
@@ -85,7 +92,7 @@ BEG_C_DECLARATION
 //================= COMPOUND LITERALS ================================================================================================================
 /*
  * Compound literals
-*/
+ */
 #define const_area(t, ...)   ({ (t[]){ __VA_ARGS__ };          })
 #define const_area_0(t, ...) ({ (t[]){ __VA_ARGS__, 0 };       })
 #define const_area_N(t, ...) ({ (t[]){ __VA_ARGS__, nullptr }; })
@@ -93,60 +100,60 @@ BEG_C_DECLARATION
 //================= MANDATORY ========================================================================================================================
 /*
  * Mandatory Semicolon
-*/
+ */
 #define MD_SC do{ } while(false)
 
 /*
  * Mandatory open figure brace
-*/
+ */
 #define MD_OFB do
 
 /*
  * Mandatory close figure brace
-*/
+ */
 #define MD_CFB while (false);
 
 //================= API TO STD SYNTAXIS ==============================================================================================================
 /*
  * Conditional
-*/
+ */
 #define ter(_cond, _true_cond, _false_cond) ({ ((_cond) ? (_true_cond) : (_false_cond)); })
 
 /*
  * Init
-*/
-#define init_ptr(n, t)   typeof(t) *n = nullptr
-#define init_val(n, t)   typeof(t)  n = {0}
+ */
+#define init_val(value_name, type)    typeof(type)  value_name = {0}
+#define init_ptr(value_name, type)    typeof(type) *value_name = nullptr
 
 /*
  * Create
-*/
-#define crete_ptr(n, v)  typeof(v) *(n) = &v
-#define crete_val(n, v)  typeof(v)  (n) = v
+ */
+#define crete_val(value_name, value)  typeof(value)  (value_name) = value
+#define crete_ptr(value_name, value)  typeof(value) *(value_name) = &value
 
 /*
  * Set
-*/
-#define set_adr(n, v)    (*(n)) = (&(v))
-#define set_val(n, v)    (n)    = (v)
+ */
+#define set_val(value_dst, value_src) (value_dst)    = (value_src)
+#define set_adr(value_dst, value_src) (*(value_dst)) = (&(value_src))
 
 /*
  * Get
-*/
-#define get_adr(x)       (&(x))
-#define get_val(x)       (*(x))
+ */
+#define get_val(value)                (*(value))
+#define get_adr(value)                (&(value))
 
 /*
  * Access
-*/
-#define access_fil(x, f) ((x).(f))
-#define access_adr(x, f) ((x)->(f))
-#define access_ind(x, i) ((x)[i])
+ */
+#define access_fil(value, field)      ((value).(field))
+#define access_adr(value, adres)      ((value)->(adres))
+#define access_ind(value, index)      ((value)[index])
 
 /*
  * Split
-*/
-#define split(x, y)      (x), (y)
+ */
+#define split(x, y)                   (x), (y)
 
 //====================================================================================================================================================
 

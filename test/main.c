@@ -22,6 +22,11 @@ int main(void) {
 
     printf("Tests Beg...\n");
 
+    err = test_argcount();
+    if (err != 0) {
+        return err;
+    }
+
     err = test_bool();
     if (err != 0) {
         return err;
@@ -33,11 +38,6 @@ int main(void) {
     }
 
     err = test_concat();
-    if (err != 0) {
-        return err;
-    }
-
-    err = test_argcount();
     if (err != 0) {
         return err;
     }
