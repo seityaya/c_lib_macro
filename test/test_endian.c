@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 // Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
-#include "test.h"
 #include "yaya_endian.h"
+#include "yaya_mtest.h"
 
 int test_endian(void) {
 #if IS_CURRENT_BYTE_ORDER(LIT_ENDIAN_BYTE_ORDER)

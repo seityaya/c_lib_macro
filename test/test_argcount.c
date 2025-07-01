@@ -7,8 +7,9 @@
 
 #include "stdarg.h"
 #include "stdio.h"
-#include "test.h"
+
 #include "yaya_argcount.h"
+#include "yaya_mtest.h"
 
 enum {
     BUF_SIZE = 128

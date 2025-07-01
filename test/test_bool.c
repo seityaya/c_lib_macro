@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 // Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
-#include "test.h"
 #include "yaya_bool.h"
+#include "yaya_mtest.h"
 #include "yaya_type.h"
 
 bool_t b_t = true;

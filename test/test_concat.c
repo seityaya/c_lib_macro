@@ -5,8 +5,8 @@
 // SPDX-License-Identifier: LGPL-2.1-or-later
 // Copyright © 2020-2025 Seityagiya Terlekchi. All rights reserved.
 
-#include "test.h"
 #include "yaya_concat.h"
+#include "yaya_mtest.h"
 
 int test_concat(void) {
     {
@@ -21,7 +21,7 @@ int test_concat(void) {
         ASSERT_STR_EQ("\"a\"", STR_1("a"));
 
         ASSERT_STR_EQ("a", STR_2(a));
-        ASSERT_STR_EQ("\"a\"", STR_2("a"));
+        ASSERT_STR_EQ("\"b\"", STR_2("a"));
 
         ASSERT_STR_EQ("a", STR_3(a));
         ASSERT_STR_EQ("\"a\"", STR_3("a"));
